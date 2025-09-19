@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GAMEBIT</title>
+  <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Style.css" />
+</head>
+<body class="index-bg">
+ <!-- HEADER (pégalo dentro del <body>) -->
+<header class="header" id="appHeader">
+  <div class="container inner">
+    <!-- Hamburguesa -->
+    <button class="icon-btn" id="btnMenu" aria-label="Abrir menú" aria-haspopup="true" aria-controls="sidebarNav" aria-expanded="false">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 6h18M3 12h18M3 18h12"/>
+      </svg>
+    </button>
+
+    <!-- Marca -->
+    <a class="brand" href="#">
+      <span class="brand-badge" aria-hidden="true"></span>
+      <span>GAMEBIT</span>
+    </a>
+
+    <!-- Navegación (visible desde 960px+) -->
+    <nav class="nav" aria-label="Principal">
+      <a href="#">Inicio</a>
+      <a href="#">Categorías</a>
+      <a href="#">Nuevos</a>
+      <a href="#">Populares</a>
+    </nav>
+
+    <!-- Buscador -->
+    <form class="search" role="search" aria-label="Buscar juegos">
+      <input type="search" placeholder="Buscar juegos..." />
+    </form>
+
+    <!-- Lupa -->
+    <button class="icon-btn" aria-label="Buscar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle><path d="m21 21-3.6-3.6"></path>
+      </svg>
+    </button>
+
+    <!-- Perfil -->
+    <button class="icon-btn" id="btnProfile" aria-label="Abrir perfil" aria-haspopup="true" aria-controls="profileDropdown" aria-expanded="false">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20 21a8 8 0 0 0-16 0" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<!-- SIDEBAR (hamburguesa) -->
+<aside class="drawer" id="sidebarNav" aria-hidden="true">
+  <div class="drawer-head">
+    <div class="brand" style="gap:8px">
+      <span class="brand-badge"></span><span>GAMEBIT</span>
+    </div>
+    <button class="icon-btn" id="btnCloseMenu" aria-label="Cerrar menú">✕</button>
+  </div>
+  <nav class="drawer-nav">
+    <h3 class="muted" style="margin:8px 0 10px;">Categorías</h3>
+    <a href="#">🏅 Deportes</a>
+    <a href="#">🏎️ Carreras</a>
+    <a href="#">🕹️ Clásicos</a>
+    <a href="#">👥 Multijugador</a>
+    <a href="#">🧭 Aventura</a>
+    <a href="#">🍳 Cocina</a>
+    <a href="#">🧠 Cartas</a>
+    <a href="#">🧒 Infantiles</a>
+    <a href="#">🔥 Acción</a>
+    <a href="#">🧩 Mesa</a>
+  </nav>
+</aside>
+<div class="scrim" id="scrimMenu" hidden></div>
+
+<!-- DROPDOWN PERFIL -->
+<aside class="dropdown" id="profileDropdown" aria-hidden="true">
+  <div class="profile-head">
+    <div class="avatar">👤</div>
+    <div>
+      <strong>Robert Plant</strong>
+      <div class="muted" style="font-size:13px">Nivel 42 · Pro Player</div>
+    </div>
+  </div>
+  <nav class="profile-nav">
+    <a href="#"><span>👤</span> Mi Perfil</a>
+    <a href="#"><span>🎮</span> Mis Juegos <em>12</em></a>
+    <a href="#"><span>🏆</span> Logros <em>3</em></a>
+    <a href="#"><span>🤝</span> Amigos <em>5</em></a>
+    <a href="#"><span>🔔</span> Notificaciones <em>2</em></a>
+    <a href="#"><span>⚙️</span> Configuración</a>
+  </nav>
+  <a class="logout" href="#">⛔ Cerrar Sesión</a>
+  <div class="profile-social">
+    <a href="#" aria-label="Instagram">📸</a>
+    <a href="#" aria-label="X">✖️</a>
+    <a href="#" aria-label="Facebook">📘</a>
+  </div>
+</aside>
+<div class="scrim" id="scrimProfile" hidden></div>
+<script src="/Interfaces-de-Usuario/TP2/js/main.js" defer></script>
+
+</body>
+</html>
