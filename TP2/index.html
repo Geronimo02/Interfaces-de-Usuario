@@ -113,9 +113,250 @@
   </aside>
   <div class="scrim" id="scrimProfile" hidden></div>
 
-  <!-- ===== Contenido de prueba ===== -->
-  <main class="container" style="padding:24px 0 80px">
-    <p class="muted">Contenido… (acá va tu home)</p>
+  <!-- ===== LOADING SCREEN ===== -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-container">
+      <div class="brand-loading">
+        <span class="brand-badge-large"></span>
+        <h1>GAMEBIT</h1>
+      </div>
+      <div class="loading-spinner"></div>
+      <div class="loading-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <span class="progress-text" id="progressText">0%</span>
+      </div>
+      <p class="loading-message">Cargando tu experiencia gaming...</p>
+    </div>
+  </div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content" id="mainContent">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">Descubre tu próxima aventura gaming</h1>
+          <p class="hero-subtitle">Más de 1000 juegos esperándote</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary hover-lift">Explorar Juegos</button>
+            <button class="btn btn-secondary hover-glow">Ver Ofertas</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Games Carousel -->
+    <section class="featured-section">
+      <div class="container">
+        <h2 class="section-title">Juegos Destacados</h2>
+        <div class="carousel-container">
+          <div class="carousel" id="featuredCarousel">
+            <div class="carousel-track" id="carouselTrack">
+              <!-- Game 1 -->
+              <div class="carousel-slide">
+                <div class="game-card featured">
+                  <div class="game-image">
+                    <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=400&h=225&fit=crop" alt="Cyberpunk Adventure">
+                    <div class="game-overlay">
+                      <button class="btn btn-play hover-pulse">▶ Jugar</button>
+                    </div>
+                  </div>
+                  <div class="game-info">
+                    <h3>Cyberpunk Adventure</h3>
+                    <p>Una aventura futurista llena de acción</p>
+                    <div class="game-meta">
+                      <span class="rating">★ 4.8</span>
+                      <span class="price">$29.99</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game 2 -->
+              <div class="carousel-slide">
+                <div class="game-card featured">
+                  <div class="game-image">
+                    <img src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=400&h=225&fit=crop" alt="Medieval Fantasy Quest">
+                    <div class="game-overlay">
+                      <button class="btn btn-play hover-pulse">▶ Jugar</button>
+                    </div>
+                  </div>
+                  <div class="game-info">
+                    <h3>Medieval Fantasy Quest</h3>
+                    <p>Explora reinos mágicos y combate dragones</p>
+                    <div class="game-meta">
+                      <span class="rating">★ 4.9</span>
+                      <span class="price">$39.99</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game 3 -->
+              <div class="carousel-slide">
+                <div class="game-card featured">
+                  <div class="game-image">
+                    <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=400&h=225&fit=crop" alt="Space Racing Championship">
+                    <div class="game-overlay">
+                      <button class="btn btn-play hover-pulse">▶ Jugar</button>
+                    </div>
+                  </div>
+                  <div class="game-info">
+                    <h3>Space Racing Championship</h3>
+                    <p>Carreras interplanetarias a alta velocidad</p>
+                    <div class="game-meta">
+                      <span class="rating">★ 4.7</span>
+                      <span class="price">$24.99</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Game 4 -->
+              <div class="carousel-slide">
+                <div class="game-card featured">
+                  <div class="game-image">
+                    <img src="https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=400&h=225&fit=crop" alt="Peg Solitaire Master">
+                    <div class="game-overlay">
+                      <a href="Pages/peg-solitaire.html" class="btn btn-play hover-pulse">▶ Jugar</a>
+                    </div>
+                  </div>
+                  <div class="game-info">
+                    <h3>Peg Solitaire Master</h3>
+                    <p>El clásico juego de mesa reinventado</p>
+                    <div class="game-meta">
+                      <span class="rating">★ 4.6</span>
+                      <span class="price">$9.99</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-btn carousel-prev" id="carouselPrev">‹</button>
+          <button class="carousel-btn carousel-next" id="carouselNext">›</button>
+          <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Games Grid -->
+    <section class="games-section">
+      <div class="container">
+        <h2 class="section-title">Todos los Juegos</h2>
+        <div class="games-grid">
+          <!-- Game Card 1 -->
+          <div class="game-card">
+            <div class="game-image">
+              <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=300&h=200&fit=crop" alt="Ocean Explorer">
+              <div class="game-overlay">
+                <button class="btn btn-play hover-pulse">▶ Jugar</button>
+              </div>
+            </div>
+            <div class="game-info">
+              <h3>Ocean Explorer</h3>
+              <p>Aventura submarina</p>
+              <div class="game-meta">
+                <span class="rating">★ 4.5</span>
+                <span class="price">$19.99</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game Card 2 -->
+          <div class="game-card">
+            <div class="game-image">
+              <img src="https://images.unsplash.com/photo-1556438064-2d7646166914?w=300&h=200&fit=crop" alt="Neon City">
+              <div class="game-overlay">
+                <button class="btn btn-play hover-pulse">▶ Jugar</button>
+              </div>
+            </div>
+            <div class="game-info">
+              <h3>Neon City</h3>
+              <p>Acción urbana nocturna</p>
+              <div class="game-meta">
+                <span class="rating">★ 4.8</span>
+                <span class="price">$34.99</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game Card 3 -->
+          <div class="game-card">
+            <div class="game-image">
+              <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=200&fit=crop" alt="Mountain Climber Pro">
+              <div class="game-overlay">
+                <button class="btn btn-play hover-pulse">▶ Jugar</button>
+              </div>
+            </div>
+            <div class="game-info">
+              <h3>Mountain Climber Pro</h3>
+              <p>Escalada extrema</p>
+              <div class="game-meta">
+                <span class="rating">★ 4.4</span>
+                <span class="price">$15.99</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game Card 4 -->
+          <div class="game-card">
+            <div class="game-image">
+              <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=300&h=200&fit=crop" alt="Desert Rally Championship">
+              <div class="game-overlay">
+                <button class="btn btn-play hover-pulse">▶ Jugar</button>
+              </div>
+            </div>
+            <div class="game-info">
+              <h3>Desert Rally Championship</h3>
+              <p>Carreras en el desierto con vehículos todo terreno</p>
+              <div class="game-meta">
+                <span class="rating">★ 4.7</span>
+                <span class="price">$29.99</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game Card 5 -->
+          <div class="game-card">
+            <div class="game-image">
+              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop" alt="Puzzle Master">
+              <div class="game-overlay">
+                <button class="btn btn-play hover-pulse">▶ Jugar</button>
+              </div>
+            </div>
+            <div class="game-info">
+              <h3>Puzzle Master</h3>
+              <p>Rompecabezas</p>
+              <div class="game-meta">
+                <span class="rating">★ 4.3</span>
+                <span class="price">$12.99</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game Card 6 -->
+          <div class="game-card">
+            <div class="game-image">
+              <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&h=200&fit=crop" alt="Kitchen Master Chef Simulator">
+              <div class="game-overlay">
+                <button class="btn btn-play hover-pulse">▶ Jugar</button>
+              </div>
+            </div>
+            <div class="game-info">
+              <h3>Kitchen Master Chef Simulator</h3>
+              <p>Simulador de cocina profesional con recetas internacionales</p>
+              <div class="game-meta">
+                <span class="rating">★ 4.6</span>
+                <span class="price">$22.99</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
 
@@ -192,7 +433,9 @@
 </footer>
 
 
-  <!-- Interacciones del header -->
+  <!-- Scripts -->
   <script src="/Interfaces-de-Usuario/TP2/js/main.js" defer></script>
+  <script src="/Interfaces-de-Usuario/TP2/js/loader.js" defer></script>
+  <script src="/Interfaces-de-Usuario/TP2/js/carrusel.js" defer></script>
 </body>
 </html>

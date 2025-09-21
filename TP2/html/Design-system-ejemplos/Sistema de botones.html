@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Botones - Design System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../css/design-system/atomos/colores.css">
+    <link rel="stylesheet" href="../../css/design-system/atomos/botones.css">
+    
+    <style>
+        body {
+            font-family: var(--font-family-primary);
+            background: #000;
+            color: #ffffff;
+            padding: 2rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #0C1624;
+            border-radius: 1rem;
+            border: 1px dashed #4a90e2;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px dashed #4a90e2;
+            border-radius: 0.5rem;
+        }
+        
+        .column h3 {
+            text-align: center;
+            margin: 0 0 1rem 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .btn-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-label {
+            font-size: 0.875rem;
+            color: #888;
+        }
+
+        /* Estilos específicos para los iconos usando img */
+        .btn-with-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-icon-img {
+            width: 12px;
+            height: 12px;
+            filter: brightness(0) invert(1); /* Hace los iconos blancos */
+        }
+
+        /* Ajuste para botones verdes */
+        .btn-accent .btn-icon-img {
+            filter: brightness(0) invert(1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; margin-bottom: 2rem;">Sistema de Botones</h1>
+        
+        <section class="section">
+            <div class="grid">
+                <!-- Columna 1: Botones Primarios -->
+                <div class="column">
+                    <h3>Botones Primarios</h3>
+                    
+                    <div class="btn-demo">
+                        <button class="btn btn-primary btn-with-icon">
+                            <img src="../../assets/iconos/Polygon 5.png" alt="play" class="btn-icon-img">
+                            Jugar
+                        </button>
+                        <span class="btn-label">Default</span>
+                    </div>
+                    
+                    <div class="btn-demo">
+                        <button class="btn btn-primary btn-with-icon" style="background: var(--primary-700);">
+                            <img src="../../assets/iconos/Polygon 5.png" alt="play" class="btn-icon-img">
+                            Jugar
+                        </button>
+                        <span class="btn-label">Hover</span>
+                    </div>
+                    
+                    <div class="btn-demo">
+                        <button class="btn btn-primary btn-with-icon" style="background: var(--primary-800);">
+                            <img src="../../assets/iconos/Polygon 5.png" alt="play" class="btn-icon-img">
+                            Jugar
+                        </button>
+                        <span class="btn-label">Press</span>
+                    </div>
+                    
+                    <div class="btn-demo">
+                        <button class="btn btn-primary btn-with-icon" disabled>
+                            <img src="../../assets/iconos/Polygon 5.png" alt="play" class="btn-icon-img">
+                            Jugar
+                        </button>
+                        <span class="btn-label">Disabled</span>
+                    </div>
+
+                    <!-- Botones adicionales sin iconos -->
+                    <div class="btn-demo">
+                        <button class="btn btn-primary">Jugar</button>
+                        <span class="btn-label">Sin icono</span>
+                    </div>
+
+                    <div class="btn-demo">
+                        <button class="btn btn-primary">Jugar</button>
+                        <span class="btn-label">Sin icono</span>
+                    </div>
+
+                    <div class="btn-demo">
+                        <button class="btn btn-primary">Jugar</button>
+                        <span class="btn-label">Sin icono</span>
+                    </div>
+
+                    <div class="btn-demo">
+                        <button class="btn btn-primary" disabled>Jugar</button>
+                        <span class="btn-label">Disabled</span>
+                    </div>
+                </div>
+                
+                <!-- Columna 2: Botones Secundarios -->
+                <div class="column">
+                    <h3>Botones Secundarios</h3>
+                    
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-with-icon">
+                            <img src="../../assets/iconos/Vector-1.png" alt="lock" class="btn-icon-img">
+                            Comprar
+                        </button>
+                        <span class="btn-label">Default</span>
+                    </div>
+                    
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-with-icon" style="background: var(--accent-700);">
+                            <img src="../../assets/iconos/Vector-1.png" alt="lock" class="btn-icon-img">
+                            Comprar
+                        </button>
+                        <span class="btn-label">Hover</span>
+                    </div>
+                    
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-with-icon" style="background: var(--accent-800);">
+                            <img src="../../assets/iconos/Vector-1.png" alt="lock" class="btn-icon-img">
+                            Comprar
+                        </button>
+                        <span class="btn-label">Press</span>
+                    </div>
+                    
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-with-icon" disabled>
+                            <img src="../../assets/iconos/Vector-1.png" alt="lock" class="btn-icon-img">
+                            Comprar
+                        </button>
+                        <span class="btn-label">Disabled</span>
+                    </div>
+
+                    <!-- Botones pequeños -->
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-small btn-with-icon">
+                            <img src="../../assets/iconos/Vector-1.png" alt="lock" class="btn-icon-img">
+                            Comprar
+                        </button>
+                        <span class="btn-label">Small</span>
+                    </div>
+
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-small btn-with-icon">
+                            <img src="../../assets/iconos/Vector-1.png" alt="lock" class="btn-icon-img">
+                            Comprar
+                        </button>
+                        <span class="btn-label">Small</span>
+                    </div>
+
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-small btn-with-icon">
+                            <img src="../../assets/iconos/Vector-1.png" alt="lock" class="btn-icon-img">
+                            Comprar
+                        </button>
+                        <span class="btn-label">Small</span>
+                    </div>
+
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-small btn-with-icon" disabled>
+                            <img src="../../assets/iconos/Vector-1.png" alt="lock" class="btn-icon-img">
+                            Comprar
+                        </button>
+                        <span class="btn-label">Small Disabled</span>
+                    </div>
+                </div>
+                
+                <!-- Columna 3: Botones Al Carrito -->
+                <div class="column">
+                    <h3>Botones secundarios</h3>
+                    
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-with-icon">
+                            <img src="../../assets/iconos/Vector.png" alt="cart" class="btn-icon-img">
+                            Al Carrito
+                        </button>
+                        <span class="btn-label">Default</span>
+                    </div>
+                    
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-with-icon" style="background: var(--accent-700);">
+                            <img src="../../assets/iconos/Vector.png" alt="cart" class="btn-icon-img">
+                            Comprar
+                        </button>
+                        <span class="btn-label">Hover</span>
+                    </div>
+                    
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-with-icon" style="background: var(--accent-800);">
+                            <img src="../../assets/iconos/Vector.png" alt="cart" class="btn-icon-img">
+                            Comprar
+                        </button>
+                        <span class="btn-label">Press</span>
+                    </div>
+                    
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-with-icon" disabled>
+                            <img src="../../assets/iconos/Vector.png" alt="cart" class="btn-icon-img">
+                            Comprar
+                        </button>
+                        <span class="btn-label">Disabled</span>
+                    </div>
+
+                    <!-- Botones pequeños -->
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-small btn-with-icon">
+                            <img src="../../assets/iconos/Vector.png" alt="cart" class="btn-icon-img">
+                            Al Carrito
+                        </button>
+                        <span class="btn-label">Small</span>
+                    </div>
+
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-small btn-with-icon">
+                            <img src="../../assets/iconos/Vector.png" alt="cart" class="btn-icon-img">
+                            Al Carrito
+                        </button>
+                        <span class="btn-label">Small</span>
+                    </div>
+
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-small btn-with-icon">
+                            <img src="../../assets/iconos/Vector.png" alt="cart" class="btn-icon-img">
+                            Al Carrito
+                        </button>
+                        <span class="btn-label">Small</span>
+                    </div>
+
+                    <div class="btn-demo">
+                        <button class="btn btn-accent btn-small btn-with-icon" disabled>
+                            <img src="../../assets/iconos/Vector.png" alt="cart" class="btn-icon-img">
+                            Al Carrito
+                        </button>
+                        <span class="btn-label">Small Disabled</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de ejemplos de uso real -->
+        <section class="section">
+            <h2 style="text-align: center; margin-bottom: 2rem;">Ejemplos de Uso Real</h2>
+            
+            <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                <!-- Botón Jugar Primario -->
+                <button class="btn btn-primary btn-with-icon">
+                    <img src="../../assets/iconos/Polygon 5.png" alt="play" class="btn-icon-img">
+                    Jugar
+                </button>
+                
+                <!-- Botón Comprar Verde -->
+                <button class="btn btn-accent btn-with-icon">
+                    <img src="../../assets/iconos/Vector-1.png" alt="lock" class="btn-icon-img">
+                    Comprar
+                </button>
+                
+                <!-- Botón Al Carrito Verde -->
+                <button class="btn btn-accent btn-with-icon">
+                    <img src="../../assets/iconos/Vector.png" alt="cart" class="btn-icon-img">
+                    Al Carrito
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Efectos de hover dinámicos
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn:not([disabled])');
+            
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    if (this.classList.contains('btn-primary')) {
+                        this.style.boxShadow = '0 0 20px rgba(44, 98, 185, 0.4)';
+                    } else if (this.classList.contains('btn-accent')) {
+                        this.style.boxShadow = '0 0 20px rgba(26, 148, 71, 0.4)';
+                    }
+                });
+                
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

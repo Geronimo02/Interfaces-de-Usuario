@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peg Solitaire Master - GAMEBIT</title>
+  <link rel="stylesheet" href="../css/Style.css">
+  <style>
+    .game-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .game-header {
+      margin-bottom: 2rem;
+    }
+    
+    .game-title {
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 1rem;    :root {
+      /* === COLORES PRIMARIOS === */
+      --primary-50: #eff6ff;
+      --primary-100: #dbeafe;
+      --primary-200: #bfdbfe;
+      --primary-300: #93c5fd;
+      --primary-400: #60a5fa;
+      --primary-500: #3b82f6;
+      --primary-600: #2563eb;
+      --primary-700: #1d4ed8;
+      --primary-800: #1e40af;
+      --primary-900: #1e3a8a;
+    
+      /* === COLORES DE FONDO === */
+      --bg-primary: #0a0e1a;
+      --bg-secondary: #1a1f2e;
+      --bg-tertiary: #2d3748;
+      --bg-card: rgba(26, 31, 46, 0.8);
+      --bg-overlay: rgba(0, 0, 0, 0.5);
+      --bg-glass: rgba(255, 255, 255, 0.05);
+    
+      /* === COLORES DE TEXTO === */
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.8);
+      --text-muted: rgba(255, 255, 255, 0.6);
+      --text-disabled: rgba(255, 255, 255, 0.4);
+    
+      /* === COLORES DE ESTADO === */
+      --success-50: #ecfdf5;
+      --success-500: #10b981;
+      --success-600: #059669;
+      
+      --warning-50: #fffbeb;
+      --warning-500: #f59e0b;
+      --warning-600: #d97706;
+      
+      --error-50: #fef2f2;
+      --error-500: #ef4444;
+      --error-600: #dc2626;
+    
+      /* === COLORES DE BORDE === */
+      --border-primary: rgba(95, 168, 255, 0.3);
+      --border-secondary: rgba(255, 255, 255, 0.2);
+      --border-muted: rgba(255, 255, 255, 0.1);
+      --border-focus: rgba(95, 168, 255, 0.6);
+    }
+    }
+    
+    .game-description {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .game-board {
+      background: linear-gradient(145deg, #1a1f2e, #0d121e);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 2px solid rgba(95, 168, 255, 0.3);
+    }
+    
+    .peg-board {
+      display: grid;
+      grid-template-columns: repeat(7, 50px);
+      grid-template-rows: repeat(7, 50px);
+      gap: 5px;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    
+    .peg-hole {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .peg-hole.has-peg {
+      background: linear-gradient(135deg, #5fa8ff, #3b82f6);
+      box-shadow: 0 4px 12px rgba(95, 168, 255, 0.4);
+    }
+    
+    .peg-hole.selected {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(95, 168, 255, 0.8);
+    }
+    
+    .peg-hole.valid-move {
+      background: rgba(16, 185, 129, 0.3);
+      border-color: #10b981;
+    }
+    
+    .peg-hole:hover {
+      transform: scale(1.05);
+    }
+    
+    .game-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .game-stats {
+      display: flex;
+      justify-content: space-around;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #5fa8ff;
+      display: block;
+    }
+    
+    .stat-label {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+    
+    .invalid {
+      grid-area: none !important;
+      background: transparent !important;
+      border: none !important;
+      cursor: default !important;
+    }
+    
+    .back-btn {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .back-btn:hover {
+      background: rgba(95, 168, 255, 0.2);
+      border-color: #5fa8ff;
+    }
+  </style>
+</head>
+<body class="auth-bg">
+  <a href="../index.html" class="back-btn hover-lift">← Volver al Home</a>
+  
+  <div class="game-container">
+    <div class="game-header">
+      <h1 class="game-title">Peg Solitaire Master</h1>
+      <p class="game-description">
+        El clásico juego de mesa reinventado. Salta sobre las fichas para eliminarlas y trata de dejar solo una ficha en el centro.
+      </p>
+    </div>
+    
+    <div class="game-stats">
+      <div class="stat">
+        <span class="stat-value" id="pegsRemaining">32</span>
+        <span class="stat-label">Fichas restantes</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="movesCount">0</span>
+        <span class="stat-label">Movimientos</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" id="gameTime">00:00</span>
+        <span class="stat-label">Tiempo</span>
+      </div>
+    </div>
+    
+    <div class="game-board">
+      <div class="peg-board" id="pegBoard">
+        <!-- Las fichas se generarán con JavaScript -->
+      </div>
+      
+      <div class="game-controls">
+        <button class="btn btn-primary hover-lift" onclick="newGame()">Nuevo Juego</button>
+        <button class="btn btn-secondary hover-glow" onclick="resetGame()">Reiniciar</button>
+        <button class="btn btn-secondary hover-pulse" onclick="showHint()">Pista</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Estado del juego
+    let board = [];
+    let selectedPeg = null;
+    let movesCount = 0;
+    let gameStartTime = Date.now();
+    let gameTimer;
+    
+    // Configuración del tablero (7x7 con forma de cruz)
+    const boardConfig = [
+      [0,0,1,1,1,0,0],
+      [0,0,1,1,1,0,0],
+      [1,1,1,1,1,1,1],
+      [1,1,1,0,1,1,1],
+      [1,1,1,1,1,1,1],
+      [0,0,1,1,1,0,0],
+      [0,0,1,1,1,0,0]
+    ];
+    
+    // Inicializar juego
+    function initGame() {
+      const pegBoard = document.getElementById('pegBoard');
+      pegBoard.innerHTML = '';
+      board = JSON.parse(JSON.stringify(boardConfig));
+      board[3][3] = 0; // Centro vacío
+      selectedPeg = null;
+      movesCount = 0;
+      
+      // Crear el tablero visual
+      for (let row = 0; row < 7; row++) {
+        for (let col = 0; col < 7; col++) {
+          const hole = document.createElement('div');
+          hole.className = 'peg-hole';
+          hole.dataset.row = row;
+          hole.dataset.col = col;
+          
+          if (board[row][col] === 0 && boardConfig[row][col] === 0) {
+            hole.classList.add('invalid');
+          } else if (board[row][col] === 1) {
+            hole.classList.add('has-peg');
+          }
+          
+          hole.addEventListener('click', handlePegClick);
+          pegBoard.appendChild(hole);
+        }
+      }
+      
+      updateStats();
+      startTimer();
+    }
+    
+    // Manejar clic en ficha
+    function handlePegClick(e) {
+      const row = parseInt(e.target.dataset.row);
+      const col = parseInt(e.target.dataset.col);
+      
+      if (board[row][col] === 0 && boardConfig[row][col] === 0) return; // Posición inválida
+      
+      // Si hay una ficha seleccionada y se hace clic en un espacio vacío válido
+      if (selectedPeg && board[row][col] === 0) {
+        if (isValidMove(selectedPeg.row, selectedPeg.col, row, col)) {
+          makeMove(selectedPeg.row, selectedPeg.col, row, col);
+        }
+        clearSelection();
+        return;
+      }
+      
+      // Seleccionar una ficha
+      if (board[row][col] === 1) {
+        clearSelection();
+        selectedPeg = { row, col };
+        e.target.classList.add('selected');
+        showValidMoves(row, col);
+      }
+    }
+    
+    // Verificar si un movimiento es válido
+    function isValidMove(fromRow, fromCol, toRow, toCol) {
+      const rowDiff = toRow - fromRow;
+      const colDiff = toCol - fromCol;
+      
+      // Solo movimientos horizontales o verticales de 2 espacios
+      if (Math.abs(rowDiff) === 2 && colDiff === 0) {
+        const jumpRow = fromRow + rowDiff / 2;
+        return board[jumpRow][fromCol] === 1 && board[toRow][toCol] === 0;
+      } else if (Math.abs(colDiff) === 2 && rowDiff === 0) {
+        const jumpCol = fromCol + colDiff / 2;
+        return board[fromRow][jumpCol] === 1 && board[toRow][toCol] === 0;
+      }
+      
+      return false;
+    }
+    
+    // Realizar movimiento
+    function makeMove(fromRow, fromCol, toRow, toCol) {
+      const jumpRow = fromRow + (toRow - fromRow) / 2;
+      const jumpCol = fromCol + (toCol - fromCol) / 2;
+      
+      // Actualizar el estado del tablero
+      board[fromRow][fromCol] = 0;
+      board[jumpRow][jumpCol] = 0;
+      board[toRow][toCol] = 1;
+      
+      // Actualizar la vista
+      const fromHole = document.querySelector(`[data-row="${fromRow}"][data-col="${fromCol}"]`);
+      const jumpHole = document.querySelector(`[data-row="${jumpRow}"][data-col="${jumpCol}"]`);
+      const toHole = document.querySelector(`[data-row="${toRow}"][data-col="${toCol}"]`);
+      
+      fromHole.classList.remove('has-peg');
+      jumpHole.classList.remove('has-peg');
+      toHole.classList.add('has-peg');
+      
+      movesCount++;
+      updateStats();
+      
+      // Verificar fin del juego
+      if (checkGameEnd()) {
+        setTimeout(() => {
+          const pegsLeft = countPegs();
+          if (pegsLeft === 1) {
+            alert('¡Felicidades! Has ganado el juego.');
+          } else {
+            alert(`Juego terminado. Quedan ${pegsLeft} fichas.`);
+          }
+        }, 100);
+      }
+    }
+    
+    // Mostrar movimientos válidos
+    function showValidMoves(row, col) {
+      const directions = [[-2,0], [2,0], [0,-2], [0,2]];
+      
+      directions.forEach(([dRow, dCol]) => {
+        const newRow = row + dRow;
+        const newCol = col + dCol;
+        
+        if (newRow >= 0 && newRow < 7 && newCol >= 0 && newCol < 7) {
+          if (isValidMove(row, col, newRow, newCol)) {
+            const hole = document.querySelector(`[data-row="${newRow}"][data-col="${newCol}"]`);
+            hole.classList.add('valid-move');
+          }
+        }
+      });
+    }
+    
+    // Limpiar selección
+    function clearSelection() {
+      document.querySelectorAll('.peg-hole').forEach(hole => {
+        hole.classList.remove('selected', 'valid-move');
+      });
+      selectedPeg = null;
+    }
+    
+    // Contar fichas restantes
+    function countPegs() {
+      let count = 0;
+      for (let row = 0; row < 7; row++) {
+        for (let col = 0; col < 7; col++) {
+          if (board[row][col] === 1) count++;
+        }
+      }
+      return count;
+    }
+    
+    // Verificar si hay movimientos posibles
+    function checkGameEnd() {
+      for (let row = 0; row < 7; row++) {
+        for (let col = 0; col < 7; col++) {
+          if (board[row][col] === 1) {
+            const directions = [[-2,0], [2,0], [0,-2], [0,2]];
+            for (let [dRow, dCol] of directions) {
+              if (isValidMove(row, col, row + dRow, col + dCol)) {
+                return false;
+              }
+            }
+          }
+        }
+      }
+      return true;
+    }
+    
+    // Actualizar estadísticas
+    function updateStats() {
+      document.getElementById('pegsRemaining').textContent = countPegs();
+      document.getElementById('movesCount').textContent = movesCount;
+    }
+    
+    // Timer del juego
+    function startTimer() {
+      gameStartTime = Date.now();
+      gameTimer = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - gameStartTime) / 1000);
+        const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+        const seconds = (elapsed % 60).toString().padStart(2, '0');
+        document.getElementById('gameTime').textContent = `${minutes}:${seconds}`;
+      }, 1000);
+    }
+    
+    // Funciones de control
+    function newGame() {
+      clearInterval(gameTimer);
+      initGame();
+    }
+    
+    function resetGame() {
+      clearInterval(gameTimer);
+      initGame();
+    }
+    
+    function showHint() {
+      clearSelection();
+      // Buscar el primer movimiento válido
+      for (let row = 0; row < 7; row++) {
+        for (let col = 0; col < 7; col++) {
+          if (board[row][col] === 1) {
+            const directions = [[-2,0], [2,0], [0,-2], [0,2]];
+            for (let [dRow, dCol] of directions) {
+              if (isValidMove(row, col, row + dRow, col + dCol)) {
+                const fromHole = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                const toHole = document.querySelector(`[data-row="${row + dRow}"][data-col="${col + dCol}"]`);
+                
+                fromHole.style.animation = 'pulse 1s ease-in-out 3';
+                toHole.style.animation = 'pulse 1s ease-in-out 3';
+                
+                setTimeout(() => {
+                  fromHole.style.animation = '';
+                  toHole.style.animation = '';
+                }, 3000);
+                
+                return;
+              }
+            }
+          }
+        }
+      }
+      alert('No hay movimientos posibles disponibles.');
+    }
+    
+    // Inicializar al cargar la página
+    document.addEventListener('DOMContentLoaded', initGame);
+  </script>
+</body>
+</html>
