@@ -68,6 +68,7 @@
 .header-elevated {
   box-shadow: var(--shadow-lg);
   border-bottom: none;
+  background-color: var(--bg-primary-header); /* CORREGIDO: Usar la variable */
 }
 
 /* Header compacto */

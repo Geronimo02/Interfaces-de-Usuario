@@ -1,0 +1,131 @@
+/* === ORGANISMO: MENÚ DE USUARIO === */
+
+.user-menu {
+    /* Layout y Posicionamiento */
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: var(--z-index-modal, 1100);
+    
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    
+    width: 20.9375rem; /* 335px */
+    /* height: 100vh; */
+    padding: 2rem 1.5rem;
+    
+    /* Estilo */
+    background-color: var(--bg-primary);
+    border-left: 1px solid var(--border-primary);
+    
+    /* Transición para el efecto de despliegue */
+    transform: translateX(100%);
+    transition: transform var(--transition-normal, 0.3s) ease-in-out;
+}
+
+.user-menu.is-open {
+    transform: translateX(0);
+}
+
+/* Molécula: Cabecera de Perfil */
+.user-menu-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+}
+
+.user-menu-info .user-menu-name {
+    display: block;
+    color: var(--slate-100); /* CAMBIO: Color casi blanco */
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700; /* CAMBIO: Más grueso (Bold) */
+    line-height: normal;
+}
+
+.user-menu-info .user-menu-level {
+    display: block;
+    color: var(--slate-350); /* CAMBIO: Usar la nueva variable de color */
+    font-family: 'Inter', sans-serif; 
+    font-size: 1rem; /* CAMBIO: Tamaño de fuente */
+    font-weight: 500; /* CAMBIO: Peso de fuente (Medium) */
+    line-height: normal;
+}
+
+/* Botón "Mi Perfil" */
+.user-menu .btn-primary {
+    width: 11.18rem; /* Ocupa todo el ancho disponible */
+    background-color: #2F68C5; /* Color de Figma */
+    border-color: #2F68C5;
+    height: 2.8125rem;
+    justify-content: center;
+}
+
+/* Molécula: Navegación de Usuario */
+.user-menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-grow: 1; /* Ocupa el espacio sobrante */
+}
+
+.user-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-radius: var(--border-radius-md);
+    text-decoration: none;
+    color: #BCC1C8; /* Color de Figma */
+    font-family: 'Inter', sans-serif;
+    font-size: 1.25rem; /* Ajustado para mejor proporción */
+    font-weight: 600;
+    transition: background-color var(--transition-fast);
+}
+
+.user-menu-item:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.user-menu-item img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Átomo: Insignia de Notificación */
+.notification-badge {
+    margin-left: auto;
+    background-color: #2F68C5;
+    color: var(--text-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 50%;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+}
+
+/* Footer del menú */
+.user-menu-footer {
+    margin-top: auto; /* Empuja el footer hacia abajo */
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-primary);
+}
+
+.user-menu-item.logout span {
+    color: #E57373; /* Un rojo suave para "Cerrar Sesión" */
+}
+
+.user-menu-footer .social-links {
+    justify-content: flex-end; /* CORREGIDO: Alinear a la izquierda */
+    margin-top: 1.5rem;
+    padding-top: 1.5rem; /* Espacio sobre la línea */
+    border-top: 1px solid var(--border-primary);
+}

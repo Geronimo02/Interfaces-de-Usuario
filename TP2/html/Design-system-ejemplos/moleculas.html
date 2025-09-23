@@ -15,19 +15,22 @@
     <link rel="stylesheet" href="../../css/design-system/moleculas/header.css">
     <link rel="stylesheet" href="../../css/design-system/organismos/navegacion.css">
     <link rel="stylesheet" href="../../css/design-system/moleculas/search-bar.css">
-    
+    <link rel="stylesheet" href="../../css/design-system/organismos/footer.css"> 
+    <link rel="stylesheet" href="../../css/design-system/organismos/sidebar.css">
+    <link rel="stylesheet" href="../../css/design-system/organismos/user-menu.css"> <!-- AÑADIDO -->
+
     <style>
         /* Mínimos estilos para la demo */
-        body {
+        /* body {
             font-family: var(--font-primary);
             background: var(--bg-primary);
             color: var(--text-primary);
             margin: 0;
             min-height: 100vh;
-        }
+        } */
         
         /* Espaciado para ver mejor la navegación */
-        .demo-content {
+        /* .demo-content {
             padding: var(--space-xl);
             max-width: 1200px;
             margin: 0 auto;
@@ -39,10 +42,29 @@
             background: var(--bg-secondary);
             border-radius: var(--border-radius-lg);
             border: 1px dashed var(--secondary-500);
-        }
+        } */
     </style>
 </head>
 <body>
+    <!-- ORGANISMO: SIDEBAR (Menú lateral) -->
+    <nav class="sidebar" id="sidebarNav">
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">Categorias</h3>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" class="sidebar-item"><span>⚽</span> Deportes</a></li>
+            <li><a href="#" class="sidebar-item"><span>🏁</span> Carreras</a></li>
+            <li><a href="#" class="sidebar-item"><img src="../../assets/iconos/pacman.svg" alt="Pacman"> Clasicos</a></li>
+            <li><a href="#" class="sidebar-item"><img src="../../assets/iconos/multijugador.svg" alt="Multijugador"> Multijugador</a></li>
+            <li><a href="#" class="sidebar-item"><img src="../../assets/iconos/aventura.svg" alt="Aventura"> Aventura</a></li>
+            <li><a href="#" class="sidebar-item"><img src="../../assets/iconos/cocina.svg" alt="Cocina"> Cocina</a></li>
+            <li><a href="#" class="sidebar-item"><img src="../../assets/iconos/cartas.svg" alt="Cartas"> Cartas</a></li>
+            <li><a href="#" class="sidebar-item"><img src="../../assets/iconos/infantiles.svg" alt="Infantiles"> Infantiles</a></li>
+            <li><a href="#" class="sidebar-item"><img src="../../assets/iconos/accion.svg" alt="Accion"> Accion</a></li>
+            <li><a href="#" class="sidebar-item"><img src="../../assets/iconos/mesa.svg" alt="Mesa"> Mesa</a></li>
+        </ul>
+    </nav>
+
     <!-- 
     ========================================
     ORGANISMO: NAVEGACIÓN PRINCIPAL
@@ -76,78 +98,198 @@
         <!-- Molécula: Acciones del Header -->
         <div class="header-group header-right">
             <!-- Átomo: Botón de Perfil -->
-            <button class="btn btn-icon">
-                <img src="../../assets/iconos/Usuarioo.png" alt="Perfil">
+            <button class="btn-icon" id="userMenuToggle"> <!-- AÑADIR ESTE ID -->
+                <img src="../../assets/iconos/Usuarioo.png" alt="Perfil de Usuario">
             </button>
         </div>
-    </header>
+</div>
+</header>
 
-    <!-- Contenido de demo para mostrar el comportamiento -->
-    <div class="demo-content">
-        <div class="demo-section">
-            <h2>🧩 Anatomía del Organismo de Navegación</h2>
-            <p><strong>Átomos utilizados:</strong></p>
-            <ul>
-                <li>🎨 Variables de color (colores.css)</li>
-                <li>📝 Variables tipográficas (tipografias.css)</li>
-                <li>🔘 Componentes de botón (botones.css)</li>
-            </ul>
-            
-            <p><strong>Moléculas utilizadas:</strong></p>
-            <ul>
-                <li>📦 Header (header.css) - Contenedor principal</li>
-                <li>🏷️ Brand/Logo - Identidad del sitio</li>
-                <li>👤 User Profile - Información del usuario</li>
-            </ul>
-            
-            <p><strong>Organismo resultante:</strong></p>
-            <ul>
-                <li>🧭 Navegación completa (navegacion.css)</li>
-                <li>📱 Responsive design</li>
-                <li>⚡ Estados interactivos</li>
-                <li>🎯 Dropdown funcional</li>
-            </ul>
+    <!-- ORGANISMO: MENÚ DE USUARIO (desplegable) -->
+    <div class="user-menu" id="userMenu">
+        <div class="user-menu-profile">
+            <div class="avatar avatar-lg">
+                <img src="../../assets/iconos/Usuarioo.png" alt="Avatar">
+            </div>
+            <div class="user-menu-info">
+                <span class="user-menu-name">Robert Plant</span>
+                <span class="user-menu-level">Nivel 42 · Pro Player</span>
+            </div>
         </div>
 
-        <div class="demo-section">
-            <h3>🎮 Interacciones disponibles:</h3>
-            <ul>
-                <li>Hover sobre los enlaces de navegación</li>
-                <li>Click en "Ejemplos" para ver el dropdown</li>
-                <li>Redimensiona la ventana para ver responsive</li>
-                <li>Los botones usan los estilos atómicos del sistema</li>
-            </ul>
+        <a href="#" class="btn btn-primary btn-full">
+            <img src="../../assets/iconos/User-1.svg" alt=""> Mi Perfil
+        </a>
+
+        <nav class="user-menu-nav">
+            <a href="#" class="user-menu-item">
+                <img src="../../assets/iconos/joystick.svg" alt="">
+                <span>Mis Juegos</span>
+                <span class="notification-badge">12</span>
+            </a>
+            <a href="#" class="user-menu-item">
+                <img src="../../assets/iconos/trofeo.svg" alt="">
+                <span>Logros</span>
+                <span class="notification-badge">3</span>
+            </a>
+            <a href="#" class="user-menu-item">
+                <img src="../../assets/iconos/2usuarios.svg" alt="">
+                <span>Amigos</span>
+                <span class="notification-badge">5</span>
+            </a>
+            <a href="#" class="user-menu-item">
+                <img src="../../assets/iconos/notificacion.svg" alt="">
+                <span>Notificaciones</span>
+                <span class="notification-badge">2</span>
+            </a>
+            <a href="#" class="user-menu-item">
+                <img src="../../assets/iconos/engranage.svg" alt="">
+                <span>Configuración</span>
+            </a>
+        </nav>
+
+        <div class="user-menu-footer">
+            <a href="#" class="user-menu-item logout">
+                <img src="../../assets/iconos/salir.svg" alt="">
+                <span>Cerrar Sesión</span>
+            </a>
+            <div class="social-links">
+                <a href="#"><img src="../../assets/iconos/insta.svg" alt="Instagram"></a>
+                <a href="#"><img src="../../assets/iconos/twiter.png" alt="X"></a>
+                <a href="#"><img src="../../assets/iconos/facebook.svg" alt="Facebook"></a>
+            </div>
         </div>
     </div>
-
-    <!-- Navegación mobile (oculta por defecto) -->
-    <nav class="mobile-nav" id="mobileNavContainer">
-        <!-- El contenido se clonará aquí -->
-    </nav>
+    <!-- Contenido de la página (solo para demo) -->
+    <div class="demo-content">
+        <div class="demo-section">
+            <h2>Ejemplo de Navegación con Design System</h2>
+            <p>Esta es una demostración de cómo utilizar los componentes del Design System para crear una navegación completa con un sidebar y un menú de usuario.</p>
+        </div>   
+        <div class="demo-section">
+            <h2>Ejemplo de Navegación con Design System</h2>
+            <p>Esta es una demostración de cómo utilizar los componentes del Design System para crear una navegación completa con un sidebar y un menú de usuario.</p>
+        </div> 
+        <div class="demo-section">
+            <h2>Ejemplo de Navegación con Design System</h2>
+            <p>Esta es una demostración de cómo utilizar los componentes del Design System para crear una navegación completa con un sidebar y un menú de usuario.</p>
+        </div> 
+        <div class="demo-section">
+            <h2>Ejemplo de Navegación con Design System</h2>
+            <p>Esta es una demostración de cómo utilizar los componentes del Design System para crear una navegación completa con un sidebar y un menú de usuario.</p>
+        </div> 
+        <div class="demo-section">
+            <h2>Ejemplo de Navegación con Design System</h2>
+            <p>Esta es una demostración de cómo utilizar los componentes del Design System para crear una navegación completa con un sidebar y un menú de usuario.</p>
+        </div> 
+        <div class="demo-section">
+            <h2>Ejemplo de Navegación con Design System</h2>
+            <p>Esta es una demostración de cómo utilizar los componentes del Design System para crear una navegación completa con un sidebar y un menú de usuario.</p>
+        </div>        
+    </div>
+  
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- Lógica para Sidebar (menú hamburguesa) ---
             const menuToggle = document.querySelector('.header-menu-toggle');
-            const mobileNav = document.getElementById('mobileNavContainer');
+            const sidebarNav = document.getElementById('sidebarNav');
 
-            if (menuToggle && mobileNav) {
-                // Crear un menú simple para móvil ya que no hay nav principal
-                const mobileMenuHTML = `
-                    <ul class="nav-list">
-                        <li class="nav-item"><a href="#" class="nav-link">Inicio</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Categorías</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Mi Perfil</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Cerrar Sesión</a></li>
-                    </ul>
-                `;
-                mobileNav.innerHTML = mobileMenuHTML;
-
+            if (menuToggle && sidebarNav) {
                 menuToggle.addEventListener('click', () => {
-                    mobileNav.classList.toggle('is-open');
-                    document.body.style.overflow = mobileNav.classList.contains('is-open') ? 'hidden' : '';
+                    sidebarNav.classList.toggle('is-open');
+                    toggleOverlay(sidebarNav.classList.contains('is-open'));
                 });
+            }
+
+            // --- Lógica para User Menu (menú de perfil) ---
+            const userToggle = document.getElementById('userMenuToggle'); // Necesitamos un ID en el botón de perfil
+            const userMenu = document.getElementById('userMenu');
+
+            if (userToggle && userMenu) {
+                userToggle.addEventListener('click', () => {
+                    userMenu.classList.toggle('is-open');
+                    toggleOverlay(userMenu.classList.contains('is-open'));
+                });
+            }
+
+            // Función para crear y gestionar un overlay
+            function toggleOverlay(show) {
+                let overlay = document.getElementById('pageOverlay');
+                if (show) {
+                    if (!overlay) {
+                        overlay = document.createElement('div');
+                        overlay.id = 'pageOverlay';
+                        overlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1099;';
+                        document.body.appendChild(overlay);
+                        overlay.addEventListener('click', () => {
+                            // Cierra cualquier menú que esté abierto
+                            if (sidebarNav.classList.contains('is-open')) sidebarNav.classList.remove('is-open');
+                            if (userMenu.classList.contains('is-open')) userMenu.classList.remove('is-open');
+                            toggleOverlay(false);
+                        });
+                    }
+                    overlay.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    if (overlay) {
+                        overlay.style.display = 'none';
+                    }
+                    document.body.style.overflow = '';
+                }
             }
         });
     </script>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-col footer-brand-col">
+                    <img src="../../assets/iconos/logo.svg" alt="Gamebit Logo" class="footer-logo">
+                    
+                    <div class="language-selector">
+                        <img src="../../assets/iconos/argentina.svg" alt="Bandera Argentina">
+                        <span>Español</span>
+                        <img src="../../assets/iconos/flechaDropDown.svg" alt="dropdown arrow" class="arrow">
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#"><img src="../../assets/iconos/insta.svg" alt="Instagram"></a>
+                        <a href="#"><img src="../../assets/iconos/twiter.png" alt="X"></a>
+                        <a href="#"><img src="../../assets/iconos/facebook.svg" alt="Facebook"></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">CONÓZCANOS</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Sobre nosotros</a></li>
+                        <li><a href="#">InterGames for Developers</a></li>
+                        <li><a href="#">InterGames</a></li>
+                        <li><a href="#">Empleos</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">PRIVACIDAD Y TÉRMINOS</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Centro de Privacidad</a></li>
+                        <li><a href="#">Términos y condiciones</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">AYUDA Y ASISTENCIA</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Preguntas frecuentes</a></li>
+                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Soporte Técnico</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+    </footer>
+
 </body>
 </html>

@@ -39,16 +39,23 @@
   --slate-50: #f0f1f3;       /* Light - 18.58 AAA */
   --slate-100: #e8eaee;      /* Light :hover - 17.43 AAA */
   --slate-200: #cfd4db;      /* Light :active - 14.09 AAA */
+   --slate-225: #C0BBBB; 
+  --slate-250: #C9D3E5; 
   --slate-300: #64748b;      /* Normal - 4.41 AA */
+  --slate-350: #878F9C;      /* NUEVO: Color para texto de nivel de usuario */
   --slate-400: #5a687d;      /* Normal :hover - 3.71 AA */
   --slate-500: #505d6f;      /* Normal :active - 3.14 AA */
+  --slate-550: #4B6883; 
   --slate-600: #4b5768;      /* Dark - 2.86 */
   --slate-700: #3c4653;      /* Dark :hover - 2.19 */
   --slate-800: #2d343f;      /* Dark :active - 1.67 */
   --slate-900: #232931;      /* Darker - 1.43 */
 
   /* === COLORES DE FONDO === */
-  --bg-primary: #0a0e1a;              /* Fondo principal oscuro */
+  --bg-primary: #0C1624;              /* Fondo principal oscuro */
+  --bg-primary-sidebar: #0C1624;          /* Fondo de navegación */
+  --bg-primary-header: #122034;       /* Fondo del header */
+  --bg-primary-footer: #122034;       /* Fondo del footer */
   --bg-secondary: #1a1f2e;            /* Fondo secundario */
   --bg-tertiary: var(--slate-800);    /* Fondo terciario usando slate */
   --bg-card: rgba(26, 31, 46, 0.8);   /* Fondo de tarjetas con transparencia */
@@ -360,3 +367,5 @@
 .glow-primary { box-shadow: var(--shadow-glow); }
 .glow-secondary { box-shadow: var(--shadow-glow-secondary); }
 .glow-accent { box-shadow: var(--shadow-glow-accent); }
+
+

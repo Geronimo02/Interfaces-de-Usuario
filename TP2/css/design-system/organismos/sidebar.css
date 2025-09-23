@@ -1,0 +1,82 @@
+/* === ORGANISMO: SIDEBAR === */
+
+.sidebar {
+    /* Layout y Posicionamiento */
+    position: fixed;
+    top: 4.2rem;
+    left: 0;
+    z-index: var(--z-index-modal, 1100); /* Por encima de todo */
+    
+    display: flex;
+    flex-direction: column;
+    
+    width: 14.8125rem; /* 237px */
+    height: 100vh; /* Ocupa toda la altura */
+    
+    padding: 2rem 1.375rem; /* Padding ajustado para el título */
+    
+    /* Estilo */
+    background-color: var(--bg-primary);
+    border-right: 1px solid var(--border-primary);
+    
+    /* Transición para el efecto de despliegue */
+    transform: translateX(-100%);
+    transition: transform var(--transition-normal, 0.3s) ease-in-out;
+}
+
+/* Estado visible del sidebar */
+.sidebar.is-open {
+    transform: translateX(0);
+}
+
+.sidebar-header {
+    margin-bottom: 2rem;
+}
+
+.sidebar-title {
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 2.5rem; /* 40px - Más grande que los items */
+    font-weight: 700; /* Bold */
+    margin: 0;
+    padding-left: 0.5rem;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    /* gap: 0.625rem; Espacio entre items */
+}
+
+/* Molécula: Sidebar Item */
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Espacio entre emoji y texto */
+    padding: 0.3rem;
+    border-radius: var(--border-radius-md);
+    
+    /* Tipografía (de tus especificaciones) */
+    color: var(--slate-50, #F0F1F3);
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem; /* 24px */
+    font-weight: 600;
+    text-decoration: none;
+    
+    transition: background-color var(--transition-fast, 0.15s);
+}
+
+.sidebar-item:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+.sidebar-item span {
+    font-size: 1.75rem; /* Hacer el emoji un poco más grande */
+    display: inline-block;
+    width: 2rem; /* Ancho fijo para alinear texto */
+    text-align: center;
+}
