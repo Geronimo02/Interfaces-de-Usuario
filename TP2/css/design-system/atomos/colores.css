@@ -1,0 +1,362 @@
+:root {
+  /* === PALETA DE COLORES PRIMARIOS - BLUE === */
+  --primary-50: #ebf3fe;     /* Light - 18.78 AAA */
+  --primary-100: #e2ecfe;    /* Light :hover - 17.66 AAA */
+  --primary-200: #c2d8fc;    /* Light :active - 14.52 AAA */
+  --primary-300: #3b82f6;    /* Normal - 5.71 AAA */
+  --primary-400: #3575dd;    /* Normal :hover - 4.74 AAA */
+  --primary-500: #2f68c5;    /* Normal :active - 3.91 AA */
+  --primary-600: #122034;    /* Dark - 3.55 AA */
+  --primary-700: #234e94;    /* Dark :hover - 2.59 */
+  --primary-800: #1b3a6f;    /* Dark :active - 1.88 */
+  --primary-900: #152e56;    /* Darker - 1.56 */
+
+  /* === PALETA DE COLORES SECUNDARIOS - VIOLET === */
+  --secondary-50: #f3effe;   /* Light - 18.59 AAA */
+  --secondary-100: #eee7fe;  /* Light :hover - 17.50 AAA */
+  --secondary-200: #dbccfc;  /* Light :active - 14.05 AAA */
+  --secondary-300: #8b5cf6;  /* Normal - 4.96 AAA */
+  --secondary-400: #7d53dd;  /* Normal :hover - 4.15 AA */
+  --secondary-500: #6f4ac5;  /* Normal :active - 3.46 AA */
+  --secondary-600: #6845b9;  /* Dark - 3.14 AA */
+  --secondary-700: #533794;  /* Dark :hover - 2.34 */
+  --secondary-800: #3f296f;  /* Dark :active - 1.76 */
+  --secondary-900: #312056;  /* Darker - 1.47 */
+
+  /* === PALETA DE COLORES DE ACENTO - NEON GREEN === */
+  --accent-50: #e9f9ef;      /* Light - 19.26 AAA */
+  --accent-100: #def6e7;     /* Light :hover - 18.44 AAA */
+  --accent-200: #baedcd;     /* Light :active - 16.08 AAA */
+  --accent-300: #22c55e;     /* Normal - 9.22 AAA */
+  --accent-400: #1fb155;     /* Normal :hover - 7.48 AAA */
+  --accent-500: #1b9e4b;     /* Normal :active - 6.04 AAA */
+  --accent-600: #1a9447;     /* Dark - 5.37 AAA */
+  --accent-700: #147638;     /* Dark :hover - 3.68 AA */
+  --accent-800: #0f592a;     /* Dark :active - 2.48 */
+  --accent-900: #0c4521;     /* Darker - 1.89 */
+
+  /* === PALETA DE COLORES NEUTROS - SLATE === */
+  --slate-50: #f0f1f3;       /* Light - 18.58 AAA */
+  --slate-100: #e8eaee;      /* Light :hover - 17.43 AAA */
+  --slate-200: #cfd4db;      /* Light :active - 14.09 AAA */
+  --slate-300: #64748b;      /* Normal - 4.41 AA */
+  --slate-400: #5a687d;      /* Normal :hover - 3.71 AA */
+  --slate-500: #505d6f;      /* Normal :active - 3.14 AA */
+  --slate-600: #4b5768;      /* Dark - 2.86 */
+  --slate-700: #3c4653;      /* Dark :hover - 2.19 */
+  --slate-800: #2d343f;      /* Dark :active - 1.67 */
+  --slate-900: #232931;      /* Darker - 1.43 */
+
+  /* === COLORES DE FONDO === */
+  --bg-primary: #0a0e1a;              /* Fondo principal oscuro */
+  --bg-secondary: #1a1f2e;            /* Fondo secundario */
+  --bg-tertiary: var(--slate-800);    /* Fondo terciario usando slate */
+  --bg-card: rgba(26, 31, 46, 0.8);   /* Fondo de tarjetas con transparencia */
+  --bg-overlay: rgba(0, 0, 0, 0.5);   /* Overlay para modales */
+  --bg-light: var(--slate-50);        /* Fondo claro */
+  --bg-muted: var(--slate-100);       /* Fondo apagado */
+  --bg-glass: rgba(255, 255, 255, 0.05); /* Efecto vidrio */
+
+  /* === COLORES DE TEXTO === */
+  --text-primary: #ffffff;                    /* Texto principal blanco */
+  --text-secondary: rgba(255, 255, 255, 0.8); /* Texto secundario */
+  --text-muted: var(--slate-400);             /* Texto apagado */
+  --text-disabled: rgba(255, 255, 255, 0.4);  /* Texto deshabilitado */
+  --text-dark: var(--slate-900);              /* Texto oscuro para fondos claros */
+  --text-medium: var(--slate-600);            /* Texto medio */
+  --text-light: var(--slate-300);             /* Texto claro */
+
+  /* === COLORES DE ESTADO === */
+  --success-50: var(--accent-50);
+  --success-500: var(--accent-300);
+  --success-600: var(--accent-400);
+  --success: var(--success-500);
+
+  --warning-50: #fffbeb;
+  --warning-500: #f59e0b;
+  --warning-600: #d97706;
+  --warning: var(--warning-500);
+
+  --error-50: #fef2f2;
+  --error-500: #ef4444;
+  --error-600: #dc2626;
+  --error: var(--error-500);
+
+  --info-50: var(--primary-50);
+  --info-500: var(--primary-300);
+  --info-600: var(--primary-400);
+  --info: var(--info-500);
+
+  /* === COLORES DE BORDE === */
+  --border-primary: rgba(53, 117, 221, 0.3);   /* Borde primario con opacidad */
+  --border-secondary: var(--slate-200);         /* Borde secundario */
+  --border-muted: var(--slate-100);             /* Borde apagado */
+  --border-focus: var(--primary-400);           /* Borde de foco */
+  --border-light: rgba(255, 255, 255, 0.2);    /* Borde claro para fondos oscuros */
+  --border-accent: var(--accent-300);           /* Borde de acento */
+
+  /* === TIPOGRAFÍA INTER DESIGN SYSTEM === */
+  /* Fuente principal */
+  --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+  /* === SISTEMA TIPOGRÁFICO DEFINIDO === */
+  /* H1 - Destacados */
+  --text-h1-size: 2rem;           /* 32px */
+  --text-h1-weight: 700;          /* Bold */
+  --text-h1-line-height: 1.25;    /* 40px / 32px = 1.25 */
+  --text-h1-letter-spacing: -0.02em;
+
+  /* H2 - Acción */
+  --text-h2-size: 1.5rem;         /* 24px */
+  --text-h2-weight: 600;          /* SemiBold */
+  --text-h2-line-height: 1.33;    /* 32px / 24px = 1.33 */
+  --text-h2-letter-spacing: -0.01em;
+
+  /* Body Large - Explora juegos */
+  --text-body-large-size: 1.125rem;    /* 18px */
+  --text-body-large-weight: 400;       /* Regular */
+  --text-body-large-line-height: 1.56; /* 28px / 18px = 1.56 */
+  --text-body-large-letter-spacing: 0;
+
+  /* Body Base - Selecciona */
+  --text-body-base-size: 1rem;         /* 16px */
+  --text-body-base-weight: 400;        /* Regular */
+  --text-body-base-line-height: 1.5;   /* 24px / 16px = 1.5 */
+  --text-body-base-letter-spacing: 0;
+
+  /* Body Small - InterGames */
+  --text-body-small-size: 0.875rem;    /* 14px */
+  --text-body-small-weight: 400;       /* Regular */
+  --text-body-small-line-height: 1.43; /* 20px / 14px = 1.43 */
+  --text-body-small-letter-spacing: 0;
+
+  /* Button Large - Mi cuenta */
+  --text-button-large-size: 1rem;      /* 16px */
+  --text-button-large-weight: 500;     /* Medium */
+  --text-button-large-line-height: 1.25; /* 20px / 16px = 1.25 */
+  --text-button-large-letter-spacing: 0.01em;
+
+  /* Button Small - Ver todos */
+  --text-button-small-size: 0.875rem;  /* 14px */
+  --text-button-small-weight: 500;     /* Medium */
+  --text-button-small-line-height: 1.29; /* 18px / 14px = 1.29 */
+  --text-button-small-letter-spacing: 0.01em;
+
+  /* Caption - Términos */
+  --text-caption-size: 0.75rem;        /* 12px */
+  --text-caption-weight: 400;          /* Regular */
+  --text-caption-line-height: 1.33;    /* 16px / 12px = 1.33 */
+  --text-caption-letter-spacing: 0.02em;
+
+  /* === ALIAS PARA COMPATIBILIDAD === */
+  --font-size-xs: var(--text-caption-size);        /* 12px */
+  --font-size-sm: var(--text-body-small-size);     /* 14px */
+  --font-size-base: var(--text-body-base-size);    /* 16px */
+  --font-size-lg: var(--text-body-large-size);     /* 18px */
+  --font-size-xl: 1.25rem;                         /* 20px */
+  --font-size-2xl: var(--text-h2-size);            /* 24px */
+  --font-size-3xl: 1.875rem;                       /* 30px */
+  --font-size-4xl: var(--text-h1-size);            /* 32px */
+  --font-size-5xl: 3rem;                           /* 48px */
+
+  /* Pesos de fuente */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;          /* Regular */
+  --font-weight-medium: 500;          /* Medium */
+  --font-weight-semibold: 600;        /* SemiBold */
+  --font-weight-bold: 700;            /* Bold */
+  --font-weight-extrabold: 800;
+
+  /* Alturas de línea */
+  --line-height-none: 1;
+  --line-height-tight: 1.25;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+
+  /* === ESPACIADO === */
+  --space-xs: 0.25rem;    /* 4px */
+  --space-sm: 0.5rem;     /* 8px */
+  --space-md: 1rem;       /* 16px */
+  --space-lg: 1.5rem;     /* 24px */
+  --space-xl: 2rem;       /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+  --space-3xl: 4rem;      /* 64px */
+
+  /* === SOMBRAS === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-glow: 0 0 20px rgba(53, 117, 221, 0.4);        /* Glow primario */
+  --shadow-glow-secondary: 0 0 20px rgba(125, 83, 221, 0.4); /* Glow secundario */
+  --shadow-glow-accent: 0 0 20px rgba(34, 197, 94, 0.4);     /* Glow acento */
+
+  /* === BORDES === */
+  --border-radius-sm: 0.375rem;   /* 6px */
+  --border-radius-md: 0.5rem;     /* 8px */
+  --border-radius-lg: 0.75rem;    /* 12px */
+  --border-radius-xl: 1rem;       /* 16px */
+  --border-radius-2xl: 1.5rem;    /* 24px */
+  --border-radius-full: 9999px;
+
+  /* === TRANSICIONES === */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+
+  /* === ALIAS PARA COMPATIBILIDAD === */
+  /* Estos mantienen la compatibilidad con el código existente */
+  --primary-blue: var(--primary-400);
+  --primary-blue-dark: var(--primary-700);
+  --primary-blue-light: var(--primary-50);
+}
+
+/* === CLASES TIPOGRÁFICAS DEL DESIGN SYSTEM === */
+
+/* H1 - Destacados */
+.text-h1,
+.heading-1 {
+  font-family: var(--font-family-heading);
+  font-size: var(--text-h1-size);
+  font-weight: var(--text-h1-weight);
+  line-height: var(--text-h1-line-height);
+  letter-spacing: var(--text-h1-letter-spacing);
+  color: var(--text-primary);
+}
+
+/* H2 - Acción */
+.text-h2,
+.heading-2 {
+  font-family: var(--font-family-heading);
+  font-size: var(--text-h2-size);
+  font-weight: var(--text-h2-weight);
+  line-height: var(--text-h2-line-height);
+  letter-spacing: var(--text-h2-letter-spacing);
+  color: var(--text-primary);
+}
+
+/* Body Large - Explora juegos */
+.text-body-large,
+.body-large {
+  font-family: var(--font-family-primary);
+  font-size: var(--text-body-large-size);
+  font-weight: var(--text-body-large-weight);
+  line-height: var(--text-body-large-line-height);
+  letter-spacing: var(--text-body-large-letter-spacing);
+  color: var(--text-primary);
+}
+
+/* Body Base - Selecciona */
+.text-body-base,
+.body-base {
+  font-family: var(--font-family-primary);
+  font-size: var(--text-body-base-size);
+  font-weight: var(--text-body-base-weight);
+  line-height: var(--text-body-base-line-height);
+  letter-spacing: var(--text-body-base-letter-spacing);
+  color: var(--text-primary);
+}
+
+/* Body Small - InterGames */
+.text-body-small,
+.body-small {
+  font-family: var(--font-family-primary);
+  font-size: var(--text-body-small-size);
+  font-weight: var(--text-body-small-weight);
+  line-height: var(--text-body-small-line-height);
+  letter-spacing: var(--text-body-small-letter-spacing);
+  color: var(--text-primary);
+}
+
+/* Button Large - Mi cuenta */
+.text-button-large,
+.button-large {
+  font-family: var(--font-family-primary);
+  font-size: var(--text-button-large-size);
+  font-weight: var(--text-button-large-weight);
+  line-height: var(--text-button-large-line-height);
+  letter-spacing: var(--text-button-large-letter-spacing);
+  text-transform: none;
+}
+
+/* Button Small - Ver todos */
+.text-button-small,
+.button-small {
+  font-family: var(--font-family-primary);
+  font-size: var(--text-button-small-size);
+  font-weight: var(--text-button-small-weight);
+  line-height: var(--text-button-small-line-height);
+  letter-spacing: var(--text-button-small-letter-spacing);
+  text-transform: none;
+}
+
+/* Caption - Términos */
+.text-caption,
+.caption {
+  font-family: var(--font-family-primary);
+  font-size: var(--text-caption-size);
+  font-weight: var(--text-caption-weight);
+  line-height: var(--text-caption-line-height);
+  letter-spacing: var(--text-caption-letter-spacing);
+  color: var(--text-muted);
+}
+
+/* === CLASES UTILITARIAS DE COLOR === */
+
+/* Colores de texto primarios */
+.text-primary-50 { color: var(--primary-50); }
+.text-primary-300 { color: var(--primary-300); }
+.text-primary-400 { color: var(--primary-400); }
+.text-primary-700 { color: var(--primary-700); }
+
+/* Colores de texto secundarios */
+.text-secondary-50 { color: var(--secondary-50); }
+.text-secondary-300 { color: var(--secondary-300); }
+.text-secondary-400 { color: var(--secondary-400); }
+.text-secondary-700 { color: var(--secondary-700); }
+
+/* Colores de texto de acento */
+.text-accent-50 { color: var(--accent-50); }
+.text-accent-300 { color: var(--accent-300); }
+.text-accent-400 { color: var(--accent-400); }
+.text-accent-700 { color: var(--accent-700); }
+
+/* Colores de texto neutros */
+.text-slate-300 { color: var(--slate-300); }
+.text-slate-600 { color: var(--slate-600); }
+.text-slate-900 { color: var(--slate-900); }
+
+/* Fondos primarios */
+.bg-primary-50 { background-color: var(--primary-50); }
+.bg-primary-400 { background-color: var(--primary-400); }
+.bg-primary-700 { background-color: var(--primary-700); }
+
+/* Fondos secundarios */
+.bg-secondary-50 { background-color: var(--secondary-50); }
+.bg-secondary-400 { background-color: var(--secondary-400); }
+.bg-secondary-700 { background-color: var(--secondary-700); }
+
+/* Fondos de acento */
+.bg-accent-50 { background-color: var(--accent-50); }
+.bg-accent-400 { background-color: var(--accent-400); }
+.bg-accent-700 { background-color: var(--accent-700); }
+
+/* Fondos neutros */
+.bg-slate-50 { background-color: var(--slate-50); }
+.bg-slate-600 { background-color: var(--slate-600); }
+.bg-slate-900 { background-color: var(--slate-900); }
+
+/* Bordes */
+.border-primary-400 { border-color: var(--primary-400); }
+.border-secondary-400 { border-color: var(--secondary-400); }
+.border-accent-400 { border-color: var(--accent-400); }
+.border-slate-200 { border-color: var(--slate-200); }
+
+/* Efectos de glow */
+.glow-primary { box-shadow: var(--shadow-glow); }
+.glow-secondary { box-shadow: var(--shadow-glow-secondary); }
+.glow-accent { box-shadow: var(--shadow-glow-accent); }

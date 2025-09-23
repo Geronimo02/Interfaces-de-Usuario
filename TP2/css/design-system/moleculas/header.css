@@ -13,7 +13,7 @@
   padding: 0 var(--space-xl);      /* 32px horizontal */
   
   /* Estilos visuales */
-  background: var(--bg-primary);
+  background: var(--bg-primary-600);
   border-bottom: 1px solid var(--border-primary);
   
   /* Positioning */
@@ -59,7 +59,7 @@
 
 /* Header sólido */
 .header-solid {
-  background: var(--bg-primary);
+  background: var(--bg-primary-800);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
@@ -84,11 +84,13 @@
   align-items: center;
   gap: var(--space-md);            /* 16px */
   flex-shrink: 0;
+  height: 3.125rem;               /* 56px */
+  width: 3.125rem;          
 }
 
 .header-logo {
-  height: 2rem;                    /* 32px */
-  width: auto;
+  height: 3.125rem;               /* 50px */
+  width: 3.125rem;                /* 50px */
 }
 
 .header-title {
@@ -99,7 +101,7 @@
   text-decoration: none;
   transition: var(--transition-fast);
   width: 5.875rem;
-  height: 2.3125rem;
+  /* height: 2.3125rem; */
   flex-shrink: 0;
 }
 
@@ -135,21 +137,26 @@
 }
 
 .btn-icon img {
-    width: 24px; /* Ajusta el tamaño del ícono */
-    height: 24px;
+    width: 3.125rem;
+    height: 3.125rem; /* Ajusta el tamaño del ícono */
+
 }
 
 /* Menu toggle para mobile */
 .header-menu-toggle {
-  display: block; /* Siempre visible ahora */
+  display: flex; 
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   color: #FFF; /* Color blanco para el ícono de menú */
   font-size: var(--text-xl);       /* 20px */
   cursor: pointer;
-  padding: var(--space-sm);        /* 8px */
+  padding: 0;        /* 8px */
   border-radius: var(--border-radius-md);
   transition: var(--transition-fast);
+  height: 3.125rem;               /* 56px */
+  width: 3.125rem;               /* 56px */
 }
 
 .header-menu-toggle:hover {

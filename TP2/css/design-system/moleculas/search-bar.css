@@ -3,7 +3,7 @@
 .search-bar {
     display: flex;
     width: 30rem;
-    height: 2.5rem;
+    /* height: 2.5rem; */
     padding: 0.5rem 1rem;
     align-items: center;
     gap: 0.625rem;
