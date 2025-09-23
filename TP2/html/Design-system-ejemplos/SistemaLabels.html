@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Labels - Design System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Importar todos los átomos del design system -->
+    <link rel="stylesheet" href="../../css/design-system/atomos/colores.css">
+    <link rel="stylesheet" href="../../css/design-system/atomos/tipografias.css">  <!-- Variables tipográficas -->
+    <link rel="stylesheet" href="../../css/design-system/atomos/labels.css">      <!-- Usa las variables -->
+    
+    <style>
+        /* Solo estilos específicos para la demo, reutilizando variables del design system */
+        body {
+            font-family: var(--font-family-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: var(--space-xl);
+            line-height: var(--line-height-normal);
+            margin: 0;
+        }
+        
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .demo-section {
+            margin-bottom: var(--space-3xl);
+            padding: var(--space-xl);
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius-xl);
+            border: 1px dashed var(--secondary-500);
+        }
+        
+        .demo-showcase {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-xl);
+            margin-top: var(--space-xl);
+        }
+        
+        .demo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--space-xl);
+            margin-top: var(--space-xl);
+        }
+        
+        .demo-card {
+            position: relative;
+            width: 200px;
+            height: 120px;
+            background: var(--bg-card);
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--border-secondary);
+            margin: var(--space-md) auto;
+        }
+        
+        .demo-flex-center {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            flex-wrap: wrap;
+        }
+        
+        .demo-flex-center-mb {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .demo-flex-center-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <!-- Título principal usando tipografía del design system -->
+        <h1 class="text-h1" style="text-align: center; margin-bottom: var(--space-xl);">
+            Sistema de Labels
+        </h1>
+        
+        <!-- Showcase principal -->
+        <section class="demo-section">
+            <h2 class="text-h2" style="text-align: center; margin-bottom: var(--space-xl);">
+                Label
+            </h2>
+            
+            <div class="demo-showcase">
+                <!-- Label Suscripción -->
+                <div class="demo-item">
+                    <span class="label label-suscripcion">SUSCRIPCION</span>
+                    <span class="text-caption text-muted">Suscripción</span>
+                </div>
+
+                <!-- Label Standard -->
+                <div class="demo-item">
+                    <span class="label label-standard">STANDARD</span>
+                    <span class="text-caption text-muted">Standard</span>
+                </div>
+
+                <!-- Label Premium -->
+                <div class="demo-item">
+                    <span class="label label-premium">PREMIUM</span>
+                    <span class="text-caption text-muted">Premium</span>
+                </div>
+
+                <!-- Label Pro -->
+                <div class="demo-item">
+                    <span class="label label-pro">PRO</span>
+                    <span class="text-caption text-muted">Pro</span>
+                </div>
+
+                <!-- Label Gratis -->
+                <div class="demo-item">
+                    <span class="label label-gratis">GRATIS</span>
+                    <span class="text-caption text-muted">Gratis</span>
+                </div>
+
+                <!-- Label En la Biblioteca -->
+                <div class="demo-item">
+                    <span class="label label-biblioteca">EN LA BIBLIOTECA</span>
+                    <span class="text-caption text-muted">En la Biblioteca</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Variantes de tamaño -->
+        <section class="demo-section">
+            <h2 class="text-h2" style="text-align: center; margin-bottom: var(--space-xl);">
+                Tamaños
+            </h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <span class="label label-gratis label-small">GRATIS</span>
+                    <span class="text-caption text-muted">Small</span>
+                </div>
+
+                <div class="demo-item">
+                    <span class="label label-gratis">GRATIS</span>
+                    <span class="text-caption text-muted">Default</span>
+                </div>
+
+                <div class="demo-item">
+                    <span class="label label-gratis label-large">GRATIS</span>
+                    <span class="text-caption text-muted">Large</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formas -->
+        <section class="demo-section">
+            <h2 class="text-h2" style="text-align: center; margin-bottom: var(--space-xl);">
+                Formas
+            </h2>
+            
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <span class="label label-premium label-square">PREMIUM</span>
+                    <span class="text-caption text-muted">Square</span>
+                </div>
+
+                <div class="demo-item">
+                    <span class="label label-premium">PREMIUM</span>
+                    <span class="text-caption text-muted">Default</span>
+                </div>
+
+                <div class="demo-item">
+                    <span class="label label-premium label-pill">PREMIUM</span>
+                    <span class="text-caption text-muted">Pill</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Uso en contexto -->
+        <section class="demo-section">
+            <h2 class="text-h2" style="text-align: center; margin-bottom: var(--space-xl);">
+                Uso en Contexto
+            </h2>
+            
+            <div class="demo-flex-center">
+                <!-- Cards con labels posicionados -->
+                <div class="demo-card">
+                    <span class="label label-gratis label-positioned">GRATIS</span>
+                </div>
+
+                <div class="demo-card">
+                    <span class="label label-premium label-positioned">PREMIUM</span>
+                </div>
+
+                <div class="demo-card">
+                    <span class="label label-suscripcion label-positioned">SUSCRIPCION</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grupos de labels -->
+        <section class="demo-section">
+            <h2 class="text-h2" style="text-align: center; margin-bottom: var(--space-xl);">
+                Grupos de Labels
+            </h2>
+            
+            <!-- Grupo horizontal usando clase atómica -->
+            <div class="labels-group demo-flex-center-mb">
+                <span class="label label-gratis">GRATIS</span>
+                <span class="label label-standard">STANDARD</span>
+                <span class="label label-premium">PREMIUM</span>
+            </div>
+
+            <!-- Stack vertical usando clase atómica -->
+            <div class="labels-stack demo-flex-center-vertical">
+                <span class="label label-suscripcion">SUSCRIPCION</span>
+                <span class="label label-biblioteca">EN LA BIBLIOTECA</span>
+            </div>
+        </section>
+
+        <!-- Sección de ejemplos combinados -->
+        <section class="demo-section">
+            <h2 class="text-h2" style="text-align: center; margin-bottom: var(--space-xl);">
+                Combinaciones
+            </h2>
+            
+            <div class="demo-grid">
+                <!-- Diferentes combinaciones de clases -->
+                <div class="demo-item">
+                    <span class="label label-gratis label-small label-pill">GRATIS</span>
+                    <span class="text-caption text-muted">Small + Pill</span>
+                </div>
+
+                <div class="demo-item">
+                    <span class="label label-premium label-large label-square">PREMIUM</span>
+                    <span class="text-caption text-muted">Large + Square</span>
+                </div>
+
+                <div class="demo-item">
+                    <span class="label label-suscripcion label-interactive">SUSCRIPCION</span>
+                    <span class="text-caption text-muted">Interactive</span>
+                </div>
+
+                <div class="demo-item">
+                    <span class="label label-pro label-disabled">PRO</span>
+                    <span class="text-caption text-muted">Disabled</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Funcionalidad usando las clases del design system
+        document.addEventListener('DOMContentLoaded', function() {
+            // Labels interactivos
+            const interactiveLabels = document.querySelectorAll('.label-interactive');
+            
+            interactiveLabels.forEach(label => {
+                label.addEventListener('click', function() {
+                    console.log('Label clickeado:', this.textContent);
+                    
+                    // Ejemplo de feedback visual usando variables del design system
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+
+                label.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = 'var(--shadow-glow-accent)';
+                });
+
+                label.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = '';
+                });
+            });
+
+            // Ejemplo de labels dinámicos
+            const dynamicContainer = document.createElement('div');
+            dynamicContainer.className = 'demo-section';
+            dynamicContainer.innerHTML = `
+                <h2 class="text-h2" style="text-align: center; margin-bottom: var(--space-xl);">
+                    Labels Dinámicos
+                </h2>
+                <div class="demo-flex-center">
+                    <button class="btn btn-primary" id="addLabel">Agregar Label</button>
+                    <button class="btn btn-secondary" id="removeLabel">Remover Label</button>
+                </div>
+                <div class="labels-group demo-flex-center-mb" id="dynamicLabels"></div>
+            `;
+            
+            document.querySelector('.demo-container').appendChild(dynamicContainer);
+
+            // Funcionalidad para agregar/remover labels
+            const labelTypes = ['gratis', 'premium', 'pro', 'standard'];
+            let labelCounter = 0;
+
+            document.getElementById('addLabel').addEventListener('click', function() {
+                const labelType = labelTypes[labelCounter % labelTypes.length];
+                const newLabel = document.createElement('span');
+                newLabel.className = `label label-${labelType}`;
+                newLabel.textContent = labelType.toUpperCase();
+                newLabel.dataset.id = labelCounter;
+                
+                document.getElementById('dynamicLabels').appendChild(newLabel);
+                labelCounter++;
+            });
+
+            document.getElementById('removeLabel').addEventListener('click', function() {
+                const labels = document.querySelectorAll('#dynamicLabels .label');
+                if (labels.length > 0) {
+                    labels[labels.length - 1].remove();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

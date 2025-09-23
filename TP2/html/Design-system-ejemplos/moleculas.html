@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navegación - Design System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Koulen&display=swap" rel="stylesheet">
+    
+    <!-- Solo importar los átomos y moléculas necesarios -->
+    <link rel="stylesheet" href="../../css/design-system/atomos/colores.css">
+    <link rel="stylesheet" href="../../css/design-system/atomos/tipografias.css">
+    <link rel="stylesheet" href="../../css/design-system/atomos/botones.css">
+    <link rel="stylesheet" href="../../css/design-system/moleculas/header.css">
+    <link rel="stylesheet" href="../../css/design-system/organismos/navegacion.css">
+    <link rel="stylesheet" href="../../css/design-system/moleculas/search-bar.css">
+    
+    <style>
+        /* Mínimos estilos para la demo */
+        body {
+            font-family: var(--font-primary);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        /* Espaciado para ver mejor la navegación */
+        .demo-content {
+            padding: var(--space-xl);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .demo-section {
+            margin-bottom: var(--space-xl);
+            padding: var(--space-lg);
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius-lg);
+            border: 1px dashed var(--secondary-500);
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+    ========================================
+    ORGANISMO: NAVEGACIÓN PRINCIPAL
+    ========================================
+    Compuesto por:
+    - Molécula: Header (contenedor)
+    - Átomos: Botones, tipografía, colores
+    -->
+    
+    <header class="header header-elevated">
+        <div class="header-group header-left">
+            <!-- Átomo: Menu toggle (mobile) -->
+            <button class="header-menu-toggle">
+                ☰
+            </button>
+            <!-- Molécula: Brand/Logo -->
+            <div class="header-brand">
+                <a href="#" class="header-title">GAMBEBIT</a>
+            </div>
+        </div>
+        
+        <!-- Molécula: Barra de Búsqueda -->
+        <div class="header-group header-center">
+            <div class="search-bar">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Buscar juegos...">
+            </div>
+        </div>
+        
+        <!-- Molécula: Acciones del Header -->
+        <div class="header-group header-right">
+            <!-- Átomo: Botón de Perfil -->
+            <button class="btn btn-icon">
+                <img src="" alt="Perfil">
+            </button>
+        </div>
+    </header>
+
+    <!-- Contenido de demo para mostrar el comportamiento -->
+    <div class="demo-content">
+        <div class="demo-section">
+            <h2>🧩 Anatomía del Organismo de Navegación</h2>
+            <p><strong>Átomos utilizados:</strong></p>
+            <ul>
+                <li>🎨 Variables de color (colores.css)</li>
+                <li>📝 Variables tipográficas (tipografias.css)</li>
+                <li>🔘 Componentes de botón (botones.css)</li>
+            </ul>
+            
+            <p><strong>Moléculas utilizadas:</strong></p>
+            <ul>
+                <li>📦 Header (header.css) - Contenedor principal</li>
+                <li>🏷️ Brand/Logo - Identidad del sitio</li>
+                <li>👤 User Profile - Información del usuario</li>
+            </ul>
+            
+            <p><strong>Organismo resultante:</strong></p>
+            <ul>
+                <li>🧭 Navegación completa (navegacion.css)</li>
+                <li>📱 Responsive design</li>
+                <li>⚡ Estados interactivos</li>
+                <li>🎯 Dropdown funcional</li>
+            </ul>
+        </div>
+
+        <div class="demo-section">
+            <h3>🎮 Interacciones disponibles:</h3>
+            <ul>
+                <li>Hover sobre los enlaces de navegación</li>
+                <li>Click en "Ejemplos" para ver el dropdown</li>
+                <li>Redimensiona la ventana para ver responsive</li>
+                <li>Los botones usan los estilos atómicos del sistema</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Navegación mobile (oculta por defecto) -->
+    <nav class="mobile-nav" id="mobileNavContainer">
+        <!-- El contenido se clonará aquí -->
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.header-menu-toggle');
+            const mobileNav = document.getElementById('mobileNavContainer');
+
+            if (menuToggle && mobileNav) {
+                // Crear un menú simple para móvil ya que no hay nav principal
+                const mobileMenuHTML = `
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="#" class="nav-link">Inicio</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Categorías</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Mi Perfil</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Cerrar Sesión</a></li>
+                    </ul>
+                `;
+                mobileNav.innerHTML = mobileMenuHTML;
+
+                menuToggle.addEventListener('click', () => {
+                    mobileNav.classList.toggle('is-open');
+                    document.body.style.overflow = mobileNav.classList.contains('is-open') ? 'hidden' : '';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

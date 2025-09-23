@@ -1,0 +1,321 @@
+/* === HEADER COMPONENT - DESIGN SYSTEM === */
+
+/* Header base */
+.header {
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  
+  /* Dimensiones */
+  height: 3.75rem;                 /* 60px - altura de Figma */
+  padding: 0 var(--space-xl);      /* 32px horizontal */
+  
+  /* Estilos visuales */
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-primary);
+  
+  /* Positioning */
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);        /* 100 */
+  
+  /* Transiciones */
+  transition: var(--transition-normal);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Grupos dentro del Header para alineación */
+.header-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.header-left {
+    justify-content: flex-start;
+}
+
+.header-center {
+    flex: 1;
+    justify-content: center;
+}
+
+.header-right {
+    justify-content: flex-end;
+}
+
+
+/* === VARIANTES DEL HEADER === */
+
+/* Header transparente */
+.header-transparent {
+  background: rgba(10, 14, 26, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Header sólido */
+.header-solid {
+  background: var(--bg-primary);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Header elevado (con sombra) */
+.header-elevated {
+  box-shadow: var(--shadow-lg);
+  border-bottom: none;
+}
+
+/* Header compacto */
+.header-compact {
+  height: 3rem;                    /* 48px */
+  padding: 0 var(--space-lg);      /* 24px horizontal */
+}
+
+/* === SECCIONES DEL HEADER === */
+
+/* Logo/Brand section */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);            /* 16px */
+  flex-shrink: 0;
+}
+
+.header-logo {
+  height: 2rem;                    /* 32px */
+  width: auto;
+}
+
+.header-title {
+  font-family: 'Koulen', sans-serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #FFF;
+  text-decoration: none;
+  transition: var(--transition-fast);
+  width: 5.875rem;
+  height: 2.3125rem;
+  flex-shrink: 0;
+}
+
+.header-title:hover {
+  color: var(--primary-400);
+}
+
+/* Ocultar navegación principal */
+.header-nav {
+  display: none;
+}
+
+/* La sección de búsqueda ahora está dentro de .header-center */
+.header-search {
+   /* Ya no necesita flex: 1, lo maneja el grupo */
+}
+
+/* Actions section ahora es .header-right */
+.header-actions {
+  /* Ya no necesita flex-shrink, lo maneja el grupo */
+}
+
+/* === ELEMENTOS DEL HEADER === */
+
+.btn-icon {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-icon img {
+    width: 24px; /* Ajusta el tamaño del ícono */
+    height: 24px;
+}
+
+/* Menu toggle para mobile */
+.header-menu-toggle {
+  display: block; /* Siempre visible ahora */
+  background: none;
+  border: none;
+  color: #FFF; /* Color blanco para el ícono de menú */
+  font-size: var(--text-xl);       /* 20px */
+  cursor: pointer;
+  padding: var(--space-sm);        /* 8px */
+  border-radius: var(--border-radius-md);
+  transition: var(--transition-fast);
+}
+
+.header-menu-toggle:hover {
+  background: var(--bg-secondary);
+  color: var(--primary-400);
+}
+
+/* User avatar/profile */
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);            /* 8px */
+  padding: var(--space-sm);        /* 8px */
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.header-user:hover {
+  background: var(--bg-secondary);
+}
+
+.header-avatar {
+  width: 2rem;                     /* 32px */
+  height: 2rem;                    /* 32px */
+  border-radius: var(--border-radius-full);
+  background: var(--primary-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-50);
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);       /* 14px */
+}
+
+.header-user-name {
+  font-size: var(--text-sm);       /* 14px */
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+}
+
+/* Search en header */
+.header-search {
+  max-width: 300px;
+  flex: 1;
+}
+
+/* Notifications */
+.header-notifications {
+  position: relative;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: var(--text-lg);       /* 18px */
+  cursor: pointer;
+  padding: var(--space-sm);        /* 8px */
+  border-radius: var(--border-radius-md);
+  transition: var(--transition-fast);
+}
+
+.header-notifications:hover {
+  background: var(--bg-secondary);
+  color: var(--primary-400);
+}
+
+.header-notifications-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--accent-500);
+  color: var(--accent-50);
+  font-size: 0.625rem;             /* 10px */
+  font-weight: var(--font-bold);
+  min-width: 1rem;                 /* 16px */
+  height: 1rem;                    /* 16px */
+  border-radius: var(--border-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(25%, -25%);
+}
+
+/* === ESTADOS DEL HEADER === */
+
+/* Header cuando hay scroll */
+.header-scrolled {
+  background: var(--bg-primary);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Header loading state */
+.header-loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .header {
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .header-group.header-center {
+      order: 3;
+      width: 100%;
+      flex-basis: 100%;
+  }
+
+  .search-bar {
+      width: 100%;
+  }
+
+  .header-group.header-left {
+      order: 1;
+      flex-grow: 1;
+  }
+
+  .header-group.header-right {
+      order: 2;
+  }
+}
+@media (max-width: 480px) {
+  .header {
+    padding: 0 var(--space-sm);    /* 8px horizontal */
+  }
+  
+  .header-title {
+    font-size: var(--text-lg);     /* 18px en mobile pequeño */
+  }
+  
+  .header-search {
+    display: none;                 /* Ocultar search en mobile muy pequeño */
+  }
+}
+
+/* === ANIMACIONES === */
+
+/* Slide down animation para header */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.header-animate-in {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Pulse animation para notifications */
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(25%, -25%) scale(1);
+  }
+  50% {
+    transform: translate(25%, -25%) scale(1.1);
+  }
+}
+
+.header-notifications-badge-pulse {
+  animation: pulse 2s infinite;
+}

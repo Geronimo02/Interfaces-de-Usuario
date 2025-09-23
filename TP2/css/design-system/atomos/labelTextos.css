@@ -1,0 +1,69 @@
+/* === SISTEMA DE TEXTOS - DESIGN SYSTEM === */
+
+/* Texto base con las especificaciones exactas */
+.text {
+  /* Layout */
+  display: block;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+
+  /* Tipografía por defecto */
+  font-family: var(--font-family-primary);
+  font-size: var(--text-body-large-size);
+  font-weight: var(--text-body-large-weight);
+  line-height: var(--text-body-large-line-height);
+  letter-spacing: var(--text-body-large-letter-spacing);
+}
+
+/* === VARIANTES DE COLOR === */
+
+/* Texto Primario - Blanco */
+.text-primary {
+  color: var(--text-primary);
+}
+
+/* Texto Secundario - Gris */
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+/* Texto de Acento - Verde */
+.text-accent {
+  color: var(--accent-600);
+}
+
+/* === VARIANTES DE TAMAÑO === */
+
+/* Texto Small - 12px */
+.text-small {
+  font-size: var(--text-body-small-size);
+  font-weight: var(--text-body-small-weight);
+  line-height: var(--text-body-small-line-height);
+  letter-spacing: var(--text-body-small-letter-spacing);
+}
+
+/* Texto Large - 18px */
+.text-large {
+  font-size: var(--text-body-large-size);
+  font-weight: var(--text-body-large-weight);
+  line-height: var(--text-body-large-line-height);
+  letter-spacing: var(--text-body-large-letter-spacing);
+}
+
+/* === ESTADOS === */
+
+/* Texto deshabilitado */
+.text:disabled,
+.text.disabled {
+  color: var(--text-disabled);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .text {
+    font-size: var(--text-body-small-size);
+  }
+}

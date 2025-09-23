@@ -1,0 +1,33 @@
+/* === MOLÉCULA: BARRA DE BÚSQUEDA === */
+
+.search-bar {
+    display: flex;
+    width: 30rem;
+    height: 2.5rem;
+    padding: 0.5rem 1rem;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+    border-radius: 1.25rem;
+    border: 1px solid rgba(219, 204, 252, 0.00); /* Borde transparente como en Figma */
+    background: #1B3A6F;
+}
+
+.search-bar .search-icon {
+    color: #FFF;
+    font-size: 1.2rem; /* Ajusta según el tamaño del ícono */
+}
+
+.search-bar .search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #FFF;
+    font-family: var(--font-body); /* O la fuente que corresponda */
+    font-size: 1rem;
+}
+
+.search-bar .search-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
