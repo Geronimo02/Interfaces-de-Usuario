@@ -1,0 +1,188 @@
+.main-home {
+  padding: 24px 0 80px;
+}
+.section.destacados {
+  margin-bottom: 32px;
+}
+
+
+/* Carrusel: visibilidad y transición */
+.carousel-banner {
+  display: none;
+  opacity: 0;
+  transition: opacity .35s ease-in-out;
+}
+.carousel-banner.active {
+  display: block;
+  opacity: 1;
+}
+
+/* Botón previo (a juego con .carousel-next existente) */
+.carousel-prev {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  background: #122034;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+}
+
+.carousel {
+  position: relative;
+  margin-bottom: 16px;
+}
+.carousel-banner {
+  background: #f9b7b7;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+.carousel-banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.carousel-next {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background: #122034;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+}
+.badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 8px;
+  color: #fff;
+}
+.badge.suscripcion { background: #2563eb; }
+.badge.standard { background: #8b5cf6; }
+.badge.pro, .badge.gratis { background: #22c55e; }
+.game-title {
+  margin: 10px 0 6px;
+  font-weight: 700;
+}
+.game-desc {
+  color: #9aa7bf;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.tach {
+  text-decoration: line-through;
+}
+.progress-wrap {
+  margin-bottom: 12px;
+}
+.btn-row {
+  display: flex;
+  gap: 12px;
+}
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.games-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+.game-card {
+  background: #0a1324;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+  position: relative;
+}
+.game-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 8px 0;
+}
+.game-card .badge {
+  position: static;
+  margin-bottom: 4px;
+  display: inline-block;
+  font-size: 11px;
+  padding: 2px 8px;
+}
+.game-card .btn-row {
+  gap: 8px;
+  margin-top: 8px;
+}
+.game-card .btn,
+.game-card .btn.secondary {
+  font-size: 13px;
+  padding: 6px 10px;
+  min-width: unset;
+  height: 32px;
+  border-radius: 8px;
+}
+
+
+
+/* Carrusel horizontal para filas de cards */
+.hcarousel {
+  position: relative;
+  margin-top: 8px;
+}
+
+.hc-track {
+  /* usa tu .games-row existente como base */
+  grid-auto-flow: column;                /* columnas continuas */
+  grid-auto-columns: minmax(180px, 1fr); /* mismo min que ya usás */
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 6px;                   /* respiro para scroll oculto */
+}
+
+.hc-track::-webkit-scrollbar { display: none; }
+
+.game-card {                              /* ya existe; sumamos snap */
+  scroll-snap-align: start;
+}
+
+/* Botones del carrusel horizontal */
+.hc-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #122034;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.hc-prev { left: -8px; }  /* pegadito al borde del container */
+.hc-next { right: -8px; }
