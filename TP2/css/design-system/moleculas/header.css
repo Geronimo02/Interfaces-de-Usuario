@@ -29,22 +29,25 @@
 
 /* Grupos dentro del Header para alineación */
 .header-group {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
 }
 
 .header-left {
-    justify-content: flex-start;
+  flex-shrink: 0; /* No permitir que se encoja */
 }
 
 .header-center {
-    flex: 1;
-    justify-content: center;
+  flex: 1 1 auto; /* Permitir crecer y encogerse */
+  justify-content: center;
+  min-width: 0; /* Clave para evitar desbordamiento */
+  padding: 0 var(--space-lg);
 }
 
 .header-right {
-    justify-content: flex-end;
+  flex-shrink: 0; /* No permitir que se encoja */
+  justify-content: flex-end;
 }
 
 
@@ -79,7 +82,31 @@
 
 /* === SECCIONES DEL HEADER === */
 
-/* Logo/Brand section */
+.header-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.header-left {
+  flex-shrink: 0; /* No permitir que se encoja */
+}
+
+.header-center {
+  flex: 1 1 auto; /* Permitir crecer y encogerse */
+  justify-content: center;
+  min-width: 0; /* Clave para evitar desbordamiento */
+  padding: 0 var(--space-lg);
+}
+
+.header-right {
+  flex-shrink: 0; /* No permitir que se encoja */
+  justify-content: flex-end;
+}
+
+/* === COMPONENTES INTERNOS === */
+
+/* Molécula: Brand/Logo */
 .header-brand {
   display: flex;
   align-items: center;
