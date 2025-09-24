@@ -1,0 +1,243 @@
+/*----------------*/
+/*  Loader (Home) */
+/*----------------*/
+#loadingOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(1200px 900px at 50% -10%, #152143, #0a101e 60%, #070b14)
+}
+
+.loading-card {
+  background: rgba(17, 24, 39, .72);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 24px;
+  width: min(92vw, 520px);
+  box-shadow: var(--shadow)
+}
+
+.progress-wrap {
+  height: 10px;
+  background: #0a1324;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 12px;
+  border: 1px solid var(--line)
+}
+
+.progress {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transition: width .2s ease
+}
+
+.spinner {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 4px solid rgba(59, 130, 246, .22);
+  border-top-color: var(--primary);
+  animation: spin 1s linear infinite, glow 1.6s ease-in-out infinite alternate;
+  margin: 12px auto 0
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg)
+  }
+}
+
+@keyframes glow {
+  from {
+    filter: drop-shadow(0 0 0 var(--primary))
+  }
+
+  to {
+    filter: drop-shadow(0 0 12px var(--primary))
+  }
+}
+
+/*----------------*/
+/*  Auth / Login  */
+/*----------------*/
+.auth-bg {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(1000px 800px at 50% -10%, #0e1730, #0b1324 60%, #091020)
+}
+
+.login-card {
+  width: min(92vw, 560px);
+  background: rgba(16, 24, 40, .88);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 34px 28px;
+  box-shadow: var(--shadow)
+}
+
+/* Logo circular principal */
+/* CAMBIAR POR EL SVG DEL LOGO */
+.logo-puck {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  margin: 4px auto 18px;
+  display: grid;
+  place-items: center;
+  background: conic-gradient(from 210deg at 50% 50%, #5ba3ff, #2b46d6 60%, #5ba3ff);
+  box-shadow: 0 0 0 6px rgba(59, 130, 246, .15), inset 0 -8px 24px rgba(0, 0, 0, .25)
+}
+
+.logo-puck svg {
+  width: 60px;
+  height: 60px
+}
+
+.gamepad {
+  fill: none;
+  stroke: #e9f2ff;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, .35))
+}
+
+.pad-dot {
+  fill: #e9f2ff
+}
+
+.login-card h1 {
+  margin: 0;
+  text-align: center;
+  letter-spacing: 1.2px;
+  font-size: 24px;
+  font-weight: 900
+}
+
+.login-card .sub {
+  margin: 6px 0 18px;
+  text-align: center;
+  color: #cfe3ff;
+  font-size: 18px;
+  font-weight: 600
+}
+
+.input-v2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  background: #151235;
+  border: 1px solid var(--line);
+  padding: 10px 12px;
+  margin: 10px 0
+}
+
+.input-v2 .icon {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  opacity: .9
+}
+
+.input-v2 input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--ink);
+  font-size: 14px
+}
+
+.forgot {
+  text-align: right;
+  margin: 6px 2px 14px;
+  color: #cfe3ff;
+  font-size: 13.5px
+}
+
+/* Botón principal login */
+.btn-primary-lg {
+  width: 100%;
+  height: 44px;
+  border-radius: 10px;
+  background: #4ea2ff;
+  color: white;
+  border: none;
+  font-weight: 700;
+  letter-spacing: .2px;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(78, 162, 255, .25);
+  transition: transform .15s ease, box-shadow .15s ease
+}
+
+.btn-primary-lg:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 10px 20px rgba(78, 162, 255, .35)
+}
+
+.small-row {
+  margin: 14px 2px 8px;
+  text-align: center;
+  color: #9cc7ff;
+  font-size: 14px
+}
+
+.small-row a {
+  color: #68a7ff;
+  text-decoration: underline;
+  text-underline-offset: 3px
+}
+
+.divider-o {
+  text-align: center;
+  color: #a6b4cf;
+  margin: 6px 0 10px;
+  font-weight: 700
+}
+
+/* Botones sociales */
+.btn-social {
+  width: 100%;
+  height: 44px;
+  border-radius: 10px;
+  background: #1e1b3b;
+  color: #dbe6ff;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-weight: 700;
+  margin: 10px 0;
+  transition: transform .15s ease, box-shadow .15s ease
+}
+
+.btn-social:hover {
+  transform: translateY(-1.5px);
+  background: #1e1b3b;
+  box-shadow: 0 10px 20px rgba(30, 27, 59)
+}
+
+.badge {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+}
+
+.badge.fb {
+  background: #1877F2;
+  border: none
+}
+
+.badge.g {
+  background: #fff
+}

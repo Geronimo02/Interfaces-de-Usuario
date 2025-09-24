@@ -1,0 +1,26 @@
+/* Contenedores para el SVG en header y footer */
+.brand-badge.logo-svg,
+.puck.logo-svg{
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: radial-gradient(60% 80% at 30% 20%, #3B82F6, #1E40AF);
+  box-shadow: 0 0 0 3px rgba(59,130,246,.22);
+}
+
+/* Tamaño header */
+.brand-badge.logo-svg{
+  width: 30px; height: 30px;
+  border-radius: 50%;
+}
+
+/* Tamaño footer */
+.puck.logo-svg{
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px rgba(59,130,246,.10), inset 0 -8px 16px rgba(0,0,0,.20);
+}
+
+/* Ajuste del propio SVG adentro (que no se deforme) */
+.brand-badge.logo-svg svg{ width: 20px; height: 20px; }
+.puck.logo-svg svg{ width: 26px; height: 26px; }

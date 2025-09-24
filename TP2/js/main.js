@@ -1,26 +1,3 @@
-/* ==============================
-   GAMEBIT · JS PRINCIPAL (Home)
-   ============================== */
-
-// Loader con % (~5s)
-(function () {
-  const overlay = document.getElementById('loadingOverlay');
-  if (!overlay) return;
-
-  const progress = overlay.querySelector('.progress');
-  const pct = overlay.querySelector('#pct');
-  let n = 0;
-
-  const t = setInterval(() => {
-    n = Math.min(100, n + Math.floor(Math.random() * 10) + 6);
-    progress.style.width = n + '%';
-    pct.textContent = n + '%';
-    if (n >= 100) {
-      clearInterval(t);
-      setTimeout(() => overlay.remove(), 300);
-    }
-  }, 320);
-})();
 
 (function () {
   const btnMenu = document.getElementById('btnMenu');

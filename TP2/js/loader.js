@@ -1,23 +1,22 @@
-// Loader (5 segundos con %)
-export function initLoading() {
-  const loading = document.querySelector('.loading');
-  if (!loading) return;
+ // Loader con % (~5s) usando tus IDs/clases del CSS
+    (function () {
+      const overlay = document.getElementById('loadingOverlay');
+      if (!overlay) return;
 
-  const bar = loading.querySelector('.progress__bar');
-  const txt = loading.querySelector('.progress__text');
+      const progress = overlay.querySelector('.progress');
+      const pct = overlay.querySelector('#pct');
+      if (!progress || !pct) return;
 
-  let p = 0;
-  const total = 5000; // ms
-  const tick = 50;
-  const step = 100 / (total / tick);
+      let n = 0;
+      const t = setInterval(() => {
+        n = Math.min(100, n + Math.floor(Math.random() * 10) + 6);
+        progress.style.width = n + '%';
+        pct.textContent = n + '%';
+        if (n >= 100) {
+          clearInterval(t);
+          setTimeout(() => overlay.remove(), 300);
+        }
+      }, 320);
+    })();
 
-  const timer = setInterval(() => {
-    p = Math.min(100, p + step);
-    bar.style.width = p + '%';
-    txt.textContent = 'Cargando ' + Math.floor(p) + '%';
-    if (p >= 100) {
-      clearInterval(timer);
-      loading.classList.add('hide');
-    }
-  }, tick);
-}
+    
