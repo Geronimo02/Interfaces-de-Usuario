@@ -1,4 +1,4 @@
-// carrusel.js
+﻿// carrusel.js
 document.addEventListener("DOMContentLoaded", () => {
   const scope = document.querySelector(".section.destacados");
   if (!scope) return;
@@ -8,9 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextBtn = scope.querySelector(".carousel .carousel-next");
 
   // Elementos de meta que están debajo del banner
-  const titleEl = scope.querySelector(".game-title");
-  const descEl = scope.querySelector(".game-desc");
-  const progressEl = scope.querySelector(".progress");
+  const titleEl = scope.querySelector(".destacados-title");
+  const descEl = scope.querySelector(".destacados-desc");
+  const progressEl = scope.querySelector(".progress-wrap .progress");
 
   let current = 0;
   let timer = null;
@@ -77,53 +77,68 @@ document.addEventListener("DOMContentLoaded", () => {
   showSlide(current);
   startAutoplay();
 });
-
-
-// ===== Carrusel horizontal de cards (secciones) =====
-document.addEventListener("DOMContentLoaded", () => {
-  const carousels = document.querySelectorAll(".hcarousel");
-
-  carousels.forEach((wrap) => {
+// Carrusel horizontal para secciones
+window.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".hcarousel").forEach((wrap) => {
     const track = wrap.querySelector(".hc-track");
-    const prev  = wrap.querySelector(".hc-prev");
-    const next  = wrap.querySelector(".hc-next");
-
+    const prev = wrap.querySelector(".hc-prev");
+    const next = wrap.querySelector(".hc-next");
     if (!track) return;
 
-    const scrollAmount = () => Math.round(track.clientWidth * 0.9);
+    const page = () => track.clientWidth * 0.95;
+    const doScroll = (delta) => track.scrollBy({ left: delta, behavior: "smooth" });
 
-    function doScroll(delta) {
-      track.scrollBy({ left: delta, behavior: "smooth" });
-    }
+    prev?.addEventListener("click", () => doScroll(-page()));
+    next?.addEventListener("click", () => doScroll(page()));
 
-    prev?.addEventListener("click", () => doScroll(-scrollAmount()));
-    next?.addEventListener("click", () => doScroll(scrollAmount()));
+    track.addEventListener("wheel", (evt) => {
+      const absY = Math.abs(evt.deltaY);
+      const absX = Math.abs(evt.deltaX);
+      if (absX === 0 && absY === 0) return;
+      evt.preventDefault();
+      const delta = absX > absY ? evt.deltaX : evt.deltaY;
+      doScroll(delta);
+    }, { passive: false });
 
-    // Drag/Swipe básico
-    let isDown = false, startX = 0, startScroll = 0;
+    let isDragging = false;
+    let startX = 0;
+    let startScroll = 0;
 
-    track.addEventListener("pointerdown", (e) => {
-      isDown = true;
-      startX = e.clientX;
+    track.addEventListener("pointerdown", (evt) => {
+      isDragging = true;
+      startX = evt.clientX;
       startScroll = track.scrollLeft;
-      track.setPointerCapture(e.pointerId);
+      track.setPointerCapture(evt.pointerId);
     });
 
-    track.addEventListener("pointermove", (e) => {
-      if (!isDown) return;
-      const dx = e.clientX - startX;
+    track.addEventListener("pointermove", (evt) => {
+      if (!isDragging) return;
+      const dx = evt.clientX - startX;
       track.scrollLeft = startScroll - dx;
     });
 
-    ["pointerup", "pointercancel", "mouseleave"].forEach(evt =>
-      track.addEventListener(evt, () => (isDown = false))
-    );
-
-    // Teclado (cuando el foco está en el track)
-    track.setAttribute("tabindex", "0");
-    track.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") doScroll(scrollAmount());
-      if (e.key === "ArrowLeft")  doScroll(-scrollAmount());
+    ["pointerup", "pointercancel", "mouseleave"].forEach((type) => {
+      track.addEventListener(type, () => {
+        isDragging = false;
+      });
     });
+
+    track.addEventListener("keydown", (evt) => {
+      if (evt.key === "ArrowRight") doScroll(page());
+      if (evt.key === "ArrowLeft") doScroll(-page());
+    });
+
+    const toggleArrows = () => {
+      const hasOverflow = track.scrollWidth > track.clientWidth + 1;
+      [prev, next].forEach((btn) => {
+        if (!btn) return;
+        btn.hidden = !hasOverflow;
+      });
+    };
+
+    toggleArrows();
+    window.addEventListener("resize", toggleArrows);
   });
 });
+
+
