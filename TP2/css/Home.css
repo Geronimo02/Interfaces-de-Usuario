@@ -13,34 +13,6 @@ body.home .section+.section {
   /* antes 36px */
 }
 
-
-/* ==========================
-   DESTACADOS (compacto)
-   ========================== */
-
-/* Card contenedora (se agrego nuevo no esta en figma) */
-.feature-card {
-  background: #0f203b;
-  border: 1.5px solid rgba(37, 99, 235, .55);
-  border-radius: 24px;
-  box-shadow: 0 30px 48px rgba(8, 15, 40, .45);
-  padding: clamp(18px, 2.4vw, 40px) clamp(18px, 2.4vw, 34px) clamp(18px, 2.4vw, 34px);
-  position: relative;
-  overflow: hidden;
-}
-
-
-/* divisor sutil al final de destacados (se agrego no esta en figma )*/
-.section.destacados .section-card::after {
-  content: "";
-  display: block;
-  height: 1px;
-  margin-top: 20px;
-  background: linear-gradient(90deg, rgba(96, 165, 250, .18), rgba(96, 165, 250, 0));
-  border-radius: 999px;
-}
-
-
 /* Carrusel principal */
 .carousel {
   position: relative;
@@ -284,7 +256,7 @@ body.home .section+.section {
 
 body.home .game-card {
   width: 240px;
-  height: 230px;
+  height: 210px;
   border-radius: 20px;
   background: linear-gradient(160deg, rgba(15, 28, 51, .95), rgba(9, 17, 34, .98));
   border: 1.4px solid rgba(96, 165, 250, .35);
@@ -354,18 +326,23 @@ body.home .game-card .card-content {
 }
 
 body.home .game-card .card-content .game-title {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 800;
 
 }
 
 body.home .game-card .card-content .game-desc {
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 600;
   color: rgba(226, 232, 240, .9);
-  margin: -5px 0 8px;
+  margin: -2px 0 8px;
 }
-
+body.home .game-card .card-content .game-biblioteca {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(226, 232, 240, .9);
+  margin: -2px 0 8px;
+}
 body.home .game-card .card-content .game-desc .tach {
   color: rgba(148, 163, 184, .9);
   margin-right: 6px;
@@ -384,7 +361,7 @@ body.home .game-card .card-content .btn-row {
 /* “Jugar” se estira y ocupa el espacio flexible */
 body.home .game-card .card-content .btn-row .btn.btn-play {
   height: 32px;
-  width: 110px;
+  width: 70px;
   border-radius: 8px;
   font-size: 13px;
   padding: 5px 10px;
@@ -476,6 +453,77 @@ body.home .game-card .card-content .btn-row .btn:hover {
   .destacados-actions {
     grid-template-columns: 1fr 1fr;
   }
+body.home .game-card .card-content .game-desc  {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(226, 232, 240, .9);
+  margin: -5px 1 8px;
+}
+body.home .game-card .card-content .game-biblioteca  {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(226, 232, 240, .9);
+  margin: -5px 1 8px;
+}
+
+
+body.home .game-card .card-content .btn-row {
+  display: flex;
+  align-items: center;
+  gap: 4px !important;
+
+
+}
+
+body.home .game-card .card-media {
+  position: relative;
+  max-height: 124px;
+  overflow: hidden;
+}
+
+body.home .game-card .card-content {
+  display: grid;
+  padding: 0 10px;
+  gap: 5px;
+  border-top: 1px solid rgba(96, 165, 250, .15);
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+
+
+}
+/* “Jugar” se estira y ocupa el espacio flexible */
+body.home .game-card .card-content .btn-row .btn.btn-play {
+  height: 32px;
+  width: 110px;
+  border-radius: 8px;
+  font-size: 13px;
+  padding: 5px 10px;
+
+
+}
+
+/* “Al Carrito” más chico y ancho según contenido */
+body.home .game-card .card-content .btn-row .btn.btn-cart {
+  height: 32px;
+  width: 110px;
+  padding: 10px 5px;
+  border-radius: 8px;
+  font-size: 13px;
+}
+body.home .game-card {
+  width: 240px;
+  height: 230px;
+  border-radius: 20px;
+  background: linear-gradient(160deg, rgba(15, 28, 51, .95), rgba(9, 17, 34, .98));
+  border: 1.4px solid rgba(96, 165, 250, .35);
+  box-shadow: 0 22px 36px rgba(8, 15, 40, .45);
+  position: relative;
+  flex-direction: column;
+  overflow: hidden;
+  color: #f8fafc;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+  
 }
 
 
