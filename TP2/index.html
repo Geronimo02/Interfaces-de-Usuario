@@ -15,7 +15,7 @@
 </head>
 <body class="home">
 
- <header class="header" id="appHeader">
+<header class="header" id="appHeader">
   <div class="container inner">
     <!-- Hamburguesa -->
     <button class="icon-btn" id="btnMenu" aria-label="Abrir menú"
@@ -113,58 +113,62 @@
 </aside>
 <div class="scrim" id="scrimProfile" hidden></div>
 
- <!-- ===== CONTENIDO DE PRUEBA ===== -->
+<!-- ===== CONTENIDO ===== -->
 <main class="container main-home">
   <!-- Destacados -->
   <section class="section destacados">
     <div class="section-card feature-card">
       <h2>Destacados</h2>
 
+      <!-- Carrusel sin data-*: metadatos “a la antigua” dentro del banner -->
       <div class="carousel" aria-roledescription="carrusel">
-        <div class="carousel-banner active"
-             data-title="Peg Solitaire Homer vs Bart"
-             data-desc="<span class='tach'>$9.99</span> GRATIS con suscripcion"
-             data-progress="70">
+        <div class="carousel-banner active">
           <span class="badge suscripcion">SUSCRIPCION</span>
           <img src="https://dummyimage.com/960x280/f5b1cc/14123A&text=PEG+SOLITAIRE+HOMER+vs+BART"
                alt="Peg Solitaire Homer vs Bart">
+          <!-- Texto real; oculto visualmente para no duplicar UI -->
+          <div class="banner-meta sr-only">
+            <h3 class="banner-title">Peg Solitaire Homer vs Bart</h3>
+            <p class="banner-desc"><span class="tach">$9.99</span> GRATIS con suscripción</p>
+          </div>
         </div>
 
-        <div class="carousel-banner"
-             data-title="Fruity Ninja"
-             data-desc="<span class='tach'>$3.99</span> GRATIS con suscripcion"
-             data-progress="45">
+        <div class="carousel-banner">
           <span class="badge standard">STANDARD</span>
           <img src="https://dummyimage.com/960x280/b6e9ed/14123A&text=FRUITY+NINJA"
                alt="Fruity Ninja">
+          <div class="banner-meta sr-only">
+            <h3 class="banner-title">Fruity Ninja</h3>
+            <p class="banner-desc"><span class="tach">$3.99</span> GRATIS con suscripción</p>
+          </div>
         </div>
 
         <div class="carousel-banner"
              data-title="Soccer"
-             data-desc="<span class='tach'>$3.99</span> GRATIS con suscripcion"
+             data-desc="$3.99 GRATIS con suscripcion"
              data-progress="55">
           <span class="badge pro">PRO</span>
           <img src="https://dummyimage.com/960x280/b6edb6/14123A&text=SOCCER"
                alt="Soccer">
+          <div class="banner-meta sr-only">
+            <h3 class="banner-title">Soccer</h3>
+            <p class="banner-desc"><span class="tach">$3.99</span> GRATIS con suscripción</p>
+          </div>
         </div>
 
         <button class="carousel-prev" aria-label="Anterior">&#9664;</button>
         <button class="carousel-next" aria-label="Siguiente">&#9654;</button>
       </div>
 
+      <!-- Meta visible precargada (no requiere JS) -->
       <div class="destacados-meta">
         <div class="dest-info">
           <div class="destacados-title">Peg Solitaire Homer vs Bart</div>
-          <div class="destacados-desc">
-            <span class="tach">$9.99</span> GRATIS con suscripcion
-          </div>
-        </div>
-        <div class="progress-wrap" role="presentation">
-          <div class="progress" style="width: 70%;"></div>
+          <div class="destacados-desc"><span class="tach">$9.99</span> GRATIS con suscripción</div>
         </div>
         <div class="destacados-actions">
           <button class="btn btn-play">Jugar</button>
-          <button class="btn btn-cart">Comprar</button>
+          <button class="btn btn-cart">Al Carrito</button>
         </div>
       </div>
     </div>
@@ -173,365 +177,378 @@
   <!-- Accion -->
   <section class="section categoria-accion">
     <div class="section-card category-card">
-        <div class="section-head">
-          <h2>Accion</h2>
-          <button class="btn ghost">Ver todos</button>
-        </div>
-        <div class="hcarousel" aria-roledescription="carrusel" data-carousel="accion">
-          <button class="hc-btn hc-prev" aria-label="Anterior">&#9664;</button>
-          <div class="games-row hc-track" tabindex="0">
-            <div class="game-card suscripcion">
-              <span class="badge suscripcion">SUSCRIPCION</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/edb6b6/14123A&text=Mountain+Bike" alt="Mountain Bike">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Mountain Bike</div>
-                <div class="game-desc"><span class="tach">$4.99</span> GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
+      <div class="section-head">
+        <h2>Accion</h2>
+        <button class="btn ghost">Ver todos</button>
+      </div>
+      <div class="hcarousel" aria-roledescription="carrusel" data-carousel="accion">
+        <button class="hc-btn hc-prev" aria-label="Anterior">&#9664;</button>
+        <div class="games-row hc-track" tabindex="0">
+          <div class="game-card suscripcion">
+            <span class="badge suscripcion">SUSCRIPCION</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/edb6b6/14123A&text=Mountain+Bike" alt="Mountain Bike">
             </div>
-    
-            <div class="game-card standard">
-              <span class="badge standard">STANDARD</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/f1f0b6/14123A&text=Fruity+Ninja" alt="Fruity Ninja">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Fruity Ninja</div>
-                <div class="game-desc">$3.99 GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
-            </div>
-    
-            <div class="game-card standard">
-              <span class="badge standard">STANDARD</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/d0f0ff/14123A&text=Soccer" alt="Soccer">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Soccer</div>
-                <div class="game-desc">$3.99 GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
-            </div>
-    
-            <div class="game-card gratis">
-              <span class="badge gratis">GRATIS</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/fddde2/14123A&text=Bowling" alt="Bowling">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Bowling</div>
-                <div class="game-desc">GRATIS</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
-            </div>
-    
-            <div class="game-card suscripcion">
-              <span class="badge suscripcion">SUSCRIPCION</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/c1e5ff/14123A&text=Subway+Surface" alt="Subway Surface">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Subway Surface</div>
-                <div class="game-desc"><span class="tach">$3.99</span> GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
+            <div class="card-content">
+              <div class="game-title">Mountain Bike</div>
+              <div class="game-desc"><span class="tach">$4.99</span> GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
               </div>
             </div>
           </div>
-          <button class="hc-btn hc-next" aria-label="Siguiente">&#9654;</button>
+
+          <div class="game-card standard">
+            <span class="badge standard">STANDARD</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/f1f0b6/14123A&text=Fruity+Ninja" alt="Fruity Ninja">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Fruity Ninja</div>
+              <div class="game-desc">$3.99 GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card standard">
+            <span class="badge standard">STANDARD</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/d0f0ff/14123A&text=Soccer" alt="Soccer">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Soccer</div>
+              <div class="game-desc">$3.99 GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card gratis">
+            <span class="badge gratis">GRATIS</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/fddde2/14123A&text=Bowling" alt="Bowling">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Bowling</div>
+              <div class="game-desc">GRATIS</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+              </div>
+            </div>
+          </div>
+
+
+            <div class="game-card gratis">
+            <span class="badge gratis">EN BIBLIOTECA</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/fddde2/14123A&text=Bowling" alt="Bowling">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Bowling</div>
+              <div class="game-biblioteca">GRATIS</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card suscripcion">
+            <span class="badge suscripcion">SUSCRIPCION</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/c1e5ff/14123A&text=Subway+Surface" alt="Subway Surface">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Subway Surface</div>
+              <div class="game-desc"><span class="tach">$3.99</span> GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
         </div>
+        <button class="hc-btn hc-next" aria-label="Siguiente">&#9654;</button>
+      </div>
     </div>
   </section>
 
   <!-- Divertidos -->
   <section class="section categoria-divertidos">
     <div class="section-card category-card">
-        <div class="section-head">
-          <h2>Divertidos</h2>
-          <button class="btn ghost">Ver todos</button>
-        </div>
-        <div class="hcarousel" aria-roledescription="carrusel" data-carousel="divertidos">
-          <button class="hc-btn hc-prev" aria-label="Anterior">&#9664;</button>
-          <div class="games-row hc-track" tabindex="0">
-            <div class="game-card suscripcion">
-              <span class="badge suscripcion">SUSCRIPCION</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/ffbcd2/14123A&text=Rons+Bean" alt="Rons Bean">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Rons Bean</div>
-                <div class="game-desc"><span class="tach">$3.49</span> GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
+      <div class="section-head">
+        <h2>Divertidos</h2>
+        <button class="btn ghost">Ver todos</button>
+      </div>
+      <div class="hcarousel" aria-roledescription="carrusel" data-carousel="divertidos">
+        <button class="hc-btn hc-prev" aria-label="Anterior">&#9664;</button>
+        <div class="games-row hc-track" tabindex="0">
+          <div class="game-card suscripcion">
+            <span class="badge suscripcion">SUSCRIPCION</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/ffbcd2/14123A&text=Rons+Bean" alt="Rons Bean">
             </div>
-    
-            <div class="game-card standard">
-              <span class="badge standard">STANDARD</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/ffdcb6/14123A&text=Metralleant" alt="Metralleant">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Metralleant</div>
-                <div class="game-desc">$2.99 GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
-            </div>
-    
-            <div class="game-card suscripcion">
-              <span class="badge suscripcion">SUSCRIPCION</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/d2ffcf/14123A&text=Plantas+vs+Oi" alt="Plantas vs Oi">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Plantas vs Oi</div>
-                <div class="game-desc"><span class="tach">$5.99</span> GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
-            </div>
-    
-            <div class="game-card gratis">
-              <span class="badge gratis">GRATIS</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/ffe7b6/14123A&text=Calabaz" alt="Calabaz">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Calabaz</div>
-                <div class="game-desc">GRATIS</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
-            </div>
-    
-            <div class="game-card suscripcion">
-              <span class="badge suscripcion">SUSCRIPCION</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/f1caff/14123A&text=La+coneja" alt="La coneja">
-              </div>
-              <div class="card-content">
-                <div class="game-title">La coneja</div>
-                <div class="game-desc"><span class="tach">$2.49</span> GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
+            <div class="card-content">
+              <div class="game-title">Rons Bean</div>
+              <div class="game-desc"><span class="tach">$3.49</span> GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
               </div>
             </div>
           </div>
-          <button class="hc-btn hc-next" aria-label="Siguiente">&#9654;</button>
+
+          <div class="game-card standard">
+            <span class="badge standard">STANDARD</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/ffdcb6/14123A&text=Metralleant" alt="Metralleant">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Metralleant</div>
+              <div class="game-desc">$2.99 GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
+          
+
+          <div class="game-card suscripcion">
+            <span class="badge suscripcion">SUSCRIPCION</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/d2ffcf/14123A&text=Plantas+vs+Oi" alt="Plantas vs Oi">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Plantas vs Oi</div>
+              <div class="game-desc"><span class="tach">$5.99</span> GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card gratis">
+            <span class="badge gratis">GRATIS</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/ffe7b6/14123A&text=Calabaz" alt="Calabaz">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Calabaz</div>
+              <div class="game-desc">GRATIS</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card suscripcion">
+            <span class="badge suscripcion">SUSCRIPCION</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/f1caff/14123A&text=La+coneja" alt="La coneja">
+            </div>
+            <div class="card-content">
+              <div class="game-title">La coneja</div>
+              <div class="game-desc"><span class="tach">$2.49</span> GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
         </div>
+        <button class="hc-btn hc-next" aria-label="Siguiente">&#9654;</button>
+      </div>
     </div>
   </section>
 
   <!-- Carreras -->
   <section class="section categoria-carreras">
     <div class="section-card category-card">
-        <div class="section-head">
-          <h2>Carreras</h2>
-          <button class="btn ghost">Ver todos</button>
-        </div>
-        <div class="hcarousel" aria-roledescription="carrusel" data-carousel="carreras">
-          <button class="hc-btn hc-prev" aria-label="Anterior">&#9664;</button>
-          <div class="games-row hc-track" tabindex="0">
-            <div class="game-card suscripcion">
-              <span class="badge suscripcion">SUSCRIPCION</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/c8d9ff/14123A&text=Crash+One" alt="Crash One">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Crash One</div>
-                <div class="game-desc"><span class="tach">$4.99</span> GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
+      <div class="section-head">
+        <h2>Carreras</h2>
+        <button class="btn ghost">Ver todos</button>
+      </div>
+      <div class="hcarousel" aria-roledescription="carrusel" data-carousel="carreras">
+        <button class="hc-btn hc-prev" aria-label="Anterior">&#9664;</button>
+        <div class="games-row hc-track" tabindex="0">
+          <div class="game-card suscripcion">
+            <span class="badge suscripcion">SUSCRIPCION</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/c8d9ff/14123A&text=Crash+One" alt="Crash One">
             </div>
-    
-            <div class="game-card standard">
-              <span class="badge standard">STANDARD</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/f0ccb6/14123A&text=Torinos+Race" alt="Torinos Race">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Torinos Race</div>
-                <div class="game-desc">$3.49 GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
-            </div>
-    
-            <div class="game-card suscripcion">
-              <span class="badge suscripcion">SUSCRIPCION</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/ffe1b6/14123A&text=Race+for+Live" alt="Race for Live">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Race for Live</div>
-                <div class="game-desc"><span class="tach">$6.99</span> GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
-            </div>
-    
-            <div class="game-card standard">
-              <span class="badge standard">STANDARD</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/cdf7ff/14123A&text=Race+and+Roll" alt="Race and Roll">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Race and Roll</div>
-                <div class="game-desc">$3.99 GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
-            </div>
-    
-            <div class="game-card suscripcion">
-              <span class="badge suscripcion">SUSCRIPCION</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/ffc7d1/14123A&text=Moto+Race" alt="Moto Race">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Moto Race</div>
-                <div class="game-desc"><span class="tach">$5.49</span> GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
+            <div class="card-content">
+              <div class="game-title">Crash One</div>
+              <div class="game-desc"><span class="tach">$4.99</span> GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
               </div>
             </div>
           </div>
-          <button class="hc-btn hc-next" aria-label="Siguiente">&#9654;</button>
+
+          <div class="game-card standard">
+            <span class="badge standard">STANDARD</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/f0ccb6/14123A&text=Torinos+Race" alt="Torinos Race">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Torinos Race</div>
+              <div class="game-desc">$3.49 GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card suscripcion">
+            <span class="badge suscripcion">SUSCRIPCION</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/ffe1b6/14123A&text=Race+for+Live" alt="Race for Live">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Race for Live</div>
+              <div class="game-desc"><span class="tach">$6.99</span> GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card standard">
+            <span class="badge standard">STANDARD</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/cdf7ff/14123A&text=Race+and+Roll" alt="Race and Roll">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Race and Roll</div>
+              <div class="game-desc">$3.99 GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card suscripcion">
+            <span class="badge suscripcion">SUSCRIPCION</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/ffc7d1/14123A&text=Moto+Race" alt="Moto Race">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Moto Race</div>
+              <div class="game-desc"><span class="tach">$5.49</span> GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
         </div>
+        <button class="hc-btn hc-next" aria-label="Siguiente">&#9654;</button>
+      </div>
     </div>
   </section>
 
   <!-- Infantiles -->
   <section class="section categoria-infantiles">
     <div class="section-card category-card">
-        <div class="section-head">
-          <h2>Infantiles</h2>
-          <button class="btn ghost">Ver todos</button>
-        </div>
-        <div class="hcarousel" aria-roledescription="carrusel" data-carousel="infantiles">
-          <button class="hc-btn hc-prev" aria-label="Anterior">&#9664;</button>
-          <div class="games-row hc-track" tabindex="0">
-            <div class="game-card gratis">
-              <span class="badge gratis">GRATIS</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/ffd2f1/14123A&text=Candy+Land" alt="Candy Land">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Candy Land</div>
-                <div class="game-desc">GRATIS</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
+      <div class="section-head">
+        <h2>Infantiles</h2>
+        <button class="btn ghost">Ver todos</button>
+      </div>
+      <div class="hcarousel" aria-roledescription="carrusel" data-carousel="infantiles">
+        <button class="hc-btn hc-prev" aria-label="Anterior">&#9664;</button>
+        <div class="games-row hc-track" tabindex="0">
+          <div class="game-card gratis">
+            <span class="badge gratis">GRATIS</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/ffd2f1/14123A&text=Candy+Land" alt="Candy Land">
             </div>
-    
-            <div class="game-card standard">
-              <span class="badge standard">STANDARD</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/d5f1ff/14123A&text=Puzzle+Party" alt="Puzzle Party">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Puzzle Party</div>
-                <div class="game-desc">$1.99 GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
-            </div>
-    
-            <div class="game-card suscripcion">
-              <span class="badge suscripcion">SUSCRIPCION</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/fff0b6/14123A&text=Color+Run" alt="Color Run">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Color Run</div>
-                <div class="game-desc"><span class="tach">$2.99</span> GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
-            </div>
-    
-            <div class="game-card suscripcion">
-              <span class="badge suscripcion">SUSCRIPCION</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/cfffe5/14123A&text=Mini+Chef" alt="Mini Chef">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Mini Chef</div>
-                <div class="game-desc"><span class="tach">$3.49</span> GRATIS con suscripcion</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
-              </div>
-            </div>
-    
-            <div class="game-card gratis">
-              <span class="badge gratis">GRATIS</span>
-              <div class="card-media">
-                <img src="https://dummyimage.com/240x140/e0d8ff/14123A&text=Tiny+Farm" alt="Tiny Farm">
-              </div>
-              <div class="card-content">
-                <div class="game-title">Tiny Farm</div>
-                <div class="game-desc">GRATIS</div>
-                <div class="btn-row">
-                  <button class="btn btn-play">Jugar</button>
-                  <button class="btn btn-cart">Al Carrito</button>
-                </div>
+            <div class="card-content">
+              <div class="game-title">Candy Land</div>
+              <div class="game-desc">GRATIS</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
               </div>
             </div>
           </div>
-          <button class="hc-btn hc-next" aria-label="Siguiente">&#9654;</button>
+
+          <div class="game-card standard">
+            <span class="badge standard">STANDARD</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/d5f1ff/14123A&text=Puzzle+Party" alt="Puzzle Party">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Puzzle Party</div>
+              <div class="game-desc">$1.99 GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card suscripcion">
+            <span class="badge suscripcion">SUSCRIPCION</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/fff0b6/14123A&text=Color+Run" alt="Color Run">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Color Run</div>
+              <div class="game-desc"><span class="tach">$2.99</span> GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card suscripcion">
+            <span class="badge suscripcion">SUSCRIPCION</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/cfffe5/14123A&text=Mini+Chef" alt="Mini Chef">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Mini Chef</div>
+              <div class="game-desc"><span class="tach">$3.49</span> GRATIS con suscripción</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+                <button class="btn btn-cart">Al Carrito</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-card gratis">
+            <span class="badge gratis">GRATIS</span>
+            <div class="card-media">
+              <img src="https://dummyimage.com/240x140/e0d8ff/14123A&text=Tiny+Farm" alt="Tiny Farm">
+            </div>
+            <div class="card-content">
+              <div class="game-title">Tiny Farm</div>
+              <div class="game-desc">GRATIS</div>
+              <div class="btn-row">
+                <button class="btn btn-play">Jugar</button>
+              </div>
+            </div>
+          </div>
         </div>
+        <button class="hc-btn hc-next" aria-label="Siguiente">&#9654;</button>
+      </div>
     </div>
   </section>
 </main>
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer-block" role="contentinfo">
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer-block" role="contentinfo">
   <div class="footer-inner">
     <!-- Columna izquierda -->
     <div class="footer-meta">
@@ -586,31 +603,11 @@
     </nav>
   </div>
 </footer>
-    <script src="/Interfaces-de-Usuario/TP2/js/main.js" defer></script>
-    <script src="/Interfaces-de-Usuario/TP2/js/carrusel.js" defer></script>
+
+<!-- Scripts (opcionales). Si no cargan, el contenido igual se ve. -->
+<script src="/Interfaces-de-Usuario/TP2/js/main.js" defer></script>
+<script src="/Interfaces-de-Usuario/TP2/js/carrusel.js" defer></script>
 
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

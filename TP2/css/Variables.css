@@ -1,4 +1,4 @@
-/*-------------*/
+﻿/*-------------*/
 /*  Variables  */
 /*-------------*/
 :root {
@@ -15,7 +15,7 @@
   --muted: #9aa7bf;
   /* texto secundario */
   --line: rgba(154, 167, 191, .22);
-  /* líneas/bordes suaves */
+  /* lÃ­neas/bordes suaves */
 
   /* Acentos */
   --primary: #3b82f6;
@@ -32,17 +32,31 @@
   --r: 14px;
   --r-lg: 20px;
 
-  /* Tipografía */
-  --h1: clamp(22px, 4vw, 34px);
-  --h2: clamp(18px, 3vw, 24px);
-  --h3: clamp(16px, 2.4vw, 18px);
-  --body: 15px;
-  --small: 13px;
+  /* Tipografías */
+  --font-h1: 32px;
+  --font-h2: 24px;
+  --font-h3: 18px;
+  --font-body-lg: 18px;
+  --font-body: 16px;
+  --font-body-sm: 14px;
+  --font-caption: 12px;
+  --font-btn-lg: 16px;
+  --font-btn-sm: 14px;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
 
-  /* Espaciado base */
-  --g: 12px;
-}
-
+  /* Alias para compatibilidad existente */
+  --h1: var(--font-h1);
+  --h2: var(--font-h2);
+  --h3: var(--font-h3);
+  --body-lg: var(--font-body-lg);
+  --body: var(--font-body);
+  --small: var(--font-body-sm);
+  --caption: var(--font-caption);
+  --btn-lg: var(--font-btn-lg);
+  --btn-sm: var(--font-btn-sm);
 /*-----------*/
 /*  Reset    */
 /*-----------*/
@@ -52,16 +66,14 @@
 
 html,
 body {
-  margin: 0;
-  padding: 0
-}
-
-html,
-body {
   background: var(--bg);
   color: var(--ink);
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-  font-size: var(--body);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: var(--font-body);
+  font-weight: var(--weight-regular);
+  line-height: 1.4;
+}
+
 }
 
 img {
@@ -74,3 +86,4 @@ a {
   color: inherit;
   text-decoration: none
 }
+

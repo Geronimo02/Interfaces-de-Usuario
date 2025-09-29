@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Elementos de meta que están debajo del banner
   const titleEl = scope.querySelector(".destacados-title");
   const descEl = scope.querySelector(".destacados-desc");
-  const progressEl = scope.querySelector(".progress-wrap .progress");
 
   let current = 0;
   let timer = null;
@@ -18,15 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function applyMeta(i) {
     const b = banners[i];
-    const title = b.dataset.title || (b.querySelector("img")?.alt ?? "");
-    const desc = b.dataset.desc || "";
-    const progress = parseInt(b.dataset.progress || "0", 10);
-
+    const titleNode = b.querySelector(".banner-title");
+    const descNode = b.querySelector(".banner-desc");
+    const title = titleNode?.textContent?.trim() || b.querySelector("img")?.alt || "";
+    const descHtml = descNode ? descNode.innerHTML : "";
     if (titleEl) titleEl.textContent = title;
-    if (descEl) descEl.innerHTML = desc;
-    if (progressEl) progressEl.style.width = Math.max(0, Math.min(progress, 100)) + "%";
+    if (descEl) descEl.innerHTML = descHtml;
   }
-
   function showSlide(i) {
     banners.forEach((ban, idx) => ban.classList.toggle("active", idx === i));
     applyMeta(i);
@@ -91,15 +88,6 @@ window.addEventListener("DOMContentLoaded", () => {
     prev?.addEventListener("click", () => doScroll(-page()));
     next?.addEventListener("click", () => doScroll(page()));
 
-    track.addEventListener("wheel", (evt) => {
-      const absY = Math.abs(evt.deltaY);
-      const absX = Math.abs(evt.deltaX);
-      if (absX === 0 && absY === 0) return;
-      evt.preventDefault();
-      const delta = absX > absY ? evt.deltaX : evt.deltaY;
-      doScroll(delta);
-    }, { passive: false });
-
     let isDragging = false;
     let startX = 0;
     let startScroll = 0;
@@ -140,5 +128,10 @@ window.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", toggleArrows);
   });
 });
+
+
+
+
+
 
 
