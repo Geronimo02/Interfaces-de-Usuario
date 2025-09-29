@@ -34,6 +34,10 @@
   border-radius: 1rem;
   padding: 2rem;
   box-shadow: 0 2px 8px #0001;
+  align-items: center;
+}
+.game-description{
+  margin-left: 3rem;
 }
 .game-gallery {
   overflow-x: auto;
