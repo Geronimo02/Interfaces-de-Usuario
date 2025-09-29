@@ -193,8 +193,23 @@
   background:#132032; border:1px solid var(--line); border-radius:999px; padding:3px 6px;
 }
 .logout{
-  display:block; text-align:left; padding:10px; border-radius:10px; border:1px solid var(--line);
-  background:#230f19; color:#ff6b6b; font-weight:700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #230f19;
+  color: #f36b6b; /* O el color que uses para "Cerrar Sesión" */
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 16px;
+  border-top: 1px solid #232b3b;
+  padding-top: 16px;
+  text-decoration: none;
+}
+.logout .profile-icon {
+  margin-right: 8px;
 }
 .profile-social{ display:flex; gap:10px; justify-content:flex-end; margin-top:8px; opacity:.9; flex-wrap: wrap; }
 
@@ -274,4 +289,16 @@
   width: 2rem;
   height: 2rem;
   object-fit: contain;
+}
+.profile-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0;
+  background: none;
+  border: none;
+  object-fit: contain;
+  flex-shrink: 0;
+  /* Sin fondo ni borde */
 }
