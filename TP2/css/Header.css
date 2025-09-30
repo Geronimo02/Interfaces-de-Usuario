@@ -13,7 +13,7 @@ html, body{
 .header{
   position: sticky; top: 0; z-index: 50;
   background: #122034; backdrop-filter: blur(6px) saturate(150%);
-  border-bottom: 1px solid var(--line);
+  /* border-bottom: 1px solid var(--line); */
   padding-top: max(env(safe-area-inset-top), 0px);
   width: 100%;
 }
@@ -59,8 +59,8 @@ html, body{
   letter-spacing: .6px; 
 }
 .brand-badge{
-  width: 3rem;
-  height: 3rem;
+  /* width: 3rem;
+  height: 3rem; */
   border-radius: 10px;
   justify-content: center;
   align-items: center;
@@ -178,6 +178,8 @@ html, body{
   box-shadow:var(--shadow-soft);
   padding:12px; display:none;
   max-width: 98vw;
+  left: 0;
+  right: auto;
 }
 .dropdown.open{ display: block; }
 .profile-head{
@@ -336,7 +338,7 @@ html, body{
 
 /* Desktop ancho: alinear dropdown al borde del container de 1120px */
 @media (min-width:1100px){
-  .dropdown{ right: calc((100vw - 1120px)/2 + 16px); }
+  .dropdown{ right: 16px; left: auto; }
 }
 
 /* ====== Desktop ====== */
@@ -427,7 +429,7 @@ html, body{
   height: 0.125rem;
   background: #334155;
   border: none;
-  margin: 24px 0 0 0;
+  /* margin: 24px 0 0 0; */
   align-self: center;
 }
 
@@ -496,4 +498,45 @@ html, body{
   line-height: normal;
   margin-bottom: 1rem;
   padding-left: 20px; /* igual al padding de los links */
+}
+
+/* Puedes agregar esto en tu archivo Footer.css o Header.css */
+.header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* O center si lo quieres centrado */
+  height: 3.25rem;            /* Ajusta según tu diseño */
+}
+.header-logo img {
+  width: 3.83769rem;
+  height: 3.25rem;
+  object-fit: contain;
+  border-radius: 50%;
+  background: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* .header-logo-img {
+  width: 5.875rem;
+  height: 2.3125rem;
+  flex-shrink: 0;
+  min-width: 1.125rem;
+  object-fit: contain;
+  display: block;
+} */
+
+.gamebit-title {
+
+  font-size: 2rem;
+  
+}
+
+@media (max-width: 960px) {
+  .dropdown {
+    right: 16px;
+    left: auto;
+  }
 }
