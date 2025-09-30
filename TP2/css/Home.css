@@ -1,17 +1,4 @@
 ﻿
-/* + separación hacia la siguiente sección */
-.section.destacados {
-  margin-bottom: 28px;
-  /* antes 32px */
-}
-
-/* más respiro entre secciones para que no se “pegue” */
-body.home .section+.section {
-  padding-top: 0;
-  border-top: none;
-  margin-top: 44px;
-  /* antes 36px */
-}
 
 /* Carrusel principal */
 .carousel {
@@ -270,7 +257,7 @@ body.home .game-card {
 
 body.home .game-card:hover {
   transform: translateY(-1px);
-  box-shadow: 0 30px 46px rgba(15, 23, 42, .5);
+  box-shadow: 0 26px 44px rgba(15,23,42,.52);
 }
 
 /* Badge en cards */
@@ -312,6 +299,12 @@ body.home .game-card .card-media {
   position: relative;
   max-height: 124px;
   overflow: hidden;
+}
+body.home .game-card .card-media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 body.home .game-card .card-content {
@@ -376,6 +369,7 @@ body.home .game-card .card-content .btn-row .btn.btn-cart {
   padding: 10px 5px;
   border-radius: 8px;
   font-size: 13px;
+  
 }
 
 body.home .game-card .card-content .btn-row .btn:only-child {
@@ -525,7 +519,3 @@ body.home .game-card {
 }
   
 }
-
-
-
-
