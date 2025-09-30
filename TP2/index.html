@@ -33,13 +33,17 @@
         <span>GAMEBIT</span>
       </a>
     </div>
-    <!-- Centro -->
+
+    <!-- Centro (buscador solo visible en desktop) -->
     <div class="header-group header-center">
-      <div class="search-bar">
-        <img src="assets/icons/lupa.svg" alt="buscar">
-        <input type="search" class="search-input" placeholder="Buscar juegos...">
+      <div class="header-search">
+        <div class="search-bar">
+          <img src="assets/icons/lupa.svg" alt="buscar">
+          <input type="search" class="search-input" placeholder="Buscar juegos...">
+        </div>
       </div>
     </div>
+
     <!-- Grupo Derecho -->
     <div class="header-group header-right">
       <button class="icon-btn" id="btnCart" aria-label="Carrito">
@@ -70,9 +74,12 @@
     </div>
     <button class="icon-btn" id="btnCloseMenu" aria-label="Cerrar menú">✕</button>
   </div>
+
+  <!-- Buscador dentro del menú (visible en mobile) -->
   <form class="search drawer-search" role="search" aria-label="Buscar juegos">
     <input type="search" placeholder="Buscar juegos..." />
   </form>
+
   <nav class="drawer-nav" aria-label="Categorías">
     <a href="#">🏅 Deportes</a>
     <a href="#">🏎️ Carreras</a>
@@ -119,6 +126,7 @@
 </aside>
 <div class="scrim" id="scrimProfile" hidden></div>
 
+
 <!-- ===== CONTENIDO ===== -->
 <main class="container main-home">
   <!-- Destacados -->
@@ -130,7 +138,7 @@
       <div class="carousel" aria-roledescription="carrusel">
         <div class="carousel-banner active">
           <span class="badge suscripcion">SUSCRIPCION</span>
-          <img src="https://dummyimage.com/960x280/f5b1cc/14123A&text=PEG+SOLITAIRE+HOMER+vs+BART"
+          <img src="/Interfaces-de-Usuario/TP2/assets/img/2.png"
                alt="Peg Solitaire Homer vs Bart">
           <!-- Texto real; oculto visualmente para no duplicar UI -->
           <div class="banner-meta sr-only">
@@ -141,7 +149,7 @@
 
         <div class="carousel-banner">
           <span class="badge standard">STANDARD</span>
-          <img src="https://dummyimage.com/960x280/b6e9ed/14123A&text=FRUITY+NINJA"
+          <img src="/Interfaces-de-Usuario/TP2/assets/img/221505_3.jpg"
                alt="Fruity Ninja">
           <div class="banner-meta sr-only">
             <h3 class="banner-title">Fruity Ninja</h3>
@@ -151,7 +159,7 @@
 
         <div class="carousel-banner">
           <span class="badge pro">PRO</span>
-          <img src="https://dummyimage.com/960x280/b6edb6/14123A&text=SOCCER"
+          <img src="/Interfaces-de-Usuario/TP2/assets/img/250830_3.jpg"
                alt="Soccer">
           <div class="banner-meta sr-only">
             <h3 class="banner-title">Soccer</h3>
@@ -190,7 +198,7 @@
           <div class="game-card suscripcion">
             <span class="badge suscripcion">SUSCRIPCION</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/edb6b6/14123A&text=Mountain+Bike" alt="Mountain Bike">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/251922_3.jpg" alt="Mountain Bike">
             </div>
             <div class="card-content">
               <div class="game-title">Mountain Bike</div>
@@ -205,7 +213,7 @@
           <div class="game-card standard">
             <span class="badge standard">STANDARD</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/f1f0b6/14123A&text=Fruity+Ninja" alt="Fruity Ninja">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/221505_3.jpg" alt="Fruity Ninja">
             </div>
             <div class="card-content">
               <div class="game-title">Fruity Ninja</div>
@@ -220,7 +228,7 @@
           <div class="game-card standard">
             <span class="badge standard">STANDARD</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/d0f0ff/14123A&text=Soccer" alt="Soccer">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/250830_3.jpg" alt="Soccer">
             </div>
             <div class="card-content">
               <div class="game-title">Soccer</div>
@@ -235,7 +243,7 @@
           <div class="game-card gratis">
             <span class="badge gratis">GRATIS</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/fddde2/14123A&text=Bowling" alt="Bowling">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/252578_3.jpg" alt="Bowling">
             </div>
             <div class="card-content">
               <div class="game-title">Bowling</div>
@@ -250,7 +258,7 @@
             <div class="game-card gratis">
             <span class="badge gratis">EN BIBLIOTECA</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/fddde2/14123A&text=Bowling" alt="Bowling">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/254334_3.jpg" alt="Bowling">
             </div>
             <div class="card-content">
               <div class="game-title">Bowling</div>
@@ -264,7 +272,7 @@
           <div class="game-card suscripcion">
             <span class="badge suscripcion">SUSCRIPCION</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/c1e5ff/14123A&text=Subway+Surface" alt="Subway Surface">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/254454_3.jpg" alt="Subway Surface">
             </div>
             <div class="card-content">
               <div class="game-title">Subway Surface</div>
@@ -294,7 +302,7 @@
           <div class="game-card suscripcion">
             <span class="badge suscripcion">SUSCRIPCION</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/ffbcd2/14123A&text=Rons+Bean" alt="Rons Bean">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/254518_3.jpg" alt="Rons Bean">
             </div>
             <div class="card-content">
               <div class="game-title">Rons Bean</div>
@@ -309,7 +317,7 @@
           <div class="game-card standard">
             <span class="badge standard">STANDARD</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/ffdcb6/14123A&text=Metralleant" alt="Metralleant">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/254590_3.jpg" alt="Metralleant">
             </div>
             <div class="card-content">
               <div class="game-title">Metralleant</div>
@@ -325,7 +333,7 @@
           <div class="game-card suscripcion">
             <span class="badge suscripcion">SUSCRIPCION</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/d2ffcf/14123A&text=Plantas+vs+Oi" alt="Plantas vs Oi">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/254590_3.jpg" alt="Plantas vs Oi">
             </div>
             <div class="card-content">
               <div class="game-title">Plantas vs Oi</div>
@@ -340,7 +348,7 @@
           <div class="game-card gratis">
             <span class="badge gratis">GRATIS</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/ffe7b6/14123A&text=Calabaz" alt="Calabaz">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/254644_3.jpg" alt="Calabaz">
             </div>
             <div class="card-content">
               <div class="game-title">Calabaz</div>
@@ -354,7 +362,7 @@
           <div class="game-card suscripcion">
             <span class="badge suscripcion">SUSCRIPCION</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/f1caff/14123A&text=La+coneja" alt="La coneja">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/254730_1.jpg" alt="La coneja">
             </div>
             <div class="card-content">
               <div class="game-title">La coneja</div>
@@ -384,7 +392,7 @@
           <div class="game-card suscripcion">
             <span class="badge suscripcion">SUSCRIPCION</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/c8d9ff/14123A&text=Crash+One" alt="Crash One">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/254644_3.jpg" alt="Crash One">
             </div>
             <div class="card-content">
               <div class="game-title">Crash One</div>
@@ -399,7 +407,7 @@
           <div class="game-card standard">
             <span class="badge standard">STANDARD</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/f0ccb6/14123A&text=Torinos+Race" alt="Torinos Race">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/254730_1.jpg" alt="Torinos Race">
             </div>
             <div class="card-content">
               <div class="game-title">Torinos Race</div>
@@ -414,7 +422,7 @@
           <div class="game-card suscripcion">
             <span class="badge suscripcion">SUSCRIPCION</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/ffe1b6/14123A&text=Race+for+Live" alt="Race for Live">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/223331_2.jpg" alt="Race for Live">
             </div>
             <div class="card-content">
               <div class="game-title">Race for Live</div>
@@ -429,7 +437,7 @@
           <div class="game-card standard">
             <span class="badge standard">STANDARD</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/cdf7ff/14123A&text=Race+and+Roll" alt="Race and Roll">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/252832_3.jpg" alt="Race and Roll">
             </div>
             <div class="card-content">
               <div class="game-title">Race and Roll</div>
@@ -444,7 +452,7 @@
           <div class="game-card suscripcion">
             <span class="badge suscripcion">SUSCRIPCION</span>
             <div class="card-media">
-              <img src="https://dummyimage.com/240x140/ffc7d1/14123A&text=Moto+Race" alt="Moto Race">
+              <img src="/Interfaces-de-Usuario/TP2/assets/img/254730_1.jpg" alt="Moto Race">
             </div>
             <div class="card-content">
               <div class="game-title">Moto Race</div>
