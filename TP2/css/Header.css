@@ -110,14 +110,16 @@ html, body{
 /* Barra de búsqueda */
 .search-bar{
   display: flex;
-  flex: 1 1 auto;
-  min-width: 0;
+  width: 100%;
+  max-width: 30rem;
   height: 2.5rem;
+  margin: 0 auto; /* Centra en su contenedor */
   padding: 0.5rem 1rem;
   align-items: center;
   gap: 0.625rem;
+  flex-shrink: 0;
   border-radius: 1.25rem;
-  border: 1px solid rgba(219,204,252,0);
+  border: 1px solid rgba(219, 204, 252, 0.00);
   background: #1B3A6F;
 }
 .search-bar img{
@@ -166,10 +168,14 @@ html, body{
   font-weight: 600;
   line-height: normal;
 }
+
 /* ===== Dropdown Perfil ===== */
 .dropdown{
   position:fixed; top:70px; right:16px; width:min(92vw,340px); z-index:75;
-  background:#0f1628; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow-soft);
+  background:#0f1628; 
+  border:1px solid var(--line); 
+  /* border-radius:14px;  */
+  box-shadow:var(--shadow-soft);
   padding:12px; display:none;
   max-width: 98vw;
 }
@@ -263,6 +269,7 @@ html, body{
   margin-top: 8px;
   opacity: .9;
   flex-wrap: wrap;
+  padding: 1rem;
 }
 .profile-social a {
   display: flex;
@@ -416,11 +423,11 @@ html, body{
 }
 
 .profile-divider {
-  width: 21.25rem;      /* 340px */
-  height: 0.125rem;     /* 2px */
+  width: 100%;
+  height: 0.125rem;
   background: #334155;
   border: none;
-  /* margin: 24px 0 0 0; */
+  margin: 24px 0 0 0;
   align-self: center;
 }
 
@@ -475,4 +482,18 @@ html, body{
   border-radius: 50%;
   margin-right: 12px;
   vertical-align: middle;
+}
+
+.drawer-nav h2 {
+  width: auto;
+  height: 2.375rem;
+  flex-shrink: 0;
+  color: #FFF;
+  font-family: Inter, sans-serif;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 1rem;
+  padding-left: 20px; /* igual al padding de los links */
 }
