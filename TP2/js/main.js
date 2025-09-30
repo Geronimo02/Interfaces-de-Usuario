@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
   
-=======
+
 // API Fetch y renderizado dinámico
 /*document.addEventListener("DOMContentLoaded", async () => {
   // === 1. Cargar destacados ===
