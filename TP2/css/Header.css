@@ -154,48 +154,71 @@ html, body{
 .drawer-head{ display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; }
 .drawer-nav{ display: flex; flex-direction: column; gap: 6px; }
 .drawer-nav a{
-  padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line);
-  background: #0a1324; color: var(--ink);
+  padding:10px 12px; border-radius:10px; border:1px solid var(--line);
+  background:#0a1324; color:var(--ink);
   word-break: break-word;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 /* ===== Dropdown Perfil ===== */
 .dropdown{
-  position: fixed; top: 70px; right: 16px; width: min(92vw, 340px); z-index: 75;
-  background: #0f1628; border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow-soft);
-  padding: 12px; display: none;
+  position:fixed; top:70px; right:16px; width:min(92vw,340px); z-index:75;
+  background:#0f1628; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow-soft);
+  padding:12px; display:none;
   max-width: 98vw;
 }
 .dropdown.open{ display: block; }
 .profile-head{
-  display: flex; gap: 10px; align-items: center;
-  padding: 6px 4px 10px; border-bottom: 1px solid var(--line);
+  display:flex; gap:10px; align-items:center;
+  padding:6px 4px 10px; border-bottom:1px solid var(--line);
   flex-wrap: wrap;
 }
 .avatar{
-  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
-  background: radial-gradient(60% 80% at 30% 20%, #5fa8ff, #1e3a8a);
-  box-shadow: 0 0 0 3px rgba(59,130,246,.28);
+  width:40px; height:40px; border-radius:50%; display:grid; place-items:center;
+  background:radial-gradient(60% 80% at 30% 20%, #5fa8ff, #1e3a8a);
+  box-shadow:0 0 0 3px rgba(59,130,246,.28);
 }
 .profile-nav{ display: flex; flex-direction: column; margin: 10px 0; }
 .profile-nav a{
-  display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  padding: 10px; border-radius: 10px; border: 1px solid var(--line); background: #0a1324; margin: 5px 0;
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:10px; border-radius:10px; border:1px solid var(--line); background:#0a1324; margin:5px 0;
   flex-wrap: wrap;
+  color: #B8BDC4;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 .profile-nav a em{
-  font-style: normal; font-weight: 800; font-size: 12px; color: #9cc7ff;
-  background: #132032; border: 1px solid var(--line); border-radius: 999px; padding: 3px 6px;
+  font-style:normal; font-weight:800; font-size:12px; color:#9cc7ff;
+  background:#132032; border:1px solid var(--line); border-radius:999px; padding:3px 6px;
 }
 .logout{
-  display: flex; align-items: center; gap: 12px; padding: 8px 0;
-  border-radius: 10px; border: 1px solid var(--line);
-  background: #230f19; color: #f36b6b;
-  font-weight: 600; font-size: 1.1rem; margin-top: 16px;
-  border-top: 1px solid #232b3b; padding-top: 16px; text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #230f19;
+  color: #f36b6b; /* O el color que uses para "Cerrar Sesión" */
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 16px;
+  border-top: 1px solid #232b3b;
+  padding-top: 16px;
+  text-decoration: none;
 }
-.logout .profile-icon{ margin-right: 8px; }
-.profile-social{ display: flex; gap: 10px; justify-content: flex-end; margin-top: 8px; opacity: .9; flex-wrap: wrap; }
+.logout .profile-icon {
+  margin-right: 8px;
+}
+.profile-social{ display:flex; gap:10px; justify-content:flex-end; margin-top:8px; opacity:.9; flex-wrap: wrap; }
 
 /* Scrim */
 .scrim{
@@ -277,7 +300,15 @@ html, body{
 #btnProfile.icon-btn svg{
   width: 2rem; height: 2rem; object-fit: contain;
 }
-.profile-icon{
-  width: 20px; height: 20px; display: inline-block; vertical-align: middle;
-  object-fit: contain; flex-shrink: 0;
+.profile-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0;
+  background: none;
+  border: none;
+  object-fit: contain;
+  flex-shrink: 0;
+  /* Sin fondo ni borde */
 }
