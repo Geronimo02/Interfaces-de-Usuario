@@ -13,7 +13,7 @@ html, body{
 .header{
   position: sticky; top: 0; z-index: 50;
   background: #122034; backdrop-filter: blur(6px) saturate(150%);
-  border-bottom: 1px solid var(--line);
+  /* border-bottom: 1px solid var(--line); */
   padding-top: max(env(safe-area-inset-top), 0px);
   width: 100%;
 }
@@ -59,8 +59,8 @@ html, body{
   letter-spacing: .6px; 
 }
 .brand-badge{
-  width: 3rem;
-  height: 3rem;
+  /* width: 3rem;
+  height: 3rem; */
   border-radius: 10px;
   justify-content: center;
   align-items: center;
@@ -110,14 +110,16 @@ html, body{
 /* Barra de búsqueda */
 .search-bar{
   display: flex;
-  flex: 1 1 auto;
-  min-width: 0;
+  width: 100%;
+  max-width: 30rem;
   height: 2.5rem;
+  margin: 0 auto; /* Centra en su contenedor */
   padding: 0.5rem 1rem;
   align-items: center;
   gap: 0.625rem;
+  flex-shrink: 0;
   border-radius: 1.25rem;
-  border: 1px solid rgba(219,204,252,0);
+  border: 1px solid rgba(219, 204, 252, 0.00);
   background: #1B3A6F;
 }
 .search-bar img{
@@ -166,12 +168,18 @@ html, body{
   font-weight: 600;
   line-height: normal;
 }
+
 /* ===== Dropdown Perfil ===== */
 .dropdown{
   position:fixed; top:70px; right:16px; width:min(92vw,340px); z-index:75;
-  background:#0f1628; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow-soft);
+  background:#0f1628; 
+  border:1px solid var(--line); 
+  /* border-radius:14px;  */
+  box-shadow:var(--shadow-soft);
   padding:12px; display:none;
   max-width: 98vw;
+  left: 0;
+  right: auto;
 }
 .dropdown.open{ display: block; }
 .profile-head{
@@ -263,6 +271,7 @@ html, body{
   margin-top: 8px;
   opacity: .9;
   flex-wrap: wrap;
+  padding: 1rem;
 }
 .profile-social a {
   display: flex;
@@ -329,7 +338,7 @@ html, body{
 
 /* Desktop ancho: alinear dropdown al borde del container de 1120px */
 @media (min-width:1100px){
-  .dropdown{ right: calc((100vw - 1120px)/2 + 16px); }
+  .dropdown{ right: 16px; left: auto; }
 }
 
 /* ====== Desktop ====== */
@@ -416,8 +425,8 @@ html, body{
 }
 
 .profile-divider {
-  width: 21.25rem;      /* 340px */
-  height: 0.125rem;     /* 2px */
+  width: 100%;
+  height: 0.125rem;
   background: #334155;
   border: none;
   /* margin: 24px 0 0 0; */
@@ -475,4 +484,59 @@ html, body{
   border-radius: 50%;
   margin-right: 12px;
   vertical-align: middle;
+}
+
+.drawer-nav h2 {
+  width: auto;
+  height: 2.375rem;
+  flex-shrink: 0;
+  color: #FFF;
+  font-family: Inter, sans-serif;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 1rem;
+  padding-left: 20px; /* igual al padding de los links */
+}
+
+/* Puedes agregar esto en tu archivo Footer.css o Header.css */
+.header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* O center si lo quieres centrado */
+  height: 3.25rem;            /* Ajusta según tu diseño */
+}
+.header-logo img {
+  width: 3.83769rem;
+  height: 3.25rem;
+  object-fit: contain;
+  border-radius: 50%;
+  background: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* .header-logo-img {
+  width: 5.875rem;
+  height: 2.3125rem;
+  flex-shrink: 0;
+  min-width: 1.125rem;
+  object-fit: contain;
+  display: block;
+} */
+
+.gamebit-title {
+
+  font-size: 2rem;
+  
+}
+
+@media (max-width: 960px) {
+  .dropdown {
+    right: 16px;
+    left: auto;
+  }
 }
