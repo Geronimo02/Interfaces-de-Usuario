@@ -1,6 +1,4 @@
-﻿
-
-/* Carrusel principal */
+﻿/* Carrusel principal */
 .carousel {
   position: relative;
   border: 1.5px solid rgba(96, 165, 250, .5);
@@ -321,7 +319,10 @@ body.home .game-card .card-content {
 body.home .game-card .card-content .game-title {
   font-size: 20px;
   font-weight: 800;
-
+  white-space: nowrap;         /* Evita que el texto salte a la siguiente línea */
+  overflow: hidden;            /* Oculta el texto que se desborda */
+  text-overflow: ellipsis;     /* Muestra "..." al final del texto cortado */
+  width: 100%;                 /* Asegúrate de que el título ocupe todo el ancho posible del contenedor */
 }
 
 body.home .game-card .card-content .game-desc {
