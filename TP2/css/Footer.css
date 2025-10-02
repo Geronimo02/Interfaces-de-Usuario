@@ -3,10 +3,11 @@
    ============================= */
 
 /* Wrapper <footer> */
-footer, .footer-block{
+footer, .footer-block {
   position: relative;
   margin-top: 37px;
-  background: #122034;
+  /* Elimina el fondo sólido: */
+  /* background: #122034; */
   box-shadow: 0 10px 24px rgba(0,0,0,.28);
   overflow: hidden;
   isolation: isolate;
@@ -14,27 +15,33 @@ footer, .footer-block{
   align-items: center;
 }
 
+.footer-block {
+  position: relative;
+  background: url('../assets/img/footer escalonado.svg') no-repeat top center;
+  background-size: cover;
+  overflow: hidden;
+}
+
 /* Brillo superior sutil */
-footer::before{
-  content:"";
-  position:absolute;
-  inset: -80px -20% auto -20%;
-  height: 140px;
-  background: radial-gradient(60% 80% at 50% 100%, rgba(59,130,246,.18), transparent 60%);
-  pointer-events: none;
-  z-index: 0;
+.footer-block::after {
+  content: none;
+}
+
+/* Línea escalonada SVG */
+.footer-block::before {
+  content: none;
 }
 
 /* Contenedor centrado */
-.footer-inner{
+.footer-inner {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 26px 22px;
+  max-width: none;      /* Elimina el ancho máximo */
+  margin: 0;            /* Elimina el centrado */
+  padding: 6rem 22px;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 240px 1fr;
-  column-gap: 26px;
+  column-gap: 16px;
   row-gap: 0;
 }
 
@@ -42,17 +49,20 @@ footer::before{
 .footer-meta{
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 1.5rem;
 }
 
 /* Logo */
 .puck.logo-svg{
-  width: 48px; height: 48px;
+  width: 3.83769rem;
+  height: 3.25rem;
+  flex-shrink: 0;
   border-radius: 50%;
-  display: grid; place-items:center;
-  background: conic-gradient(from 210deg, #5ba3ff, #2b46d6 60%, #5ba3ff);
-  box-shadow: 0 0 0 6px rgba(59,130,246,.10), inset 0 -8px 20px rgba(0,0,0,.25);
-  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  display: grid;
+  place-items: center;
+  background: none; /* Elimina el gradiente */
+  box-shadow: none; /* Elimina la sombra */
+  transition: transform .18s ease;
 }
 .puck.logo-svg svg{
   width: 26px; height: 26px;
@@ -64,19 +74,42 @@ footer::before{
 }
 
 /* Chip de idioma */
-.lang-chip{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:8px 12px;
-  border-radius:999px;
-  background:#0a1324;
-  color:#cfe3ff;
-  border:1px solid rgba(154,167,191,.22);
-  font-weight:700;
-  letter-spacing:.2px;
-  cursor:default;
+.lang-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: none;
+  color: rgba(255, 255, 255, 0.73);
+  border: 1px solid #C0BBBB;
+  font-family: Inter, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: .2px;
+  cursor: default;
   box-shadow: inset 0 0 0 1px rgba(59,130,246,.12);
+  height: 3rem;
+  width: 12rem;         /* Ajusta el ancho al contenido */
+  min-width: unset;    /* Elimina el mínimo ancho */
+  justify-content: flex-start;
+}
+
+.lang-chip .flag {
+  width: 1.85rem;
+  height: 1.85rem;
+  flex-shrink: 0;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.lang-chip .chev {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 
 /* Redes sociales */
@@ -93,7 +126,28 @@ footer::before{
   color:#cfe3ff; background:#0a1324;
   border:1px solid rgba(154,167,191,.22);
   transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* Nueva clase para el ícono de la red social */
+.social-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  border-radius: 0 !important;    /* Sin redondeo */
+  background: none !important;    /* Sin fondo */
+  box-shadow: none !important;    /* Sin sombra */
+  border: none !important;        /* Sin borde */
+  display: block;
+  transition: filter 0.15s;
+}
+
 .social-btn:hover{
   transform: translateY(-2px);
   background:#0e1730;
@@ -104,7 +158,7 @@ footer::before{
 .footer-cols{
   display:grid;
   grid-template-columns: repeat(3, minmax(180px, 1fr));
-  gap: 22px;
+  gap: 6px;
   align-content: start;
 }
 .footer-cols .col{ min-width:180px; }
@@ -118,13 +172,34 @@ footer::before{
 }
 .footer-cols a{
   display:block;
-  color: #9aa7bf;
+  color: #4A6782;
   padding: 6px 0;
   transition: color .15s ease, transform .15s ease;
+  font-size: 1.15625rem;
+  font-style: normal;
+  font-weight: 700;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  
 }
 .footer-cols a:hover{
-  color: #e6eaf2;
+  color: #4A6782;;
   transform: translateX(2px);
+}
+.footer-cols .col h4 {
+  display: flex;
+  /* width: 8.75rem; */
+  height: 0.92219rem;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #C8D2E4;;
+  font-family: Inter, sans-serif;
+  font-size: 1.15625rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 1.5rem;
 }
 
 /* ===== Breakpoints ===== */
@@ -152,8 +227,9 @@ footer::before{
 /* Phablets / móviles anchos: una sola columna de enlaces */
 @media (max-width: 720px){
   .footer-cols{ grid-template-columns: 1fr; gap: 16px; }
-  .footer-meta{ align-items: center; text-align: center; }
-  .social{ justify-content: center; }
+  .footer-meta{ align-items: flex-start; text-align: left; }
+  .social{ justify-content: flex-start; }
+  .lang-chip{ justify-content: flex-start; margin-left: 0; }
 }
 
 /* Móviles chicos: más aire y tamaños cómodos */
@@ -161,4 +237,17 @@ footer::before{
   .footer-inner{ padding: 20px 12px; row-gap: 20px; }
   .lang-chip{ font-size: 13px; padding: 6px 10px; }
   .social-btn{ width: 32px; height: 32px; }
+  .social { margin-bottom: 3rem; }
+}
+
+.brand-badge.logo-img,
+.brand-badge.logo-img img {
+  background: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: block;
+  border-radius: 50%;
+  width: 3rem;
 }

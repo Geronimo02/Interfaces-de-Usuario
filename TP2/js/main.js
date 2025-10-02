@@ -52,6 +52,46 @@
     }
   });
 })();
+
+
+
+
+// Mejora progresiva: sincroniza meta leyendo del DOM (no de data-*) -->
+
+document.addEventListener('DOMContentLoaded', () => {
+  const carousel = document.querySelector('.section.destacados .carousel');
+  if (!carousel) return;
+
+  const titleEl = document.querySelector('.destacados-title');
+  const descEl  = document.querySelector('.destacados-desc');
+  const banners = Array.from(carousel.querySelectorAll('.carousel-banner'));
+
+  const getActive = () => carousel.querySelector('.carousel-banner.active') || banners[0];
+
+  function applyMetaFrom(banner) {
+    const t = banner.querySelector('.banner-title')?.textContent?.trim() || '';
+    const d = banner.querySelector('.banner-desc')?.innerHTML?.trim() || '';
+    if (titleEl) titleEl.textContent = t;
+    if (descEl)  descEl.innerHTML   = d;
+  }
+
+  // Inicial (por si el HTML precargado fuera distinto)
+  applyMetaFrom(getActive());
+
+  // Botones del carrusel
+  const prev = carousel.querySelector('.carousel-prev');
+  const next = carousel.querySelector('.carousel-next');
+  function updateSoon(){ setTimeout(() => applyMetaFrom(getActive()), 0); }
+  prev && prev.addEventListener('click', updateSoon);
+  next && next.addEventListener('click', updateSoon);
+
+  // Por si el cambio de slide lo hace otro script/auto-rotación
+  const obs = new MutationObserver(updateSoon);
+  banners.forEach(b => obs.observe(b, { attributes: true, attributeFilter: ['class'] }));
+});
+
+  
+
 // API Fetch y renderizado dinámico
 /*document.addEventListener("DOMContentLoaded", async () => {
   // === 1. Cargar destacados ===

@@ -22,12 +22,21 @@
 /*--------------*/
 /*  Contenedor  */
 /*--------------*/
-.container {
-  width: 100%;
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 0 16px
+/* el container general se queda igual */
+.container{
+  width:100%;
+  max-width: 1250px;
+  margin:0 auto;
+  padding:0 16px;
 }
+
+/* pero en el header, que sea full-bleed */
+.header .container,
+.header .inner{
+  max-width:none;
+  padding-inline:16px;   /* si querés bordes respirando */
+}
+
 
 /*-----------*/
 /*  Botones  */
@@ -80,30 +89,14 @@
   background: linear-gradient(90deg, var(--secondary), #6f4ac5)
 }
 
-/* Espaciado general de la pÃ¡gina */
-body.home main {
-  padding: 18px 0 60px;
-  /* aire arriba y abajo del contenido */
-}
 
-/* Secciones separadas entre sÃ­ */
-body.home .section {
-  margin-top: 28px;
-  /* mÃ¡s alto que los 22px globales */
-}
 
-body.home .section:first-of-type {
-  margin-top: 16px;
-  /* la primera, un poco menos */
-}
-
-/* lÃ­nea sutil entre bloques (no antes de la primera) */
 body.home .section+.section {
   padding-top: 16px;
-  border-top: 1px solid var(--line);
+  border-top: 2px solid var(--line);
+  margin-top: 16px;
 }
 
-/* HÃ©roe + barra inferior (como en tu mock) */
 body.home .carousel {
   margin-bottom: 10px;
 }
@@ -120,30 +113,4 @@ body.home .progress-slim {
   margin-top: 6px;
 }
 
-/* SVG containers */
-.brand-badge.logo-svg,
-.puck.logo-svg{
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-  background: radial-gradient(60% 80% at 30% 20%, #3B82F6, #1E40AF);
-  box-shadow: 0 0 0 3px rgba(59,130,246,.22);
-}
-
-/* TamaÃ±o header */
-.brand-badge.logo-svg{
-  width: 30px; height: 30px;
-  border-radius: 50%;
-}
-
-/* TamaÃ±o footer */
-.puck.logo-svg{
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  box-shadow: 0 0 0 6px rgba(59,130,246,.10), inset 0 -8px 16px rgba(0,0,0,.20);
-}
-
-/* Ajuste del propio SVG adentro (que no se deforme) */
-.brand-badge.logo-svg svg{ width: 20px; height: 20px; }
-.puck.logo-svg svg{ width: 26px; height: 26px; }
 
