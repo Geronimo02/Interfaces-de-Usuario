@@ -9,13 +9,13 @@
         <title>GAMEBIT</title>
 
         <!-- CSS modularizado -->
-    <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Variables.css" />
-    <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Utils.css" />
-    <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Header.css" />
-    <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Footer.css" />
-    <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/SVGContainers.css" />
-    <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Home.css" />
-    <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Game.css" />
+        <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Variables.css" />
+        <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Utils.css" />
+        <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Header.css" />
+        <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Footer.css" />
+        <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/SVGContainers.css" />
+        <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Home.css" />
+        <link rel="stylesheet" href="/Interfaces-de-Usuario/TP2/css/Game.css" />
     </head>
 
 <body>
@@ -68,42 +68,80 @@
         <section class="game-fullwidth">
             <!-- Aquí puedes insertar un iframe, canvas o el juego embebido -->
             <div id="game-area">
-                <p style="color:white;">Aquí se ejecutará el juego a pantalla completa.</p>
+                <p style="color:white;">Juego a pantalla completa.</p>
             </div>
         </section>
-
+        <h2>Peg Solitaire: Los Simpson</h2>
         <!-- Contenedores inferiores -->
         <section class="game-details-column">
             <!-- Descripción y controles -->
             <div class="game-desc-controls">
-                <h2>Descripción del juego</h2>
-                <p>Aquí va la descripción del juego, historia, objetivos, etc.</p>
-                <h3>Controles</h3>
+                <h3>🎮 Controles</h3>
                 <ul>
-                    <li>Flechas: Mover</li>
-                    <li>Espacio: Saltar</li>
-                    <li>Enter: Acción</li>
+                    <li><strong>Teclas de flecha:</strong> Mover ficha</li>
+                    <li><strong>Barra espaciadora:</strong> Saltar ficha</li>
+                    <li><strong>Ctrl + Z:</strong> Deshacer movimiento</li>
+                    <li><strong>R:</strong> Reiniciar juego</li>
+                    <li><strong>M:</strong> Silenciar/activar sonido</li>
                 </ul>
+                <h3>🎮 Descripción del juego</h3>
+                <p class="game-description">Peg Solitaire clásico reinventado con la temática de Los Simpson. El tablero
+                    representa la sala de
+                    la familia Simpson, con Homero y Bart como las fichas principales.
+                    Cada movimiento es un duelo entre padre e hijo, donde la estrategia decide quién queda en pie.</p>
+                <h3>🎯 Objetivo</h3>
+                <ul>
+                    <li>El objetivo es el mismo que en el Peg Solitaire clásico: dejar la menor cantidad posible de
+                        fichas en el tablero.
+                        En esta versión, los jugadores ven cómo Bart y Homero saltan entre sí, eliminándose con cada
+                        jugada.
+                        Cuando un personaje desaparece, aparece un efecto característico, como el clásico “¡D’oh!” de
+                        Homero.</li>
+                </ul>
+                <h3>⚙️ Reglas e instrucciones</h3>
+                <ol>
+                    <li>El tablero está compuesto por agujeros en forma de cruz, con las fichas distribuidas en ellos
+                    </li>
+                    <li>Cada ficha puede saltar sobre otra adyacente (horizontal o vertical), cayendo en un hueco libre.
+                    </li>
+                    <li>El juego continúa hasta que no haya más movimientos posibles.</li>
+                    <li>La ficha “saltada” se elimina (desaparece del tablero).</li>
+                </ol>
             </div>
-            <!-- Galería de fotos -->
-            <div class="game-gallery">
-                <h2>Galería</h2>
-                <div class="gallery">
-                    <img src="https://dummyimage.com/160x100/ccc/14123A&text=Foto+1" alt="Foto 1">
-                    <img src="https://dummyimage.com/160x100/eee/14123A&text=Foto+2" alt="Foto 2">
-                    <img src="https://dummyimage.com/160x100/ddd/14123A&text=Foto+3" alt="Foto 3">
+            <div class="block">
+                <!-- Galería de fotos -->
+                <div class="game-gallery">
+            <h2>Galería</h2>
+            <div class="banner" style="position: relative;">
+            <button class="gallery-nav gallery-nav-left" aria-label="Anterior" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:2;background:rgba(0,0,0,0.4);border:none;border-radius:50%;width:32px;height:32px;color:white;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+                &#8592;
+            </button>
+            <div class="slider" style="--quantity: 8">
+                <div class="item" style="--position: 1"><img src="/Interfaces-de-Usuario/TP2/assets/img/17073_3.jpg" alt="Foto 1"></div>
+                <div class="item" style="--position: 2"><img src="/Interfaces-de-Usuario/TP2/assets/img/252578_3.jpg" alt="Foto 2"></div>
+                <div class="item" style="--position: 3"><img src="/Interfaces-de-Usuario/TP2/assets/img/254334_3.jpg" alt="Foto 3"></div>
+                <div class="item" style="--position: 4"><img src="/Interfaces-de-Usuario/TP2/assets/img/251922_3.jpg" alt="Foto 4"></div>
+                <div class="item" style="--position: 5"><img src="/Interfaces-de-Usuario/TP2/assets/img/250888_3.jpg" alt="Foto 5"></div>
+                <div class="item" style="--position: 6"><img src="/Interfaces-de-Usuario/TP2/assets/img/254590_3.jpg" alt="Foto 6"></div>
+                <div class="item" style="--position: 7"><img src="/Interfaces-de-Usuario/TP2/assets/img/254564_3.jpg" alt="Foto 7"></div>
+                <div class="item" style="--position: 8"><img src="/Interfaces-de-Usuario/TP2/assets/img/254518_3.jpg" alt="Foto 8"></div>
+            </div>
+            <button class="gallery-nav gallery-nav-right" aria-label="Siguiente" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:2;background:rgba(0,0,0,0.4);border:none;border-radius:50%;width:32px;height:32px;color:white;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+                &#8594;
+            </button>
+            </div>
                 </div>
-            </div>
-            <!-- Sección de comentarios -->
-            <div class="game-comments">
-                <h2>Comentarios</h2>
-                <form>
-                    <textarea placeholder="Escribe tu comentario..."></textarea>
-                    <button class="btn" type="submit">Enviar</button>
-                </form>
-                <div class="comments-list">
-                    <div><strong>Usuario1:</strong> ¡Gran juego!</div>
-                    <div><strong>Usuario2:</strong> Me encantó la jugabilidad.</div>
+                <!-- Sección de comentarios -->
+                <div class="game-comments">
+                    <h2>Comentarios</h2>
+                    <form>
+                        <textarea placeholder="Escribe tu comentario..."></textarea>
+                        <button class="btn" type="submit">Enviar</button>
+                    </form>
+                    <div class="comments-list">
+                        <div><strong>Usuario1:</strong> ¡Gran juego!</div>
+                        <div><strong>Usuario2:</strong> Me encantó la jugabilidad.</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -174,4 +212,6 @@
     </footer>
 </body>
 
+</body>
+<script src="/Interfaces-de-Usuario/TP2/js/gallery.js"></script>
 </html>

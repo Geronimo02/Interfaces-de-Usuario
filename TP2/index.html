@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -13,182 +14,15 @@
   <link rel="stylesheet" href="css/SVGContainers.css" />
   <link rel="stylesheet" href="css/Home.css" />
 </head>
+
 <body class="home">
 
-<header class="header" id="appHeader">
-  <div class="container inner header-flex">
-    <!-- Grupo Izquierdo -->
-    <div class="header-group header-left">
-      <button class="icon-btn" id="btnMenu" aria-label="Abrir menú"
-              aria-haspopup="true" aria-controls="sidebarNav" aria-expanded="false">
-        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-             fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M3 6h18M3 12h18M3 18h18"/>
-        </svg>
-      </button>
-      <a class="brand" href="#" aria-label="GAMEBIT · Inicio">
-        <span class="brand-badge logo-img" aria-hidden="true">
-          <img src="assets/icons/logo.png" alt="" width="32" height="32" />
-        </span>
-        <span>GAMEBIT</span>
-      </a>
-    </div>
-
-    <!-- Centro (buscador solo visible en desktop) -->
-    <div class="header-group header-center">
-      <div class="header-search">
-        <div class="search-bar">
-          <img src="assets/icons/lupa.svg" alt="buscar">
-          <input type="search" class="search-input" placeholder="Buscar juegos...">
-        </div>
-      </div>
-    </div>
-
-    <!-- Grupo Derecho -->
-    <div class="header-group header-right">
-      <button class="icon-btn" id="btnCart" aria-label="Carrito">
-        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-           fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="9" cy="20" r="1"/><circle cx="16" cy="20" r="1"/>
-          <path d="M3 4h2l2.4 12.3A2 2 0 0 0 9.4 18H17a2 2 0 0 0 2-1.6L21 8H6"/>
-        </svg>
-      </button>
-      <button class="icon-btn" id="btnProfile" aria-label="Abrir perfil"
-          aria-haspopup="true" aria-controls="profileDropdown" aria-expanded="false">
-        <img src="assets/icons/usuario.png" alt="Perfil" width="24" height="24" />
-      </button>
-    </div>
-  </div>
-</header>
-
-<!-- Drawer (menú hamburguesa) -->
-<aside class="drawer" id="sidebarNav" aria-hidden="true">
-  <div class="drawer-head">
-    <div class="brand" style="gap:8px">
-      <span class="brand-badge logo-svg" aria-hidden="true">
-        <svg fill="#14123A" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M21.986 9.74a3.193 3.193 0 0 0-.008-.088A5.003 5.003 0 0 0 17 5H7a4.97 4.97 0 0 0-4.987 4.737c-.01.079-.013.161-.013.253v6.51c0 .925.373 1.828 1.022 2.476A3.524 3.524 0 0 0 5.5 20c1.8 0 2.504-1 3.5-3 .146-.292.992-2 3-2 1.996 0 2.853 1.707 3 2 1.004 2 1.7 3 3.5 3 .925 0 1.828-.373 2.476-1.022A3.524 3.524 0 0 0 22 16.5V10c0-.095-.004-.18-.014-.26zM7 12.031a2 2 0 1 1-.001-3.999A2 2 0 0 1 7 12.031zm10-5a1 1 0 1 1 0 2 1 1 0 1 1 0-2zm-2 4a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2 2a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2-2a1 1 0 1 1 0-2 1 1 0 1 1 0 2z"></path>
-        </svg>
-      </span>
-      <span>GAMEBIT</span>
-    </div>
-    <button class="icon-btn" id="btnCloseMenu" aria-label="Cerrar menú">✕</button>
-  </div>
-  <form class="search drawer-search" role="search" aria-label="Buscar juegos">
-    <input type="search" placeholder="Buscar juegos..." />
-  </form> 
-
-  <nav class="drawer-nav" aria-label="Categorías">
-    <a href="#">🏅 Deportes</a>
-    <a href="#">🏎️ Carreras</a>
-    <a href="#">🕹️ Clásicos</a>
-    <a href="#">👥 Multijugador</a>
-    <a href="#">🧭 Aventura</a>
-    <a href="#">🍳 Cocina</a>
-    <a href="#">🧠 Cartas</a>
-    <a href="#">🧒 Infantiles</a>
-    <a href="#">🔥 Acción</a>
-    <a href="#">🧩 Mesa</a>
-  </nav>
-</aside>
-<div class="scrim" id="scrimMenu" hidden></div>
-
-<!-- Dropdown Perfil -->
-<aside class="dropdown" id="profileDropdown" aria-hidden="true">
-  <div class="profile-head">
-    <div class="avatar">
-      <img src="assets/icons/Usuario3.svg" alt="Avatar" />
-    </div>
-    <div>
-      <strong>Robert Plant</strong>
-      <div class="muted" style="font-size:13px">Nivel 42 · Pro Player</div>
-    </div>
-  </div>
-  <nav class="profile-nav">
-    <a href="#" class="profile-btn profile-main">
-      <img class="profile-icon" src="assets/icons/User-1.png" alt="" width="20" height="20">
-      Mi Perfil
-    </a>
-    <a href="#"><img class="profile-icon" src="assets/icons/joystick.png" alt="" width="20" height="20"> Mis Juegos <em>12</em></a>
-    <a href="#"><img class="profile-icon" src="assets/icons/trofeo.png" alt="" width="20" height="20"> Logros <em>3</em></a>
-    <a href="#"><img class="profile-icon" src="assets/icons/multijugador.png" alt="" width="20" height="20"> Amigos <em>5</em></a>
-    <a href="#"><img class="profile-icon" src="assets/icons/notificaccion.png" alt="" width="20" height="20"> Notificaciones <em>2</em></a>
-    <a href="#"><img class="profile-icon" src="assets/icons/ajustes.png" alt="" width="20" height="20"> Configuración</a>
-  </nav>
-  <hr class="profile-divider">
-  <a class="logout" href="#">
-    <img class="profile-icon" src="assets/icons/salir.png" alt="" width="20" height="20">
-    Cerrar Sesión
-  </a>
-  <hr class="profile-divider">
-  <div class="profile-social">
-    <a href="#" aria-label="Instagram">
-      <img src="assets/icons/instagram.png" alt="Instagram" width="20" height="20">
-    </a>
-    <a href="#" aria-label="X">
-      <img src="assets/icons/twiter.png" alt="X" width="20" height="20">
-    </a>
-    <a href="#" aria-label="Facebook">
-      <img src="assets/icons/facebook2.png" alt="Facebook" width="20" height="20">
-    </a>
-  </div>
-</aside>
-<div class="scrim" id="scrimProfile" hidden></div>
 
 
-<!-- ===== CONTENIDO ===== -->
-<main class="container main-home">
-  <!-- Destacados -->
-  <section class="section destacados">
-    <div class="section-card feature-card">
-      <h2>Destacados</h2>
-
-      <!-- Carrusel sin data-*: metadatos “a la antigua” dentro del banner -->
-      <div class="carousel" aria-roledescription="carrusel">
-        <div class="carousel-banner active">
-          <span class="badge suscripcion">SUSCRIPCION</span>
-          <img src="/Interfaces-de-Usuario/TP2/assets/img/2.png"
-               alt="Peg Solitaire Homer vs Bart">
-          <!-- Texto real; oculto visualmente para no duplicar UI -->
-          <div class="banner-meta sr-only">
-            <h3 class="banner-title">Peg Solitaire Homer vs Bart</h3>
-            <p class="banner-desc"><span class="tach">$9.99</span> GRATIS con suscripción</p>
-          </div>
+          <button class="carousel-prev" aria-label="Anterior">&#9664;</button>
+          <button class="carousel-next" aria-label="Siguiente">&#9654;</button>
         </div>
 
-        <div class="carousel-banner">
-        <div class="carousel-banner"
-             data-title="Fruity Ninja"
-             data-desc="<span class='tach'>$3.99</span> GRATIS con suscripcion"
-             data-progress="45">
-
-          <span class="badge standard">STANDARD</span>
-          <img src="/Interfaces-de-Usuario/TP2/assets/img/221505_3.jpg"
-               alt="Fruity Ninja">
-          <div class="banner-meta sr-only">
-            <h3 class="banner-title">Fruity Ninja</h3>
-            <p class="banner-desc"><span class="tach">$3.99</span> GRATIS con suscripción</p>
-          </div>
-        </div>
-
-        <div class="carousel-banner">
-
-        <div class="carousel-banner"
-             data-title="Soccer"
-             data-desc="<span class='tach'>$3.99</span> GRATIS con suscripcion"
-             data-progress="55">
-          <span class="badge pro">PRO</span>
-          <img src="/Interfaces-de-Usuario/TP2/assets/img/250830_3.jpg"
-               alt="Soccer">
-          <div class="banner-meta sr-only">
-            <h3 class="banner-title">Soccer</h3>
-            <p class="banner-desc"><span class="tach">$3.99</span> GRATIS con suscripción</p>
-          </div>
-        </div>
-
-        <button class="carousel-prev" aria-label="Anterior">&#9664;</button>
-        <button class="carousel-next" aria-label="Siguiente">&#9654;</button>
-      </div>
 
       <!-- Meta visible precargada (no requiere JS) -->
       <div class="destacados-meta">
@@ -199,10 +33,11 @@
         <div class="destacados-actions">
           <button class="btn btn-play">Jugar</button>
           <button class="btn btn-cart">Al Carrito</button>
+
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
 
   <!-- Accion -->
   <section class="section categoria-accion">
@@ -299,10 +134,12 @@
               <div class="btn-row">
                 <button class="btn btn-play">Jugar</button>
                 <button class="btn btn-cart">Al Carrito</button>
+
               </div>
             </div>
           </div>
         </div>
+
         <button class="hc-btn hc-next" aria-label="Siguiente">&#9654;</button>
       </div>
     </div>
@@ -389,10 +226,12 @@
               <div class="btn-row">
                 <button class="btn btn-play">Jugar</button>
                 <button class="btn btn-cart">Al Carrito</button>
+
               </div>
             </div>
           </div>
         </div>
+
         <button class="hc-btn hc-next" aria-label="Siguiente">&#9654;</button>
       </div>
     </div>
@@ -479,10 +318,12 @@
               <div class="btn-row">
                 <button class="btn btn-play">Jugar</button>
                 <button class="btn btn-cart">Al Carrito</button>
+
               </div>
             </div>
           </div>
         </div>
+
         <button class="hc-btn hc-next" aria-label="Siguiente">&#9654;</button>
       </div>
     </div>
@@ -567,10 +408,12 @@
               <div class="game-desc">GRATIS</div>
               <div class="btn-row">
                 <button class="btn btn-play">Jugar</button>
+
               </div>
             </div>
           </div>
         </div>
+
         <button class="hc-btn hc-next" aria-label="Siguiente">&#9654;</button>
       </div>
     </div>
@@ -601,14 +444,57 @@
         <a href="#" aria-label="X" class="social-btn">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M4 4l16 16M20 4L8 20"></path>
+
           </svg>
-        </a>
-        <a href="#" aria-label="Facebook" class="social-btn">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-            <path d="M13.5 22v-7h2.4l.4-3h-2.8V9.5c0-.9.3-1.5 1.6-1.5H16V5.2c-.3 0-1.2-.2-2.3-.2-2.2 0-3.7 1.3-3.7 3.8V12H7.6v3h2.4v7h3.5z"></path>
-          </svg>
-        </a>
+        </div>
+        <button class="lang-chip" aria-label="Cambiar idioma">
+          <span class="flag">🇪🇸</span>
+          <span>Español</span>
+          <span class="chev">▾</span>
+        </button>
+        <div class="social">
+          <a href="#" aria-label="Instagram" class="social-btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+              <circle cx="12" cy="12" r="3.5"></circle>
+              <circle cx="17.5" cy="6.5" r="1"></circle>
+            </svg>
+          </a>
+          <a href="#" aria-label="X" class="social-btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4l16 16M20 4L8 20"></path>
+            </svg>
+          </a>
+          <a href="#" aria-label="Facebook" class="social-btn">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path
+                d="M13.5 22v-7h2.4l.4-3h-2.8V9.5c0-.9.3-1.5 1.6-1.5H16V5.2c-.3 0-1.2-.2-2.3-.2-2.2 0-3.7 1.3-3.7 3.8V12H7.6v3h2.4v7h3.5z">
+              </path>
+            </svg>
+          </a>
+        </div>
       </div>
+      <!-- Columna derecha -->
+      <nav class="footer-cols" aria-label="Enlaces del sitio">
+        <div class="col">
+          <h4>Conózcanos</h4>
+          <a href="#">Sobre nosotros</a>
+          <a href="#">InterGames for Developers</a>
+          <a href="#">InterGames</a>
+          <a href="#">Empleos</a>
+        </div>
+        <div class="col">
+          <h4>Privacidad y términos</h4>
+          <a href="#">Centro de Privacidad</a>
+          <a href="#">Términos y condiciones</a>
+        </div>
+        <div class="col">
+          <h4>Ayuda y asistencia</h4>
+          <a href="#">Preguntas frecuentes</a>
+          <a href="#">Contacto</a>
+          <a href="#">Soporte Técnico</a>
+        </div>
+      </nav>
     </div>
     <!-- Columna derecha -->
     <nav class="footer-cols" aria-label="Enlaces del sitio">
@@ -641,3 +527,4 @@
 
 </body>
 </html>
+

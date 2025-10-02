@@ -1,4 +1,4 @@
-﻿
+
 
 /* Carrusel principal */
 .carousel {
@@ -84,11 +84,13 @@
 
 .carousel-prev {
   left: clamp(10px, 2vw, 22px);
+
 }
 
 .carousel-next {
   right: clamp(10px, 2vw, 22px);
 }
+
 
 /* Meta (título/descr + botones) con grid */
 .destacados-meta {
@@ -258,6 +260,7 @@ body.home .game-card {
 body.home .game-card:hover {
   transform: translateY(-1px);
   box-shadow: 0 26px 44px rgba(15,23,42,.52);
+
 }
 
 /* Badge en cards */
@@ -300,12 +303,7 @@ body.home .game-card .card-media {
   max-height: 124px;
   overflow: hidden;
 }
-body.home .game-card .card-media img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
+
 
 body.home .game-card .card-content {
   display: grid;
@@ -370,6 +368,7 @@ body.home .game-card .card-content .btn-row .btn.btn-cart {
   border-radius: 8px;
   font-size: 13px;
   
+
 }
 
 body.home .game-card .card-content .btn-row .btn:only-child {
