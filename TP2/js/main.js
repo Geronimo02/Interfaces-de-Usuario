@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
   banners.forEach(b => obs.observe(b, { attributes: true, attributeFilter: ['class'] }));
 });
 
+  
 
 // API Fetch y renderizado dinámico
 /*document.addEventListener("DOMContentLoaded", async () => {
@@ -156,5 +157,4 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error(`Error cargando categoría ${cat}:`, e);
     }
 })()*/;
-
 

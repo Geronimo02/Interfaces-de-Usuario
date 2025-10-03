@@ -13,7 +13,7 @@ html, body{
 .header{
   position: sticky; top: 0; z-index: 50;
   background: #122034; backdrop-filter: blur(6px) saturate(150%);
-  border-bottom: 1px solid var(--line);
+  /* border-bottom: 1px solid var(--line); */
   padding-top: max(env(safe-area-inset-top), 0px);
   width: 100%;
 }
@@ -59,8 +59,8 @@ html, body{
   letter-spacing: .6px; 
 }
 .brand-badge{
-  width: 3rem;
-  height: 3rem;
+  /* width: 3rem;
+  height: 3rem; */
   border-radius: 10px;
   justify-content: center;
   align-items: center;
@@ -70,7 +70,7 @@ html, body{
 
 /* Icon buttons */
 .icon-btn{
-  width: 3rem; height: 3rem;      /* ✅ mismo alto que el logo */
+  width: 3rem; height: 3rem;    
   border-radius: 12px;
   background: transparent;
   border: none;
@@ -110,14 +110,16 @@ html, body{
 /* Barra de búsqueda */
 .search-bar{
   display: flex;
-  flex: 1 1 auto;
-  min-width: 0;
+  width: 100%;
+  max-width: 30rem;
   height: 2.5rem;
+  margin: 0 auto; /* Centra en su contenedor */
   padding: 0.5rem 1rem;
   align-items: center;
   gap: 0.625rem;
+  flex-shrink: 0;
   border-radius: 1.25rem;
-  border: 1px solid rgba(219,204,252,0);
+  border: 1px solid rgba(219, 204, 252, 0.00);
   background: #1B3A6F;
 }
 .search-bar img{
@@ -154,8 +156,11 @@ html, body{
 .drawer-head{ display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; }
 .drawer-nav{ display: flex; flex-direction: column; gap: 6px; }
 .drawer-nav a{
-  padding:10px 12px; border-radius:10px; border:1px solid var(--line);
-  background:#0a1324; color:var(--ink);
+  padding: 0.44rem 0.75rem;
+  border-radius:10px; 
+  /* border:1px solid var(--line);
+  background:#0a1324;  */
+  color:var(--ink);
   word-break: break-word;
   font-family: 'Inter', sans-serif;
   font-size: 1.5rem;
@@ -167,9 +172,14 @@ html, body{
 /* ===== Dropdown Perfil ===== */
 .dropdown{
   position:fixed; top:70px; right:16px; width:min(92vw,340px); z-index:75;
-  background:#0f1628; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow-soft);
+  background:#0f1628; 
+  border:1px solid var(--line); 
+  /* border-radius:14px;  */
+  box-shadow:var(--shadow-soft);
   padding:12px; display:none;
   max-width: 98vw;
+  left: 0;
+  right: auto;
 }
 .dropdown.open{ display: block; }
 .profile-head{
@@ -178,14 +188,32 @@ html, body{
   flex-wrap: wrap;
 }
 .avatar{
-  width:40px; height:40px; border-radius:50%; display:grid; place-items:center;
-  background:radial-gradient(60% 80% at 30% 20%, #5fa8ff, #1e3a8a);
-  box-shadow:0 0 0 3px rgba(59,130,246,.28);
+  width: 5.625rem;      /* 90px */
+  height: 5.625rem;     /* 90px */
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #7b8fff 0%, #a084ee 100%);
 }
-.profile-nav{ display: flex; flex-direction: column; margin: 10px 0; }
+.avatar img, .avatar svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+.profile-nav{ display:flex; flex-direction:column; margin:10px 0; }
 .profile-nav a{
-  display:flex; align-items:center; justify-content:space-between; gap:10px;
-  padding:10px; border-radius:10px; border:1px solid var(--line); background:#0a1324; margin:5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px 0;
   flex-wrap: wrap;
   color: #B8BDC4;
   text-align: left;
@@ -195,31 +223,76 @@ html, body{
   font-weight: 700;
   line-height: normal;
 }
-.profile-nav a em{
-  font-style:normal; font-weight:800; font-size:12px; color:#9cc7ff;
-  background:#132032; border:1px solid var(--line); border-radius:999px; padding:3px 6px;
+.profile-nav a em,
+.profile-nav em {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1875rem;
+  height: 2.1875rem;
+  margin-left: auto;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  background: #3E82FB;
+  border: 1px solid #2F68C5;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px 0 rgba(47,104,197,0.10);
+  flex-shrink: 0;
+  padding: 0;
+  letter-spacing: 0;
+  transition: background 0.18s;
 }
-.logout{
+
+.logout {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 8px 0;
-  border-radius: 10px;
-  border: 1px solid var(--line);
-  background: #230f19;
-  color: #f36b6b; /* O el color que uses para "Cerrar Sesión" */
-  font-weight: 600;
-  font-size: 1.1rem;
-  margin-top: 16px;
-  border-top: 1px solid #232b3b;
-  padding-top: 16px;
+  color: #f36b6b;
+  font-weight: 700;
+  font-size: 1.4rem;
   text-decoration: none;
+  padding: 10px 0 10px 20px; /* <-- iguala el padding izquierdo */
+  border-radius: 10px;
+  margin: 5px 0;
+  font-family: 'Inter', sans-serif;
 }
 .logout .profile-icon {
   margin-right: 8px;
+  width: 1.5625rem;
+  height: 1.5625rem;
+  flex-shrink: 0;
 }
-.profile-social{ display:flex; gap:10px; justify-content:flex-end; margin-top:8px; opacity:.9; flex-wrap: wrap; }
-
+.profile-social {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+  opacity: .9;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+.profile-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0; /* Elimina el borde redondeado */
+  box-shadow: none;
+}
+.profile-social img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 0; /* Elimina el borde redondeado de la imagen */
+  background: none;
+  box-shadow: none;
+  border: none;
+  display: block;
+}
 /* Scrim */
 .scrim{
   position: fixed; inset: 0; z-index: 60;
@@ -265,7 +338,7 @@ html, body{
 
 /* Desktop ancho: alinear dropdown al borde del container de 1120px */
 @media (min-width:1100px){
-  .dropdown{ right: calc((100vw - 1120px)/2 + 16px); }
+  .dropdown{ right: 16px; left: auto; }
 }
 
 /* ====== Desktop ====== */
@@ -300,9 +373,11 @@ html, body{
 #btnProfile.icon-btn svg{
   width: 2rem; height: 2rem; object-fit: contain;
 }
+
 .profile-icon {
-  width: 20px;
-  height: 20px;
+  width: 1.76363rem;
+  height: 1.2895rem;
+  flex-shrink: 0;
   display: inline-block;
   vertical-align: middle;
   margin-right: 0;
@@ -311,4 +386,157 @@ html, body{
   object-fit: contain;
   flex-shrink: 0;
   /* Sin fondo ni borde */
+  border-radius: 0 !important;
+}
+
+
+/* ===== Botón de perfil principal ===== */
+.profile-btn.profile-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 11.1875rem;      /* 179px */
+  height: 2.8125rem;      /* 45px */
+  background: #2F68C5;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.25rem;
+  border: none;
+  border-radius: 1.40625rem; /* 45px / 2 = 22.5px, pero puedes ajustar */
+  box-shadow: 0 2px 8px 0 rgba(47,104,197,0.10);
+  text-decoration: none;
+  justify-content: flex-start;
+  padding: 0 1.5rem;
+  transition: background 0.18s;
+}
+
+.profile-btn.profile-main:hover,
+.profile-btn.profile-main:focus {
+  background: #22509a;
+  color: #fff;
+}
+
+.profile-btn.profile-main .profile-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0 !important;
+  background: none;
+  margin-right: 8px;
+}
+
+.profile-divider {
+  width: 100%;
+  height: 0.125rem;
+  background: #334155;
+  border: none;
+  /* margin: 24px 0 0 0; */
+  align-self: center;
+}
+
+/* Nueva sección para categorías */
+.categorias-head {
+  padding: 0 0 1rem 0;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.categorias-head span {
+  color: #FFF;
+  font-family: 'Inter', sans-serif;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: block;
+  padding-left: 20px; /* iguala el padding de los links */
+}
+
+.drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.drawer-nav a {
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 8px 0 8px 20px; /* mismo padding izquierdo que el resto del menú */
+  border-radius: 8px;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drawer-nav a:hover,
+.drawer-nav a:focus {
+  background: #232b3b;
+}
+
+.flag {
+  width: 28px;
+  height: 20px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 12px;
+  vertical-align: middle;
+}
+
+.drawer-nav h2 {
+  width: auto;
+  height: 2.375rem;
+  flex-shrink: 0;
+  color: #FFF;
+  font-family: Inter, sans-serif;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-bottom: 1rem;
+  padding-left: 20px; /* igual al padding de los links */
+}
+
+/* Puedes agregar esto en tu archivo Footer.css o Header.css */
+.header-logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* O center si lo quieres centrado */
+  height: 3.25rem;            /* Ajusta según tu diseño */
+}
+.header-logo img {
+  width: 3.83769rem;
+  height: 3.25rem;
+  object-fit: contain;
+  border-radius: 50%;
+  background: none;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+/* .header-logo-img {
+  width: 5.875rem;
+  height: 2.3125rem;
+  flex-shrink: 0;
+  min-width: 1.125rem;
+  object-fit: contain;
+  display: block;
+} */
+
+.gamebit-title {
+
+  font-size: 2rem;
+  
+}
+
+@media (max-width: 960px) {
+  .dropdown {
+    right: 16px;
+    left: auto;
+  }
 }

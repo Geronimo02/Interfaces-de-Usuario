@@ -25,7 +25,7 @@
 /* el container general se queda igual */
 .container{
   width:100%;
-  max-width:1120px;
+  max-width: 1250px;
   margin:0 auto;
   padding:0 16px;
 }
