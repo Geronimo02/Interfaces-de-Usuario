@@ -212,59 +212,7 @@ Interfaces-de-Usuario/
 - **Accesibilidad**: Navegación por teclado y lectores de pantalla
 - **SEO Optimizado**: Estructura semántica y meta tags
 
-## 📱 Capturas de Pantalla
 
-### Desktop
-![Página Principal Desktop](docs/screenshots/desktop-home.png)
-*Página principal en vista desktop con header completo y carrusel*
 
-### Mobile
-![Página Principal Mobile](docs/screenshots/mobile-home.png)
-*Versión móvil con menú hamburguesa y diseño adaptativo*
 
-### Página de Juego
-![Página de Juego](docs/screenshots/game-page.png)
-*Página individual de juego con información detallada*
 
-## 🤝 Contribución
-
-¡Las contribuciones son bienvenidas! Si quieres colaborar:
-
-1. **Fork** el repositorio
-2. **Crea** una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. **Commit** tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** a la rama (`git push origin feature/AmazingFeature`)
-5. **Abre** un Pull Request
-
-### Guías de Contribución
-- Seguir las convenciones de código existentes
-- Documentar nuevas funcionalidades
-- Probar en múltiples navegadores
-- Mantener el diseño responsive
-
-## 👨‍💻 Autores
-
-- **Gerónimo** - *Desarrollo Frontend* - [@Geronimo02](https://github.com/Geronimo02)
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para detalles.
-
-## 📞 Contacto
-
-- **Proyecto**: [https://github.com/Geronimo02/Interfaces-de-Usuario](https://github.com/Geronimo02/Interfaces-de-Usuario)
-- **Reportar Bug**: [Issues](https://github.com/Geronimo02/Interfaces-de-Usuario/issues)
-
-## 🎯 Próximas Funcionalidades
-
-- [ ] Sistema de favoritos
-- [ ] Chat en tiempo real
-- [ ] Modo oscuro/claro
-- [ ] PWA (Progressive Web App)
-- [ ] Integración con APIs reales de juegos
-- [ ] Sistema de puntuaciones y rankings
-- [ ] Multiplayer básico
-
----
-
-⭐ **¡No olvides darle una estrella al repositorio si te gustó el proyecto!**
