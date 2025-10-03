@@ -17,51 +17,143 @@
 </head>
 
 <body>
-    <header class="header" id="appHeader">
-        <div class="container inner">
-            <!-- Hamburguesa -->
-            <button class="icon-btn" id="btnMenu" aria-label="Abrir menú" aria-haspopup="true"
-                aria-controls="sidebarNav" aria-expanded="false">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round" aria-hidden="true">
-                    <path d="M3 6h18M3 12h18M3 18h18" />
-                </svg>
-            </button>
-            <!-- Marca con SVG -->
-            <a class="brand" href="#" aria-label="GAMEBIT · Inicio">
-                <span class="brand-badge logo-svg" aria-hidden="true">
-                    <svg fill="#14123A" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path
-                            d="M21.986 9.74a3.193 3.193 0 0 0-.008-.088A5.003 5.003 0 0 0 17 5H7a4.97 4.97 0 0 0-4.987 4.737c-.01.079-.013.161-.013.253v6.51c0 .925.373 1.828 1.022 2.476A3.524 3.524 0 0 0 5.5 20c1.8 0 2.504-1 3.5-3 .146-.292.992-2 3-2 1.996 0 2.853 1.707 3 2 1.004 2 1.7 3 3.5 3 .925 0 1.828-.373 2.476-1.022A3.524 3.524 0 0 0 22 16.5V10c0-.095-.004-.18-.014-.26zM7 12.031a2 2 0 1 1-.001-3.999A2 2 0 0 1 7 12.031zm10-5a1 1 0 1 1 0 2 1 1 0 1 1 0-2zm-2 4a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2 2a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2-2a1 1 0 1 1 0-2 1 1 0 1 1 0 2z">
-                        </path>
-                    </svg>
-                </span>
-                <span>GAMEBIT</span>
-            </a>
-            <form class="search header-search" role="search" aria-label="Buscar juegos">
-                <input type="search" placeholder="Buscar juegos..." />
-            </form>
-            <div class="spacer" aria-hidden="true"></div>
-            <button class="icon-btn" id="btnCart" aria-label="Carrito">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round" aria-hidden="true">
-                    <circle cx="9" cy="20" r="1" />
-                    <circle cx="16" cy="20" r="1" />
-                    <path d="M3 4h2l2.4 12.3A2 2 0 0 0 9.4 18H17a2 2 0 0 0 2-1.6L21 8H6" />
-                </svg>
-            </button>
-            <button class="icon-btn" id="btnProfile" aria-label="Abrir perfil" aria-haspopup="true"
-                aria-controls="profileDropdown" aria-expanded="false">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
-                    stroke-linejoin="round" aria-hidden="true">
-                    <path d="M20 21a8 8 0 0 0-16 0" />
-                    <circle cx="12" cy="7" r="4" />
-                </svg>
-            </button>
+  
+<header class="header" id="appHeader">
+  <div class="container inner header-flex">
+    <!-- Grupo Izquierdo -->
+    <div class="header-group header-left">
+      <button class="icon-btn" id="btnMenu" aria-label="Abrir menú"
+              aria-haspopup="true" aria-controls="sidebarNav" aria-expanded="false">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+             fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+      </button>
+      <a class="brand" href="#" aria-label="GAMEBIT · Inicio">
+        <span class="brand-badge logo-img" aria-hidden="true">
+          <img src="/Interfaces-de-Usuario/TP2/assets/icons/logo.png" alt=""  />
+        </span>
+        <span class="gamebit-title">GAMEBIT</span>
+      </a>
+    </div>
+
+    <!-- Centro (buscador solo visible en desktop) -->
+    <div class="header-group header-center">
+      <div class="header-search">
+        <div class="search-bar">
+          <img src="/Interfaces-de-Usuario/TP2/assets/icons/lupa.svg" alt="buscar">
+          <input type="search" class="search-input" placeholder="Buscar juegos...">
         </div>
-    </header>
+      </div>
+    </div>
+
+    <!-- Grupo Derecho -->
+    <div class="header-group header-right">
+      <button class="icon-btn" id="btnCart" aria-label="Carrito">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+           fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="20" r="1"/><circle cx="16" cy="20" r="1"/>
+          <path d="M3 4h2l2.4 12.3A2 2 0 0 0 9.4 18H17a2 2 0 0 0 2-1.6L21 8H6"/>
+        </svg>
+      </button>
+      <button class="icon-btn" id="btnProfile" aria-label="Abrir perfil"
+          aria-haspopup="true" aria-controls="profileDropdown" aria-expanded="false">
+        <img src="/Interfaces-de-Usuario/TP2/assets/icons/usuario.png" alt="Perfil" width="24" height="24" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Drawer (menú hamburguesa) -->
+<aside class="drawer" id="sidebarNav" aria-hidden="true">
+  <div class="drawer-head">
+    <div class="brand" style="gap:8px">
+      <span class="brand-badge logo-svg" aria-hidden="true">
+        <svg fill="#14123A" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M21.986 9.74a3.193 3.193 0 0 0-.008-.088A5.003 5.003 0 0 0 17 5H7a4.97 4.97 0 0 0-4.987 4.737c-.01.079-.013.161-.013.253v6.51c0 .925.373 1.828 1.022 2.476A3.524 3.524 0 0 0 5.5 20c1.8 0 2.504-1 3.5-3 .146-.292.992-2 3-2 1.996 0 2.853 1.707 3 2 1.004 2 1.7 3 3.5 3 .925 0 1.828-.373 2.476-1.022A3.524 3.524 0 0 0 22 16.5V10c0-.095-.004-.18-.014-.26zM7 12.031a2 2 0 1 1-.001-3.999A2 2 0 0 1 7 12.031zm10-5a1 1 0 1 1 0 2 1 1 0 1 1 0-2zm-2 4a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2 2a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2-2a1 1 0 1 1 0-2 1 1 0 1 1 0 2z"></path>
+        </svg>
+      </span>
+      <span>GAMEBIT</span>
+    </div>
+    <button class="icon-btn" id="btnCloseMenu" aria-label="Cerrar menú">✕</button>
+  </div>
+  <form class="search drawer-search" role="search" aria-label="Buscar juegos">
+    <input type="search" placeholder="Buscar juegos..." />
+  </form> 
+
+  <nav class="drawer-nav" aria-label="Categorías">
+    <h2>Categoría</h2>
+    <a href="#">🏅 Deportes</a>
+    <a href="#">🏎️ Shooter</a>
+    <a href="#">🕹️ Clásicos</a>
+    <a href="#">👥 RPG</a>
+    <a href="#">🧭 Aventura</a>
+    <a href="#">🍳 Cocina</a>
+    <a href="#">🧠 Cartas</a>
+    <a href="#">🧒 Infantiles</a>
+    <a href="#">🔥 Acción</a>
+    <a href="#">🧩 Mesa</a>
+  </nav>
+</aside>
+<div class="scrim" id="scrimMenu" hidden></div>
+
+<!-- Dropdown Perfil -->
+<aside class="dropdown" id="profileDropdown" aria-hidden="true">
+  <div class="profile-head">
+    <div class="avatar">
+      <img src="/Interfaces-de-Usuario/TP2/assets/icons/Usuario3.svg" alt="Avatar" />
+    </div>
+    <div>
+      <strong>Robert Plant</strong>
+      <div class="muted" style="font-size:13px">Nivel 42 · Pro Player</div>
+    </div>
+  </div>
+  <nav class="profile-nav">
+    <a href="#" class="profile-btn profile-main">
+      <img class="profile-icon" src="/Interfaces-de-Usuario/TP2/assets/icons/User-1.png" alt="" width="20" height="20">
+      Mi Perfil
+    </a>
+    <a href="#"><img class="profile-icon" src="/Interfaces-de-Usuario/TP2/assets/icons/joystick.png" alt="" width="20" height="20"> Mis Juegos <em>12</em></a>
+    <a href="#"><img class="profile-icon" src="/Interfaces-de-Usuario/TP2/assets/icons/trofeo.png" alt="" width="20" height="20"> Logros <em>3</em></a>
+    <a href="#"><img class="profile-icon" src="/Interfaces-de-Usuario/TP2/assets/icons/multijugador.png" alt="" width="20" height="20"> Amigos <em>5</em></a>
+    <a href="#"><img class="profile-icon" src="/Interfaces-de-Usuario/TP2/assets/icons/notificaccion.png" alt="" width="20" height="20"> Notificaciones <em>2</em></a>
+    <a href="#"><img class="profile-icon" src="/Interfaces-de-Usuario/TP2/assets/icons/ajustes.png" alt="" width="20" height="20"> Configuración</a>
+  </nav>
+  <hr class="profile-divider">
+  <a class="logout" href="#">
+    <img class="profile-icon" src="/Interfaces-de-Usuario/TP2/assets/icons/salir.png" alt="" width="20" height="20">
+    Cerrar Sesión
+  </a>
+  <hr class="profile-divider">
+  <div class="profile-social">
+    <a href="#" aria-label="Instagram">
+      <img src="/Interfaces-de-Usuario/TP2/assets/icons/instagram.png" alt="Instagram" width="20" height="20">
+    </a>
+    <a href="#" aria-label="X">
+      <img src="/Interfaces-de-Usuario/TP2/assets/icons/twiter.png" alt="X" width="20" height="20">
+    </a>
+    <a href="#" aria-label="Facebook">
+      <img src="/Interfaces-de-Usuario/TP2/assets/icons/facebook2.png" alt="Facebook" width="20" height="20">
+    </a>
+  </div>
+</aside>
+<div class="scrim" id="scrimProfile" hidden></div>
 
     <main>
+        <!-- Breadcrumb navigation -->
+        <nav class="breadcrumb-nav" aria-label="Navegación de ruta">
+            <div class="breadcrumb-container">
+                <ol class="breadcrumb">
+                    <li><a href="/Interfaces-de-Usuario/TP2/Pages/index.html">Inicio</a></li>
+                    <li><a href="#">Juegos</a></li>
+                    <li><a href="#">Clásicos</a></li>
+                    <li aria-current="page">Peg Solitaire: Los Simpson</li>
+                </ol>
+            </div>
+        </nav>
+
+       
+
         <!-- Contenedor principal del juego a pantalla completa -->
         <section class="game-fullwidth">
             <div id="game-area">
@@ -147,6 +239,42 @@
                 </div>
             </div>
         </section>
+         <!-- Enlaces relacionados -->
+        <section class="game-links-section">
+            <div class="game-links-container">
+                <h3>🔗 Enlaces relacionados</h3>
+                <div class="links-grid">
+                    <a href="#" class="game-link-item">
+                        <div class="link-icon">🎮</div>
+                        <div class="link-content">
+                            <h4>Más juegos de Los Simpson</h4>
+                            <p>Descubre otros juegos de la famosa serie</p>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link-item">
+                        <div class="link-icon">🧩</div>
+                        <div class="link-content">
+                            <h4>Juegos de mesa clásicos</h4>
+                            <p>Explora más puzzles y juegos tradicionales</p>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link-item">
+                        <div class="link-icon">🏆</div>
+                        <div class="link-content">
+                            <h4>Tutorial completo</h4>
+                            <p>Aprende las estrategias avanzadas</p>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link-item">
+                        <div class="link-icon">👥</div>
+                        <div class="link-content">
+                            <h4>Comunidad del juego</h4>
+                            <p>Únete a otros jugadores y comparte tips</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <!-- Galería separada, abajo de la información -->
         <section class="gallery-section">
@@ -174,6 +302,43 @@
                                 <polyline points="9,18 15,12 9,6"></polyline>
                             </svg>
                         </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de video después de la galería -->
+        <section class="video-section">
+            <div class="game-video">
+                <h3>📹 Gameplay y Tutorial</h3>
+                <div class="video-container">
+                    <div class="video-player">
+                        <iframe 
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                            title="Peg Solitaire: Los Simpson - Gameplay"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>🎯 Cómo jugar Peg Solitaire: Los Simpson</h4>
+                        <p>
+                            Mira este tutorial completo donde te explicamos todas las estrategias 
+                            para dominar el Peg Solitaire con la temática de Los Simpson. 
+                            Aprende los movimientos básicos, trucos avanzados y cómo conseguir 
+                            la puntuación perfecta.
+                        </p>
+                        <div class="video-stats">
+                            <span class="video-stat">👁️ 125,847 visualizaciones</span>
+                            <span class="video-stat">👍 4,582 likes</span>
+                            <span class="video-stat">⏱️ 8:42 minutos</span>
+                        </div>
+                        <div class="video-actions">
+                            <button class="video-btn primary">▶️ Ver en YouTube</button>
+                            <button class="video-btn secondary">💾 Guardar</button>
+                            <button class="video-btn secondary">📤 Compartir</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -226,71 +391,57 @@
             </div>
         </section>
     </main>
-
-    <footer class="footer-block" role="contentinfo">
-        <div class="footer-inner">
-            <!-- Columna izquierda -->
-            <div class="footer-meta">
-                <div class="puck logo-svg" aria-hidden="true">
-                    <svg fill="#14123A" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path
-                            d="M21.986 9.74a3.193 3.193 0 0 0-.008-.088A5.003 5.003 0 0 0 17 5H7a4.97 4.97 0 0 0-4.987 4.737c-.01.079-.013.161-.013.253v6.51c0 .925.373 1.828 1.022 2.476A3.524 3.524 0 0 0 5.5 20c1.8 0 2.504-1 3.5-3 .146-.292.992-2 3-2 1.996 0 2.853 1.707 3 2 1.004 2 1.7 3 3.5 3 .925 0 1.828-.373 2.476-1.022A3.524 3.524 0 0 0 22 16.5V10c0-.095-.004-.18-.014-.26zM7 12.031a2 2 0 1 1-.001-3.999A2 2 0 0 1 7 12.031zm10-5a1 1 0 1 1 0 2 1 1 0 1 1 0-2zm-2 4a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2 2a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2-2a1 1 0 1 1 0-2 1 1 0 1 1 0 2z">
-                        </path>
-                    </svg>
-                </div>
-                <button class="lang-chip" aria-label="Cambiar idioma">
-                    <span class="flag">🇪🇸</span>
-                    <span>Español</span>
-                    <span class="chev">▾</span>
-                </button>
-                <div class="social">
-                    <a href="#" aria-label="Instagram" class="social-btn">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
-                            <circle cx="12" cy="12" r="3.5"></circle>
-                            <circle cx="17.5" cy="6.5" r="1"></circle>
-                        </svg>
-                    </a>
-                    <a href="#" aria-label="X" class="social-btn">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M4 4l16 16M20 4L8 20"></path>
-                        </svg>
-                    </a>
-                    <a href="#" aria-label="Facebook" class="social-btn">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                            <path
-                                d="M13.5 22v-7h2.4l.4-3h-2.8V9.5c0-.9.3-1.5 1.6-1.5H16V5.2c-.3 0-1.2-.2-2.3-.2-2.2 0-3.7 1.3-3.7 3.8V12H7.6v3h2.4v7h3.5z">
-                            </path>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            <!-- Columna derecha -->
-            <nav class="footer-cols" aria-label="Enlaces del sitio">
-                <div class="col">
-                    <h4>Conózcanos</h4>
-                    <a href="#">Sobre nosotros</a>
-                    <a href="#">InterGames for Developers</a>
-                    <a href="#">InterGames</a>
-                    <a href="#">Empleos</a>
-                </div>
-                <div class="col">
-                    <h4>Privacidad y términos</h4>
-                    <a href="#">Centro de Privacidad</a>
-                    <a href="#">Términos y condiciones</a>
-                </div>
-                <div class="col">
-                    <h4>Ayuda y asistencia</h4>
-                    <a href="#">Preguntas frecuentes</a>
-                    <a href="#">Contacto</a>
-                    <a href="#">Soporte Técnico</a>
-                </div>
-            </nav>
-        </div>
-    </footer>
-
+<!-- ===== FOOTER ===== -->
+<footer class="footer-block">
+  <div class="footer-inner">
+    <!-- Columna izquierda -->
+    <div class="footer-meta">
+      <div class="footer-logo" aria-hidden="true">
+        <span class="brand-badge logo-img">
+          <img src="/Interfaces-de-Usuario/TP2/assets/icons/logo.png" alt="Logo" />
+        </span>
+      </div>
+      <button class="lang-chip" aria-label="Cambiar idioma">
+        <img src="/Interfaces-de-Usuario/TP2/assets/icons/bandera.png" alt="Español" class="flag">
+        <span>Español</span>
+        <img src="/Interfaces-de-Usuario/TP2/assets/icons/flecha abajo.png" alt="Desplegar" class="chev">
+      </button>
+      <div class="social">
+        <a href="#" aria-label="Instagram" class="social-btn">
+          <img src="/Interfaces-de-Usuario/TP2/assets/icons/instagram.png" alt="Instagram" class="social-icon">
+        </a>
+        <a href="#" aria-label="X" class="social-btn">
+          <img src="/Interfaces-de-Usuario/TP2/assets/icons/twiter.png" alt="X" class="social-icon">
+        </a>
+        <a href="#" aria-label="Facebook" class="social-btn">
+          <img src="/Interfaces-de-Usuario/TP2/assets/icons/facebook2.png" alt="Facebook" class="social-icon">
+        </a>
+      </div>
+    </div>
+    <!-- Columna derecha -->
+    <nav class="footer-cols" aria-label="Enlaces del sitio">
+      <div class="col">
+        <h4>Conózcanos</h4>
+        <a href="#">Sobre nosotros</a>
+        <a href="#">InterGames for Developers</a>
+        <a href="#">InterGames</a>
+        <a href="#">Empleos</a>
+      </div>
+      <div class="col">
+        <h4>Privacidad y términos</h4>
+        <a href="#">Centro de Privacidad</a>
+        <a href="#">Términos y condiciones</a>
+      </div>
+      <div class="col">
+        <h4>Ayuda y asistencia</h4>
+        <a href="#">Preguntas frecuentes</a>
+        <a href="#">Contacto</a>
+        <a href="#">Soporte Técnico</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+<script src="/Interfaces-de-Usuario/TP2/js/main.js" defer></script>
     <script src="/Interfaces-de-Usuario/TP2/js/gallery.js"></script>
 </body>
 
