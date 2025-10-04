@@ -540,3 +540,12 @@ html, body{
     left: auto;
   }
 }
+
+/* Estilos movidos desde el HTML para los menús desplegables */
+.drawer-head .brand {
+    gap: 8px;
+}
+
+.profile-head .muted {
+    font-size: 13px;
+}
