@@ -549,3 +549,11 @@ html, body{
 .profile-head .muted {
     font-size: 13px;
 }
+
+/* Estilos para los iconos del menú de perfil (movidos desde el HTML) */
+.profile-nav .profile-icon,
+.logout .profile-icon,
+.profile-social img {
+  width: 20px;
+  height: 20px;
+}
