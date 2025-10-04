@@ -557,3 +557,9 @@ html, body{
   width: 20px;
   height: 20px;
 }
+
+/* Estilo para el icono de perfil en el header (movido desde el HTML) */
+#btnProfile img {
+  width: 24px;
+  height: 24px;
+}
