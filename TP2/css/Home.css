@@ -992,3 +992,113 @@ body.home .game-card {
   font-size: clamp(11px, 2vw, 13px);
   padding: clamp(3px, 0.5vw, 4px) clamp(10px, 2vw, 14px) clamp(4px, 0.6vw, 5px);
 }
+
+/* ==========================
+   PROFILE DROPDOWN MOBILE ADJUST
+   ========================== */
+@media (max-width: 520px) {
+  #profileDropdown.dropdown {
+    width: clamp(240px, 88vw, 300px);
+    max-height: 78vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 14px 16px 18px;
+    border-radius: 18px;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%);
+  }
+
+  #profileDropdown .profile-head {
+    gap: 10px;
+  }
+
+  #profileDropdown .profile-head .avatar img {
+    width: 42px;
+    height: 42px;
+  }
+
+  #profileDropdown .profile-head strong {
+    font-size: 14px;
+    line-height: 1.2;
+    display: block;
+  }
+
+  #profileDropdown .profile-head .muted {
+    font-size: 11px !important;
+    opacity: .85;
+  }
+
+  #profileDropdown .profile-nav {
+    margin-top: 6px;
+    gap: 4px;
+  }
+
+  #profileDropdown .profile-nav a,
+  #profileDropdown .logout {
+    padding: 8px 10px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+
+  #profileDropdown .profile-nav a em {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+
+  #profileDropdown .profile-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  #profileDropdown .profile-divider {
+    margin: 10px 0;
+  }
+
+  #profileDropdown .profile-social {
+    gap: 10px;
+  }
+
+  #profileDropdown .profile-social a img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 360px) {
+  #profileDropdown.dropdown {
+    width: 92vw;
+    padding: 12px 14px 16px;
+  }
+  #profileDropdown .profile-head .avatar img {
+    width: 38px;
+    height: 38px;
+  }
+  #profileDropdown .profile-nav a,
+  #profileDropdown .logout {
+    font-size: 12.5px;
+    padding: 7px 9px;
+  }
+  #profileDropdown .profile-nav a em {
+    font-size: 10px;
+  }
+}
+
+/* Scrollbar refinado (solo para dropdown en mobile) */
+@media (max-width:520px) {
+  #profileDropdown.dropdown {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(120,150,200,.4) transparent;
+  }
+  #profileDropdown.dropdown::-webkit-scrollbar {
+    width: 6px;
+  }
+  #profileDropdown.dropdown::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  #profileDropdown.dropdown::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(96,165,250,.55), rgba(56,120,200,.45));
+    border-radius: 20px;
+  }
+}
+
