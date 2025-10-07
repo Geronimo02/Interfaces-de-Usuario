@@ -1,4 +1,9 @@
-﻿/* Carrusel principal */
+﻿@media (max-width: 1024px) {
+  .gamebit-title {
+    font-weight: 700 !important;
+  }
+}
+/* Carrusel principal */
 .carousel {
   position: relative;
   border: 1.5px solid rgba(96, 165, 250, .5);
