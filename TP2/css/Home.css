@@ -83,6 +83,7 @@
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 16px 28px rgba(8, 15, 40, .45);
+  transition: transform 0.6s ease;
 }
 
 .carousel-prev {
@@ -363,8 +364,7 @@ body.home .game-card .card-content .btn.btn-play {
   border-radius: 8px;
   font-size: 13px;
   padding: 5px 10px;
-
-
+  transition: transform 0.3s ease;
 }
 
 /* “Al Carrito” más chico y ancho según contenido */
@@ -374,15 +374,28 @@ body.home .game-card .card-content .btn.btn-cart {
   padding: 10px 5px;
   border-radius: 8px;
   font-size: 13px;
-  
+  transition: transform 0.3s ease;
 }
 
 body.home .game-card .card-content .btn-row .btn:only-child {
   flex: 1 1 100%;
 }
 
-body.home .game-card .card-content .btn-row .btn:hover {
+/* HOVER 1: Movimiento vertical (translateY) */
+body.home .game-card .card-content .btn.btn-play:hover {
   transform: translateY(-3px);
+}
+
+/* HOVER 2: Escala/Zoom (scale) */
+body.home .game-card .card-content .btn.btn-cart:hover {
+  transform: scale(1.05);
+}
+
+/* HOVER 3: Rotación (rotate) para botones de carrusel */
+.carousel-prev:hover,
+.carousel-next:hover {
+  transform: translateY(-50%) rotate(360deg);
+  transition: transform 0.6s ease;
 }
 
 .btn-play::before,
