@@ -1,4 +1,9 @@
-﻿/* Carrusel principal */
+﻿@media (max-width: 1024px) {
+  .gamebit-title {
+    font-weight: 700 !important;
+  }
+}
+/* Carrusel principal */
 .carousel {
   position: relative;
   border: 1.5px solid rgba(96, 165, 250, .5);
@@ -78,6 +83,7 @@
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 16px 28px rgba(8, 15, 40, .45);
+  transition: transform 0.6s ease;
 }
 
 .carousel-prev {
@@ -358,8 +364,7 @@ body.home .game-card .card-content .btn.btn-play {
   border-radius: 8px;
   font-size: 13px;
   padding: 5px 10px;
-
-
+  transition: transform 0.3s ease;
 }
 
 /* “Al Carrito” más chico y ancho según contenido */
@@ -369,15 +374,28 @@ body.home .game-card .card-content .btn.btn-cart {
   padding: 10px 5px;
   border-radius: 8px;
   font-size: 13px;
-  
+  transition: transform 0.3s ease;
 }
 
 body.home .game-card .card-content .btn-row .btn:only-child {
   flex: 1 1 100%;
 }
 
-body.home .game-card .card-content .btn-row .btn:hover {
+/* HOVER 1: Movimiento vertical (translateY) */
+body.home .game-card .card-content .btn.btn-play:hover {
   transform: translateY(-3px);
+}
+
+/* HOVER 2: Escala/Zoom (scale) */
+body.home .game-card .card-content .btn.btn-cart:hover {
+  transform: scale(1.05);
+}
+
+/* HOVER 3: Rotación (rotate) para botones de carrusel */
+.carousel-prev:hover,
+.carousel-next:hover {
+  transform: translateY(-50%) rotate(360deg);
+  transition: transform 0.6s ease;
 }
 
 .btn-play::before,
@@ -1099,6 +1117,454 @@ body.home .game-card {
   #profileDropdown.dropdown::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, rgba(96,165,250,.55), rgba(56,120,200,.45));
     border-radius: 20px;
+  }
+}
+
+/* ==========================
+   FOOTER RESPONSIVE ADJUSTMENTS - UPDATED
+   ========================== */
+
+/* Mobile adjustments for footer - Logo arriba */
+@media (max-width: 768px) {
+  .footer-block {
+    padding: clamp(32px, 8vw, 48px) 0 clamp(24px, 6vw, 32px);
+  }
+  
+  .footer-inner {
+    flex-direction: column;
+    gap: clamp(24px, 6vw, 32px);
+    align-items: center;
+    text-align: center;
+  }
+  
+  /* Logo y redes van ARRIBA (order: 1) */
+  .footer-meta {
+    order: 1;
+    align-items: center;
+    gap: clamp(16px, 4vw, 20px);
+  }
+  
+  /* Columnas van ABAJO (order: 2) */
+  .footer-cols {
+    order: 2;
+    grid-template-columns: 1fr;
+    gap: clamp(20px, 5vw, 24px);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .footer-logo {
+    align-self: center;
+  }
+  
+  .footer-logo .brand-badge {
+    width: clamp(44px, 11vw, 52px);
+    height: clamp(44px, 11vw, 52px);
+  }
+  
+  .footer-logo .brand-badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  .lang-chip {
+    padding: clamp(8px, 2vw, 10px) clamp(12px, 3vw, 16px);
+    font-size: clamp(13px, 3.5vw, 14px);
+    border-radius: clamp(8px, 2vw, 12px);
+  }
+  
+  .lang-chip .flag,
+  .lang-chip .chev {
+    width: clamp(16px, 4vw, 18px);
+    height: clamp(16px, 4vw, 18px);
+  }
+  
+  .social {
+    gap: clamp(14px, 3.5vw, 18px);
+  }
+  
+  .social-btn {
+    width: clamp(42px, 10.5vw, 46px);
+    height: clamp(42px, 10.5vw, 46px);
+    border-radius: clamp(10px, 2.5vw, 12px);
+  }
+  
+  .social-icon {
+    width: clamp(20px, 5vw, 22px);
+    height: clamp(20px, 5vw, 22px);
+  }
+  
+  .footer-cols .col h4 {
+    font-size: clmp(14px, 3.5vw, 16px);
+    margin-bottom: clamp(8px, 2vw, 12px);
+  }
+  
+  .footer-cols .col a {
+    font-size: clamp(13px, 3.2vw, 14px);
+    padding: clamp(4px, 1vw, 6px) 0;
+    display: block;
+  }
+}
+
+/* Very small mobile adjustments */
+@media (max-width: 400px) {
+  .footer-block {
+    padding: 28px 0 22px;
+  }
+  
+  .footer-inner {
+    gap: 22px;
+  }
+  
+  .footer-meta {
+    gap: 16px;
+  }
+  
+  .footer-logo .brand-badge {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .lang-chip {
+    padding: 7px 11px;
+    font-size: 12px;
+  }
+  
+  .social {
+    gap: 12px;
+  }
+  
+  .social-btn {
+    width: 38px;
+    height: 38px;
+  }
+  
+  .social-icon {
+    width: 19px;
+    height: 19px;
+  }
+  
+  .footer-cols {
+    gap: 18px;
+    max-width: 320px;
+  }
+  
+  .footer-cols .col h4 {
+    font-size: 13px;
+    margin-bottom: 7px;
+  }
+  
+  .footer-cols .col a {
+    font-size: 12px;
+    padding: 4px 0;
+  }
+}
+
+/* Tablet adjustments - Logo arriba también */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .footer-block {
+    padding: clamp(40px, 6vw, 56px) 0 clamp(28px, 4vw, 40px);
+  }
+  
+  .footer-inner {
+    flex-direction: column;
+    gap: clamp(32px, 4vw, 40px);
+    align-items: center;
+    text-align: center;
+  }
+  
+  /* Logo y redes arriba */
+  .footer-meta {
+    order: 1;
+    max-width: 320px;
+  }
+  
+  /* Columnas abajo */
+  .footer-cols {
+    order: 2;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(24px, 3vw, 32px);
+    max-width: 600px;
+  }
+  
+  .footer-cols .col:last-child {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+  
+  .footer-logo .brand-badge {
+    width: clamp(48px, 6vw, 52px);
+    height: clamp(48px, 6vw, 52px);
+  }
+}
+
+/* Desktop - mantener layout horizontal pero con logo prominente */
+@media (min-width: 1025px) {
+  .footer-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .footer-meta {
+    order: 1;
+    flex: 0 0 auto;
+  }
+  
+  .footer-cols {
+    order: 2;
+    flex: 1;
+    margin-left: 60px;
+  }
+}
+
+/* Large desktop - prevent footer from stretching too much */
+@media (min-width: 1400px) {
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* Fix for logo alignment in all screen sizes */
+.footer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: clamp(12px, 3vw, 16px);
+}
+
+.footer-logo .brand-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Ensure social buttons are properly aligned */
+.social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: clamp(8px, 2vw, 12px);
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.social-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Language chip improvements */
+.lang-chip {
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 1.5vw, 8px);
+  transition: background-color 0.2s ease;
+  margin: clamp(4px, 1vw, 8px) 0;
+}
+
+.lang-chip:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================
+   HEADER RESPONSIVE ADJUSTMENTS
+   ========================== */
+
+/* Mobile adjustments for header */
+@media (max-width: 768px) {
+  .header {
+    padding: clamp(8px, 2vw, 12px) 0;
+  }
+  
+  .header-flex {
+    gap: clamp(8px, 2vw, 12px);
+  }
+  
+  /* Logo adjustments */
+  .brand {
+    gap: clamp(6px, 1.5vw, 10px);
+  }
+  
+  .brand-badge.logo-img {
+    width: clamp(32px, 8vw, 40px);
+    height: clamp(32px, 8vw, 40px);
+  }
+  
+  .brand-badge.logo-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  .gamebit-title {
+    font-size: clamp(16px, 4vw, 20px);
+    font-weight: 700;
+  }
+  
+  /* Icon buttons smaller on mobile */
+  .icon-btn {
+    width: clamp(36px, 9vw, 42px);
+    height: clamp(36px, 9vw, 42px);
+    border-radius: clamp(8px, 2vw, 10px);
+  }
+  
+  .icon-btn svg {
+    width: clamp(18px, 4.5vw, 22px);
+    height: clamp(18px, 4.5vw, 22px);
+  }
+  
+  .icon-btn img {
+    width: clamp(20px, 5vw, 24px);
+    height: clamp(20px, 5vw, 24px);
+  }
+  
+  /* Hide search bar on mobile */
+  .header-center {
+    display: none;
+  }
+  
+  /* Adjust header groups */
+  .header-left {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .header-right {
+    gap: clamp(6px, 1.5vw, 10px);
+  }
+}
+
+/* Very small mobile */
+@media (max-width: 400px) {
+  .header {
+    padding: 6px 0;
+  }
+  
+  .brand-badge.logo-img {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .gamebit-title {
+    font-size: 15px;
+  }
+  
+  .icon-btn {
+    width: 34px;
+    height: 34px;
+  }
+  
+  .icon-btn svg {
+    width: 17px;
+    height: 17px;
+  }
+  
+  .icon-btn img {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .brand-badge.logo-img {
+    width: clamp(40px, 5vw, 44px);
+    height: clamp(40px, 5vw, 44px);
+  }
+  
+  .gamebit-title {
+    font-size: clamp(18px, 2.5vw, 22px);
+  }
+  
+  /* Show search bar but smaller */
+  .header-center {
+    display: block;
+    flex: 0 0 auto;
+    max-width: 300px;
+  }
+  
+  .search-bar {
+    max-width: 280px;
+  }
+  
+  .search-input {
+    font-size: 14px;
+    padding: 8px 12px 8px 36px;
+  }
+}
+
+/* Desktop - maintain original sizes */
+@media (min-width: 1025px) {
+  .brand-badge.logo-img {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .gamebit-title {
+    font-size: 24px;
+  }
+  
+  .header-center {
+    display: block;
+    flex: 1;
+    max-width: 500px;
+  }
+}
+
+/* Drawer logo adjustments */
+@media (max-width: 768px) {
+  .drawer-head .brand {
+    gap: clamp(6px, 1.5vw, 8px);
+  }
+  
+  .drawer-head .brand-badge {
+    width: clamp(28px, 7vw, 32px);
+    height: clamp(28px, 7vw, 32px);
+  }
+  
+  .drawer-head .brand span:last-child {
+    font-size: clamp(14px, 3.5vw, 16px);
+  }
+  
+  .drawer-search input {
+    font-size: clamp(14px, 3.5vw, 16px);
+    padding: clamp(10px, 2.5vw, 12px) clamp(12px, 3vw, 16px);
+  }
+  
+  .drawer-nav h2 {
+    font-size: clamp(16px, 4vw, 18px);
+    margin-bottom: clamp(12px, 3vw, 16px);
+  }
+  
+  .drawer-nav a {
+    font-size: clamp(14px, 3.5vw, 16px);
+    padding: clamp(10px, 2.5vw, 12px) clamp(16px, 4vw, 20px);
+  }
+}
+
+@media (max-width: 400px) {
+  .drawer-head .brand-badge {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .drawer-head .brand span:last-child {
+    font-size: 13px;
   }
 }
 
