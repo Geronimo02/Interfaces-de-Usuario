@@ -1,0 +1,542 @@
+/* ========== BLOCKA GAME STYLES ========== */
+
+/* Contenedor principal del juego */
+.game-fullwidth {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem 0;
+}
+
+#game-area {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.blocka-game-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  min-height: 600px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ========== MENÚ DE INICIO ========== */
+.game-menu {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.game-menu h1 {
+  font-size: 3.5rem;
+  font-weight: 900;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.game-subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.game-config {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0;
+  flex-wrap: wrap;
+}
+
+.config-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.config-item label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.config-item select {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e0e6ed;
+  border-radius: 10px;
+  background: white;
+  font-size: 1rem;
+  min-width: 200px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.config-item select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* ========== PREVIEW DE IMÁGENES ========== */
+.image-preview {
+  margin: 2rem 0;
+}
+
+.image-preview h3 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.preview-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.preview-container img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px;
+  border: 3px solid #e0e6ed;
+  transition: all 0.5s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.preview-animation img {
+  transform: scale(1.05) rotateY(10deg);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== BOTONES ========== */
+.btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 0.5rem;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-play {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+.btn-play:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+  background: #f8f9fa;
+  color: #333;
+  border: 2px solid #e0e6ed;
+}
+
+.btn-secondary:hover {
+  background: #e9ecef;
+  transform: translateY(-1px);
+}
+
+.btn-small {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* ========== PANEL DE INSTRUCCIONES ========== */
+.instructions-panel {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.instructions-panel h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+
+.instructions-content {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.instruction-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.instruction-icon {
+  font-size: 2rem;
+  min-width: 50px;
+}
+
+.instruction-text h3 {
+  color: #333;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.instruction-text p {
+  color: #666;
+  margin: 0.25rem 0;
+  line-height: 1.5;
+}
+
+/* ========== ÁREA DE JUEGO ========== */
+.game-area {
+  padding: 1rem;
+}
+
+.game-hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.hud-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.hud-label {
+  font-size: 0.875rem;
+  color: #666;
+  font-weight: 600;
+}
+
+.hud-value {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #333;
+}
+
+.hud-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ========== TABLERO DE BLOCKA ========== */
+.blocka-board {
+  display: grid;
+  gap: 4px;
+  max-width: 500px;
+  margin: 2rem auto;
+  aspect-ratio: 1;
+  background: #333;
+  border-radius: 15px;
+  padding: 4px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.blocka-piece {
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.blocka-piece:hover {
+  transform: scale(1.02);
+  border-color: #667eea;
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+}
+
+.blocka-piece.fixed-piece {
+  border-color: #28a745;
+  box-shadow: 0 0 15px rgba(40, 167, 69, 0.4);
+}
+
+.blocka-piece.fixed-piece::after {
+  content: '✓';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #28a745;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* ========== IMAGEN DE REFERENCIA ========== */
+.reference-image {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.reference-image h4 {
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+/* Mejora para el contraste de la imagen de referencia */
+.reference-image img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 3px solid #667eea;
+  opacity: 0.9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== PANTALLA DE VICTORIA ========== */
+.victory-screen {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.victory-screen h2 {
+  font-size: 3rem;
+  color: #28a745;
+  margin-bottom: 2rem;
+  animation: bounce 1s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% { transform: translate3d(0, 0, 0); }
+  40%, 43% { transform: translate3d(0, -30px, 0); }
+  70% { transform: translate3d(0, -15px, 0); }
+  90% { transform: translate3d(0, -4px, 0); }
+}
+
+.victory-stats {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 400px;
+}
+
+.victory-stats p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+.victory-stats span {
+  font-weight: 900;
+  color: #667eea;
+}
+
+.victory-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+/* ========== UTILIDADES ========== */
+.hidden {
+  display: none !important;
+}
+
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 768px) {
+  .game-menu h1 {
+    font-size: 2.5rem;
+  }
+  
+  .game-config {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .config-item select {
+    min-width: 250px;
+  }
+  
+  .game-hud {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .hud-actions {
+    justify-content: center;
+  }
+  
+  .blocka-board {
+    max-width: 90vw;
+    margin: 1rem auto;
+  }
+  
+  .victory-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .instructions-panel {
+    padding: 1rem;
+  }
+  
+  .instruction-item {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-menu {
+    padding: 1rem 0;
+  }
+  
+  .game-menu h1 {
+    font-size: 2rem;
+  }
+  
+  .blocka-game-container {
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 15px;
+  }
+  
+  .preview-container img {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ========== ANIMACIONES ADICIONALES ========== */
+.blocka-piece {
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.preview-animation {
+  animation: previewPulse 1s ease-in-out;
+}
+
+@keyframes previewPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* ========== EFECTOS HOVER Y FOCUS ========== */
+.blocka-piece:focus {
+  outline: 3px solid #667eea;
+  outline-offset: 2px;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+}
+
+/* ========== ESTADOS DESHABILITADOS ========== */
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.blocka-board[style*="pointer-events: none"] .blocka-piece {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ========== MEJORAS DE ACCESIBILIDAD ========== */
+@media (prefers-reduced-motion: reduce) {
+  .blocka-piece,
+  .btn,
+  .preview-container img {
+    transition: none;
+  }
+  
+  .victory-screen h2 {
+    animation: none;
+  }
+  
+  @keyframes slideIn {
+    from, to { transform: none; }
+  }
+}
+
+/* ========== TEMA OSCURO (opcional) ========== */
+@media (prefers-color-scheme: dark) {
+  .blocka-game-container {
+    background: rgba(30, 30, 30, 0.95);
+    color: #e0e0e0;
+  }
+  
+  .game-hud {
+    background: #2d2d2d;
+  }
+  
+  .hud-value {
+    color: #e0e0e0;
+  }
+  
+  .instruction-item {
+    background: #2d2d2d;
+    color: #e0e0e0;
+  }
+  
+  .victory-stats {
+    background: #2d2d2d;
+    color: #e0e0e0;
+  }
+}

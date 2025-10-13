@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BLOCKA - Juego de Rompecabezas - GAMEBIT</title>
+
+    <!-- CSS modularizado -->
+    <link rel="stylesheet" href="../css/Variables.css" />
+    <link rel="stylesheet" href="../css/Utils.css" />
+    <link rel="stylesheet" href="../css/Header.css" />
+    <link rel="stylesheet" href="../css/Footer.css" />
+    <link rel="stylesheet" href="../css/SVGContainers.css" />
+    <link rel="stylesheet" href="../css/Home.css" />
+    <link rel="stylesheet" href="../css/Game.css" />
+    <link rel="stylesheet" href="../css/Blocka.css" />
+</head>
+
+<body>
+  
+<header class="header" id="appHeader">
+  <div class="container inner header-flex">
+    <!-- Grupo Izquierdo -->
+    <div class="header-group header-left">
+      <button class="icon-btn" id="btnMenu" aria-label="Abrir menú"
+              aria-haspopup="true" aria-controls="sidebarNav" aria-expanded="false">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+             fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 6h18M3 12h18M3 18h18"/>
+        </svg>
+      </button>
+      <a class="brand" href="../index.html" aria-label="GAMEBIT · Inicio">
+        <span class="brand-badge logo-img" aria-hidden="true">
+          <img src="../assets/icons/logo.png" alt=""  />
+        </span>
+        <span class="gamebit-title">GAMEBIT</span>
+      </a>
+    </div>
+
+    <!-- Centro (buscador solo visible en desktop) -->
+    <div class="header-group header-center">
+      <div class="header-search">
+        <div class="search-bar">
+          <img src="../assets/icons/lupa.svg" alt="buscar">
+          <input type="search" class="search-input" placeholder="Buscar juegos...">
+        </div>
+      </div>
+    </div>
+
+    <!-- Grupo Derecho -->
+    <div class="header-group header-right">
+      <button class="icon-btn" id="btnCart" aria-label="Carrito">
+        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+           fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="20" r="1"/><circle cx="16" cy="20" r="1"/>
+          <path d="M3 4h2l2.4 12.3A2 2 0 0 0 9.4 18H17a2 2 0 0 0 2-1.6L21 8H6"/>
+        </svg>
+      </button>
+      <button class="icon-btn" id="btnProfile" aria-label="Abrir perfil"
+          aria-haspopup="true" aria-controls="profileDropdown" aria-expanded="false">
+        <img src="../assets/icons/usuario.png" alt="Perfil" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Drawer (menú hamburguesa) -->
+<aside class="drawer" id="sidebarNav" aria-hidden="true">
+  <div class="drawer-head">
+    <div class="brand">
+      <span class="brand-badge logo-svg" aria-hidden="true">
+        <svg fill="#14123A" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M21.986 9.74a3.193 3.193 0 0 0-.008-.088A5.003 5.003 0 0 0 17 5H7a4.97 4.97 0 0 0-4.987 4.737c-.01.079-.013.161-.013.253v6.51c0 .925.373 1.828 1.022 2.476A3.524 3.524 0 0 0 5.5 20c1.8 0 2.504-1 3.5-3 .146-.292.992-2 3-2 1.996 0 2.853 1.707 3 2 1.004 2 1.7 3 3.5 3 .925 0 1.828-.373 2.476-1.022A3.524 3.524 0 0 0 22 16.5V10c0-.095-.004-.18-.014-.26zM7 12.031a2 2 0 1 1-.001-3.999A2 2 0 0 1 7 12.031zm10-5a1 1 0 1 1 0 2 1 1 0 1 1 0-2zm-2 4a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2 2a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2-2a1 1 0 1 1 0-2 1 1 0 1 1 0 2z"></path>
+        </svg>
+      </span>
+      <span>GAMEBIT</span>
+    </div>
+    <button class="icon-btn" id="btnCloseMenu" aria-label="Cerrar menú">✕</button>
+  </div>
+  <form class="search drawer-search" role="search" aria-label="Buscar juegos">
+    <input type="search" placeholder="Buscar juegos..." />
+  </form> 
+
+  <nav class="drawer-nav" aria-label="Categorías">
+    <h2>Categoría</h2>
+    <a href="#">🏅 Deportes</a>
+    <a href="#">🏎️ Shooter</a>
+    <a href="#">🕹️ Clásicos</a>
+    <a href="#">👥 RPG</a>
+    <a href="#">🧭 Aventura</a>
+    <a href="#">🍳 Cocina</a>
+    <a href="#">🧠 Cartas</a>
+    <a href="#">🧒 Infantiles</a>
+    <a href="#">🔥 Acción</a>
+    <a href="#">🧩 Mesa</a>
+  </nav>
+</aside>
+<div class="scrim" id="scrimMenu" hidden></div>
+
+<!-- Dropdown Perfil -->
+<aside class="dropdown" id="profileDropdown" aria-hidden="true">
+  <div class="profile-head">
+    <div class="avatar">
+      <img src="../assets/icons/Usuario3.svg" alt="Avatar" />
+    </div>
+    <div>
+      <strong>Robert Plant</strong>
+      <div class="muted">Nivel 42 · Pro Player</div>
+    </div>
+  </div>
+  <nav class="profile-nav">
+    <a href="#" class="profile-btn profile-main">
+      <img class="profile-icon" src="../assets/icons/User-1.png" alt="">
+      Mi Perfil
+    </a>
+    <a href="#"><img class="profile-icon" src="../assets/icons/joystick.png" alt=""> Mis Juegos <em>12</em></a>
+    <a href="#"><img class="profile-icon" src="../assets/icons/trofeo.png" alt=""> Logros <em>3</em></a>
+    <a href="#"><img class="profile-icon" src="../assets/icons/multijugador.png" alt=""> Amigos <em>5</em></a>
+    <a href="#"><img class="profile-icon" src="../assets/icons/notificaccion.png" alt=""> Notificaciones <em>2</em></a>
+    <a href="#"><img class="profile-icon" src="../assets/icons/ajustes.png" alt=""> Configuración</a>
+  </nav>
+  <hr class="profile-divider">
+  <a class="logout" href="#">
+    <img class="profile-icon" src="../assets/icons/salir.png" alt="">
+    Cerrar Sesión
+  </a>
+  <hr class="profile-divider">
+  <div class="profile-social">
+    <a href="#" aria-label="Instagram">
+      <img src="../assets/icons/instagram.png" alt="Instagram">
+    </a>
+    <a href="#" aria-label="X">
+      <img src="../assets/icons/twiter.png" alt="X">
+    </a>
+    <a href="#" aria-label="Facebook">
+      <img src="../assets/icons/facebook2.png" alt="Facebook">
+    </a>
+  </div>
+</aside>
+<div class="scrim" id="scrimProfile" hidden></div>
+
+    <main>
+        <!-- Breadcrumb navigation -->
+        <nav class="breadcrumb-nav" aria-label="Navegación de ruta">
+            <div class="breadcrumb-container">
+                <ol class="breadcrumb">
+                    <li><a href="../index.html">Inicio</a></li>
+                    <li><a href="#">Juegos</a></li>
+                    <li><a href="#">Rompecabezas</a></li>
+                    <li aria-current="page">BLOCKA</li>
+                </ol>
+            </div>
+        </nav>
+
+        <!-- Contenedor principal del juego a pantalla completa -->
+        <section class="game-fullwidth">
+            <div id="game-area">
+                <div class="blocka-game-container">
+                    <!-- Menú de inicio -->
+                    <div id="startMenu" class="game-menu">
+                        <h1>🧩 BLOCKA</h1>
+                        <p class="game-subtitle">Juego de Rompecabezas Rotacional</p>
+                        
+                        <!-- Configuración del juego -->
+                        <div class="game-config">
+                            <div class="config-item">
+                                <label for="difficultySelect">Nivel de dificultad:</label>
+                                <select id="difficultySelect">
+                                    <option value="1">Nivel 1 - Escala de grises</option>
+                                    <option value="2">Nivel 2 - Brillo reducido</option>
+                                    <option value="3">Nivel 3 - Negativo</option>
+                                </select>
+                            </div>
+                            
+                            <div class="config-item">
+                                <label for="blocksSelect">Cantidad de bloques:</label>
+                                <select id="blocksSelect">
+                                    <option value="4">4 bloques</option>
+                                    <option value="6">6 bloques (Extra)</option>
+                                    <option value="8">8 bloques (Extra)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Preview de imágenes -->
+                        <div class="image-preview" id="imagePreview">
+                            <h3>Imagen del nivel:</h3>
+                            <div class="preview-container">
+                                <img id="previewImage" src="../assets/blocka/preview1.jpg" alt="Vista previa">
+                            </div>
+                        </div>
+
+                        <button id="startGameBtn" class="btn btn-play">🎮 Comenzar Juego</button>
+                        <button id="instructionsBtn" class="btn btn-secondary">📖 Instrucciones</button>
+                    </div>
+
+                    <!-- Instrucciones del juego -->
+                    <div id="instructionsPanel" class="instructions-panel hidden">
+                        <h2>📖 Cómo jugar BLOCKA</h2>
+                        <div class="instructions-content">
+                            <div class="instruction-item">
+                                <div class="instruction-icon">🧩</div>
+                                <div class="instruction-text">
+                                    <h3>Objetivo</h3>
+                                    <p>Rota las piezas de la imagen hasta formar la imagen completa correctamente.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="instruction-item">
+                                <div class="instruction-icon">🖱️</div>
+                                <div class="instruction-text">
+                                    <h3>Controles</h3>
+                                    <p><strong>Clic izquierdo:</strong> Rota la pieza hacia la izquierda</p>
+                                    <p><strong>Clic derecho:</strong> Rota la pieza hacia la derecha</p>
+                                </div>
+                            </div>
+                            
+                            <div class="instruction-item">
+                                <div class="instruction-icon">⏱️</div>
+                                <div class="instruction-text">
+                                    <h3>Tiempo</h3>
+                                    <p>El cronómetro se inicia al comenzar y se detiene al completar la imagen.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="instruction-item">
+                                <div class="instruction-icon">🎨</div>
+                                <div class="instruction-text">
+                                    <h3>Filtros</h3>
+                                    <p>Cada nivel tiene filtros diferentes que se quitan al completar la imagen.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="backToMenuBtn" class="btn btn-secondary">⬅️ Volver al Menú</button>
+                    </div>
+
+                    <!-- Área de juego -->
+                    <div id="gameArea" class="game-area hidden">
+                        <!-- HUD del juego -->
+                        <div class="game-hud">
+                            <div class="hud-item">
+                                <span class="hud-label">Nivel:</span>
+                                <span id="currentLevel" class="hud-value">1</span>
+                            </div>
+                            <div class="hud-item">
+                                <span class="hud-label">Tiempo:</span>
+                                <span id="gameTimer" class="hud-value">00:00</span>
+                            </div>
+                            <div class="hud-item">
+                                <span class="hud-label">Movimientos:</span>
+                                <span id="moveCounter" class="hud-value">0</span>
+                            </div>
+                            <div class="hud-actions">
+                                <button id="helpBtn" class="btn btn-small">💡 Ayudita (+5s)</button>
+                                <button id="pauseBtn" class="btn btn-small">⏸️ Pausa</button>
+                                <button id="quitBtn" class="btn btn-small">❌ Salir</button>
+                            </div>
+                        </div>
+
+                        <!-- Tablero de juego -->
+                        <div class="blocka-board" id="blockaBoard">
+                            <!-- Las piezas se generarán dinámicamente aquí -->
+                        </div>
+
+                        <!-- Imagen de referencia pequeña -->
+                        <div class="reference-image">
+                            <h4>Imagen objetivo:</h4>
+                            <img id="referenceImg" src="" alt="Imagen de referencia">
+                        </div>
+                    </div>
+
+                    <!-- Pantalla de victoria -->
+                    <div id="victoryScreen" class="victory-screen hidden">
+                        <h2>🎉 ¡Felicitaciones!</h2>
+                        <div class="victory-stats">
+                            <p>Completaste el nivel <span id="victoryLevel">1</span></p>
+                            <p>Tiempo: <span id="victoryTime">00:00</span></p>
+                            <p>Movimientos: <span id="victoryMoves">0</span></p>
+                        </div>
+                        <div class="victory-actions">
+                            <button id="nextLevelBtn" class="btn btn-play">➡️ Siguiente Nivel</button>
+                            <button id="restartBtn" class="btn btn-secondary">🔄 Jugar de Nuevo</button>
+                            <button id="menuBtn" class="btn btn-secondary">🏠 Menú Principal</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Título principal del juego -->
+        <div class="game-header">
+            <h2>BLOCKA - Juego de Rompecabezas</h2>
+            <div class="game-rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-text">4.8/5 (2,156 reseñas)</span>
+            </div>
+        </div>
+
+        <!-- Información del juego -->
+        <section class="game-info-full">
+            <div class="game-desc-controls">
+                <div class="rules-section">
+                    <h3>⚙️ Reglas del Juego</h3>
+                    <ol>
+                        <li>La imagen está dividida en 4, 6 o 8 piezas que aparecen rotadas aleatoriamente</li>
+                        <li>Cada pieza puede rotarse en incrementos de 90 grados</li>
+                        <li>Usa clic izquierdo para rotar hacia la izquierda, clic derecho para rotar hacia la derecha</li>
+                        <li>El objetivo es rotar todas las piezas hasta formar la imagen completa</li>
+                        <li>El juego incluye filtros que se eliminan al completar el nivel</li>
+                    </ol>
+                </div>
+
+                <div class="objective-section">
+                    <h3>🎯 Objetivo</h3>
+                    <p>BLOCKA es un juego de rompecabezas donde debes reconstruir una imagen rotando sus piezas. 
+                    Cada nivel presenta una imagen dividida en bloques con diferentes filtros aplicados (escala de grises, 
+                    brillo reducido, negativo). Tu misión es rotar cada bloque hasta que todos estén en su posición 
+                    correcta y formar la imagen original.</p>
+                </div>
+
+                <div class="description-section">
+                    <h3>📖 Descripción</h3>
+                    <p class="game-description">
+                        BLOCKA combina la estrategia del rompecabezas tradicional con mecánicas de rotación. 
+                        Con múltiples niveles de dificultad y diferentes configuraciones de bloques, 
+                        este juego desafiará tu percepción visual y habilidades de resolución de problemas. 
+                        Los filtros añaden una capa extra de complejidad que se revela gradualmente.
+                    </p>
+                </div>
+
+                <div class="control-section">
+                    <h3>🎮 Controles</h3>
+                    <div class="controls-grid">
+                        <div class="control-item">
+                            <kbd>Clic Izq</kbd>
+                            <span>Rotar izquierda</span>
+                        </div>
+                        <div class="control-item">
+                            <kbd>Clic Der</kbd>
+                            <span>Rotar derecha</span>
+                        </div>
+                        <div class="control-item">
+                            <kbd>H</kbd>
+                            <span>Pedir ayuda</span>
+                        </div>
+                        <div class="control-item">
+                            <kbd>P</kbd>
+                            <span>Pausar juego</span>
+                        </div>
+                        <div class="control-item">
+                            <kbd>R</kbd>
+                            <span>Reiniciar nivel</span>
+                        </div>
+                        <div class="control-item">
+                            <kbd>Esc</kbd>
+                            <span>Volver al menú</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enlaces relacionados -->
+        <section class="game-links-section">
+            <div class="game-links-container">
+                <h3>🔗 Enlaces relacionados</h3>
+                <div class="links-grid">
+                    <a href="#" class="game-link-item">
+                        <div class="link-icon">🧩</div>
+                        <div class="link-content">
+                            <h4>Más juegos de rompecabezas</h4>
+                            <p>Descubre otros desafiantes juegos de lógica</p>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link-item">
+                        <div class="link-icon">🎨</div>
+                        <div class="link-content">
+                            <h4>Juegos de percepción visual</h4>
+                            <p>Entrena tu mente con estos ejercicios</p>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link-item">
+                        <div class="link-icon">🏆</div>
+                        <div class="link-content">
+                            <h4>Ranking de jugadores</h4>
+                            <p>Ve los mejores tiempos y competiciones</p>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link-item">
+                        <div class="link-icon">📚</div>
+                        <div class="link-content">
+                            <h4>Estrategias y trucos</h4>
+                            <p>Aprende técnicas avanzadas de juego</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galería de capturas -->
+        <section class="gallery-section">
+            <div class="game-gallery">
+                <h3>🖼️ Galería del Juego</h3>
+                <div class="gallery-container">
+                    <div class="banner">
+                        <button class="gallery-nav gallery-nav-left" aria-label="Imagen anterior">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="15,18 9,12 15,6"></polyline>
+                            </svg>
+                        </button>
+                        <div class="slider" style="--quantity: 6">
+                            <div class="item active" style="--position: 1"><img src="../assets/blocka/screenshot1.jpg" alt="Pantalla de inicio de BLOCKA"></div>
+                            <div class="item" style="--position: 2"><img src="../assets/blocka/screenshot2.jpg" alt="Nivel con filtro de escala de grises"></div>
+                            <div class="item" style="--position: 3"><img src="../assets/blocka/screenshot3.jpg" alt="Nivel con filtro de brillo"></div>
+                            <div class="item" style="--position: 4"><img src="../assets/blocka/screenshot4.jpg" alt="Nivel con filtro negativo"></div>
+                            <div class="item" style="--position: 5"><img src="../assets/blocka/screenshot5.jpg" alt="Pantalla de victoria"></div>
+                            <div class="item" style="--position: 6"><img src="../assets/blocka/screenshot6.jpg" alt="Configuración de 8 bloques"></div>
+                        </div>
+                        <button class="gallery-nav gallery-nav-right" aria-label="Imagen siguiente">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="9,18 15,12 9,6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de video -->
+        <section class="video-section">
+            <div class="game-video">
+                <h3>📹 Tutorial y Gameplay</h3>
+                <div class="video-container">
+                    <div class="video-player">
+                        <iframe 
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                            title="BLOCKA - Tutorial de Juego"
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>🎯 Cómo dominar BLOCKA</h4>
+                        <p>
+                            Aprende todas las estrategias para resolver los rompecabezas de BLOCKA más rápidamente. 
+                            Este tutorial te mostrará técnicas avanzadas, cómo manejar los diferentes filtros y 
+                            consejos para mejorar tu tiempo de resolución en cada nivel.
+                        </p>
+                        <div class="video-stats">
+                            <span class="video-stat">👁️ 89,234 visualizaciones</span>
+                            <span class="video-stat">👍 3,891 likes</span>
+                            <span class="video-stat">⏱️ 12:18 minutos</span>
+                        </div>
+                        <div class="video-actions">
+                            <button class="video-btn primary">▶️ Ver en YouTube</button>
+                            <button class="video-btn secondary">💾 Guardar</button>
+                            <button class="video-btn secondary">📤 Compartir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comentarios -->
+        <section class="comments-section">
+            <div class="game-comments">
+                <h3>💬 Comentarios</h3>
+                <form class="comment-form">
+                    <div class="form-group">
+                        <textarea placeholder="Comparte tu experiencia con BLOCKA..." rows="4"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" type="submit">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                            </svg>
+                            Enviar comentario
+                        </button>
+                    </div>
+                </form>
+                <div class="comments-list">
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <strong class="username">PuzzleMaster99</strong>
+                            <span class="comment-date">hace 1 hora</span>
+                            <div class="comment-rating">★★★★★</div>
+                        </div>
+                        <p class="comment-text">¡Excelente juego! Me encanta cómo los filtros añaden dificultad sin ser frustrantes.</p>
+                    </div>
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <strong class="username">VisualGamer</strong>
+                            <span class="comment-date">hace 3 horas</span>
+                            <div class="comment-rating">★★★★☆</div>
+                        </div>
+                        <p class="comment-text">Los controles son intuitivos y la progresión de dificultad está muy bien calibrada.</p>
+                    </div>
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <strong class="username">BlockaFan</strong>
+                            <span class="comment-date">hace 1 día</span>
+                            <div class="comment-rating">★★★★★</div>
+                        </div>
+                        <p class="comment-text">Adictivo y relajante a la vez. Perfect para entrenar la percepción visual.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+<!-- Footer -->
+<footer class="footer-block">
+  <div class="footer-inner">
+    <!-- Columna izquierda -->
+    <div class="footer-meta">
+      <div class="footer-logo" aria-hidden="true">
+        <span class="brand-badge logo-img">
+          <img src="../assets/icons/logo.png" alt="Logo" />
+        </span>
+      </div>
+      <button class="lang-chip" aria-label="Cambiar idioma">
+        <img src="../assets/icons/bandera.png" alt="Español" class="flag">
+        <span>Español</span>
+        <img src="../assets/icons/flecha abajo.png" alt="Desplegar" class="chev">
+      </button>
+      <div class="social">
+        <a href="#" aria-label="Instagram" class="social-btn">
+          <img src="../assets/icons/instagram.png" alt="Instagram" class="social-icon">
+        </a>
+        <a href="#" aria-label="X" class="social-btn">
+          <img src="../assets/icons/twiter.png" alt="X" class="social-icon">
+        </a>
+        <a href="#" aria-label="Facebook" class="social-btn">
+          <img src="../assets/icons/facebook2.png" alt="Facebook" class="social-icon">
+        </a>
+      </div>
+    </div>
+    <!-- Columna derecha -->
+    <nav class="footer-cols" aria-label="Enlaces del sitio">
+      <div class="col">
+        <h4>Conózcanos</h4>
+        <a href="#">Sobre nosotros</a>
+        <a href="#">InterGames for Developers</a>
+        <a href="#">InterGames</a>
+        <a href="#">Empleos</a>
+      </div>
+      <div class="col">
+        <h4>Privacidad y términos</h4>
+        <a href="#">Centro de Privacidad</a>
+        <a href="#">Términos y condiciones</a>
+      </div>
+      <div class="col">
+        <h4>Ayuda y asistencia</h4>
+        <a href="#">Preguntas frecuentes</a>
+        <a href="#">Contacto</a>
+        <a href="#">Soporte Técnico</a>
+      </div>
+    </nav>
+  </div>
+</footer>
+
+<script src="../js/main.js" defer></script>
+<script src="../js/gallery.js" defer></script>
+<script src="../js/blocka.js" defer></script>
+</body>
+
+</html>
