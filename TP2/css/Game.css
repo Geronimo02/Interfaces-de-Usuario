@@ -78,10 +78,7 @@
 
 /* Estilos para el área del juego con animación */
 .game-fullwidth {
-  width: 100vw;
-  max-width: 100vw;
   height: 400px; /* Reducir de 500px a 400px */
-  margin-left: calc(-50vw + 50%);
   background: #181828;
   display: flex;
   justify-content: center;
@@ -106,8 +103,7 @@
 }
 
 #game-area {
-  width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   min-height: 350px; /* Reducir de 450px a 350px */
   display: flex;
   justify-content: center;
@@ -341,7 +337,7 @@
 
 /* Contenedor principal de detalles */
 .game-details-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem 2rem;
   display: grid;
