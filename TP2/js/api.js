@@ -92,10 +92,10 @@ function crearCardHTML(juego) {
 }
 
 
-obtenerJuegos()
-  .then(juegos => mostrarJuegos(juegos))
-  .catch(error => {
-    const contenedor = document.getElementById('cards-container');
-    if (contenedor) contenedor.innerHTML = `<p>Error al cargar los juegos</p>`;
-    console.error('Error al obtener los juegos:', error);
-  });
+// obtenerJuegos()
+//   .then(juegos => mostrarJuegos(juegos))
+//   .catch(error => {
+//     const contenedor = document.getElementById('cards-container');
+//     if (contenedor) contenedor.innerHTML = `<p>Error al cargar los juegos</p>`;
+//     console.error('Error al obtener los juegos:', error);
+//   });
