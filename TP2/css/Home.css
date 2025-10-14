@@ -40,6 +40,27 @@
 }
 
 
+/* Transición suave entre banners */
+.carousel-banner {
+  transition: transform 0.5s ease-in-out, opacity 0.35s ease-in-out;
+}
+
+/* Animación de entrada desde la derecha */
+.carousel-banner.slide-in {
+  animation: slideInFromRight 0.6s ease-out;
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 /* Badge: base + variantes */
 .carousel-banner .badge {
   position: absolute;
@@ -189,6 +210,11 @@
   cursor: grab;
 }
 
+/* Scroll suave en carruseles horizontales */
+.hc-track {
+  scroll-behavior: smooth;
+}
+
 .hc-track::-webkit-scrollbar {
   display: none;
 }
@@ -201,6 +227,22 @@
 .hc-track .game-card {
   flex: 0 0 clamp(200px, 32vw, 240px);
   scroll-snap-align: start;
+}
+
+/* Animación de las cards al entrar en vista */
+.hc-track .game-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Botones HC con tamaños fluidos */
@@ -1599,5 +1641,10 @@ body.home .game-card {
   .drawer-head .brand span:last-child {
     font-size: 13px;
   }
+}
+
+body.home .game-card:hover .card-media img {
+  transform: scale(1.1);
+  transition: transform 0.5s cubic-bezier(.4,0,.2,1);
 }
 
