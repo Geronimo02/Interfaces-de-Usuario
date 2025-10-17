@@ -74,9 +74,11 @@ Interfaces-de-Usuario/
 │   │   ├── gameLoader.js       # Cargador de juegos
 │   │   ├── loader.js           # Pantalla de carga
 │   │   ├── pegSolitaire.js     # Juego Peg Solitaire
+│   │   ├── blocka.js           # Juego Blocka (Puzzle)
 │   │   └── api.js              # Conexiones API
 │   ├── Pages/                  # Páginas adicionales
-│   │   ├── game.html           # Página de juego individual
+│   │   ├── game.html           # Página de juego individual (Peg Solitaire)
+│   │   ├── blocka.html         # Página de juego Blocka (Puzzle)
 │   │   ├── login.html          # Página de login
 │   │   ├── register.html       # Página de registro
 │   │   ├── card.html           # Tarjeta de juego
@@ -171,6 +173,7 @@ Interfaces-de-Usuario/
 ### Páginas Disponibles
 - **`/TP2/index.html`**: Página principal con catálogo
 - **`/TP2/Pages/game.html`**: Página de juego individual (Peg Solitaire)
+- **`/TP2/Pages/blocka.html`**: Página de juego Blocka (Puzzle de imágenes con Canvas)
 - **`/TP2/Pages/login.html`**: Formulario de inicio de sesión
 - **`/TP2/Pages/register.html`**: Formulario de registro
 - **`/TP2/loader.html`**: Pantalla de carga animada
@@ -211,6 +214,41 @@ Interfaces-de-Usuario/
 - **Animaciones CSS**: Transiciones suaves y micro-interacciones
 - **Accesibilidad**: Navegación por teclado y lectores de pantalla
 - **SEO Optimizado**: Estructura semántica y meta tags
+
+### Juegos Implementados
+
+#### 🎮 Peg Solitaire
+- Juego clásico de tablero
+- Implementado en JavaScript vanilla
+- Lógica de juego completa
+
+#### 🧩 Blocka - Puzzle de Imágenes (Canvas)
+Un juego de rompecabezas basado en Canvas HTML5 con las siguientes características:
+
+**Mecánicas del Juego:**
+- Imagen dividida en 4 piezas (2x2) con rotaciones aleatorias
+- Click izquierdo: rotar pieza hacia la izquierda (-90°)
+- Click derecho: rotar pieza hacia la derecha (+90°)
+- Sistema de detección automática de victoria
+
+**Sistema de Niveles:**
+- 3 niveles de dificultad con diferentes filtros de imagen
+- Nivel 1: Filtro de escala de grises
+- Nivel 2: Filtro de brillo (+30%)
+- Nivel 3: Filtro negativo (inversión de colores)
+- Selección aleatoria de imagen de un banco de 8+ imágenes
+
+**Interfaz:**
+- Pantalla de inicio con botones "COMENZAR" e "INSTRUCCIONES"
+- HUD en tiempo real con temporizador, nivel actual y filtro aplicado
+- Pantalla de victoria mostrando la imagen original sin filtros
+- Opciones para continuar al siguiente nivel o volver al menú
+
+**Tecnología:**
+- Canvas API para renderizado
+- Manipulación de píxeles para filtros de imagen
+- Sistema de rotación con transformaciones de matriz
+- Gestión de estado del juego con JavaScript orientado a objetos
 
 
 
