@@ -1,4 +1,4 @@
-var canvas = document.getElementById('blockaCanvas');
+var canvas = document.getElementById('canvasBlocka');
 var ctx = canvas.getContext('2d');
 ctx.font = '20px Arial';
 ctx.fillStyle = 'white';
