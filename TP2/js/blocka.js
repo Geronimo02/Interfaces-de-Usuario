@@ -9,9 +9,9 @@ const GAME_CONFIG = {
         'https://images.unsplash.com/photo-1519985176271-adb1088fa94c'
     ],
     filters: {
-        1: 'grayscale(100%)', // Escala de grises
-        2: 'brightness(30%)',  // Brillo 30%
-        3: 'invert(1)'         // Negativo
+        1: 'none',            // Nivel 1: SIN filtros
+        2: 'brightness(30%)', // Brillo 30%
+        3: 'invert(1)'        // Negativo
     },
     blockConfigs: {
         4: { rows: 2, cols: 2 },
@@ -31,7 +31,8 @@ let gameState = {
     moveCount: 0,
     isPlaying: false,
     isPaused: false,
-    helpUsed: false
+    helpUsed: false,
+    selectedPiece: null
 };
 
 // Elementos del DOM
@@ -80,7 +81,11 @@ function initializeElements() {
         // Victory screen
         victoryLevel: document.getElementById('victoryLevel'),
         victoryTime: document.getElementById('victoryTime'),
-        victoryMoves: document.getElementById('victoryMoves')
+        victoryMoves: document.getElementById('victoryMoves'),
+        
+        // Botones de rotación (nuevos)
+        rotateLeftBtn: document.getElementById('rotateLeftBtn'),
+        rotateRightBtn: document.getElementById('rotateRightBtn')
     };
 }
 
@@ -110,6 +115,12 @@ function bindEvents() {
     
     // Prevenir menú contextual en el área de juego
     elements.blockaBoard.addEventListener('contextmenu', (e) => e.preventDefault());
+    
+    // Eventos para botones de rotación
+    if (elements.rotateLeftBtn && elements.rotateRightBtn) {
+        elements.rotateLeftBtn.addEventListener('click', () => rotateSelected('left'));
+        elements.rotateRightBtn.addEventListener('click', () => rotateSelected('right'));
+    }
 }
 
 // Manejar eventos de teclado
@@ -231,12 +242,14 @@ function createBlock(index, config, filter) {
     // Calcular posición y tamaño del background
     const row = Math.floor(index / config.cols);
     const col = index % config.cols;
-    
+
     const bgSizeX = config.cols * 100;
     const bgSizeY = config.rows * 100;
-    const bgPosX = -(col * 100);
-    const bgPosY = -(row * 100);
-    
+
+    // Posición en porcentaje (0% .. 100%). Evita división por cero si cols/rows === 1.
+    const bgPosX = config.cols > 1 ? (col / (config.cols - 1)) * 100 : 0;
+    const bgPosY = config.rows > 1 ? (row / (config.rows - 1)) * 100 : 0;
+
     element.style.backgroundSize = `${bgSizeX}% ${bgSizeY}%`;
     element.style.backgroundPosition = `${bgPosX}% ${bgPosY}%`;
     
@@ -251,6 +264,28 @@ function createBlock(index, config, filter) {
     element.addEventListener('contextmenu', (e) => {
         e.preventDefault();
         rotateBlock(block, 'right');
+    });
+    
+    // Detectar touch para seleccionar (evitar rotar inmediatamente en móvil)
+    element.addEventListener('pointerdown', (e) => {
+        // si es touch, seleccionamos y prevenimos que el click (rotar) se dispare
+        if (e.pointerType === 'touch') {
+            e.preventDefault();
+            selectBlock(blockData);
+        }
+    });
+
+    // Mantener click para rotar en desktop
+    element.addEventListener('click', (e) => {
+        // si fue touch, ya lo manejó pointerdown -> ignorar
+        if (e.pointerType === 'touch') return;
+        rotateBlock(blockData, 'left');
+    });
+
+    // Mantener menú contextual (clic derecho) para rotar a la derecha
+    element.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        rotateBlock(blockData, 'right');
     });
     
     // Datos del bloque
@@ -391,10 +426,14 @@ function resetGameState() {
     gameState.isPaused = false;
     gameState.helpUsed = false;
     gameState.startTime = null;
+    gameState.selectedPiece = null;
     elements.helpBtn.disabled = false;
     elements.helpBtn.textContent = '💡 Ayudita (+5s)';
     elements.pauseBtn.textContent = '⏸️ Pausa';
     elements.blockaBoard.style.pointerEvents = 'auto';
+    
+    // quitar clase selected de cualquier pieza existente
+    document.querySelectorAll('.blocka-piece.selected').forEach(el => el.classList.remove('selected'));
 }
 
 // Manejo del temporizador

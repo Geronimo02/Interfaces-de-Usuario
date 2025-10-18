@@ -217,14 +217,14 @@
 
 .game-hud {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
   align-items: center;
+  justify-content: space-between;
   background: #f8f9fa;
   padding: 1rem 2rem;
   border-radius: 12px;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
 }
 
 .hud-item {
@@ -248,32 +248,29 @@
 
 .hud-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 8px;
+  align-items: center;
   flex-wrap: wrap;
 }
 
 /* ========== TABLERO DE BLOCKA ========== */
 .blocka-board {
   display: grid;
-  gap: 4px;
-  max-width: 500px;
-  margin: 2rem auto;
-  aspect-ratio: 1;
-  background: #333;
-  border-radius: 15px;
-  padding: 4px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  gap: 10px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .blocka-piece {
-  background-size: cover;
+  width: 100%;
+  aspect-ratio: 1 / 1; /* navegador compatible para mantener cuadrado */
   background-repeat: no-repeat;
+  background-size: cover; /* cubre por defecto, nuestra lógica JS sobreescribe */
+  background-position: center;
   border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 2px solid transparent;
-  position: relative;
   overflow: hidden;
+  transition: box-shadow .12s ease, transform .12s ease;
+  touch-action: manipulation;
 }
 
 .blocka-piece:hover {
@@ -397,11 +394,19 @@
   
   .game-hud {
     flex-direction: column;
-    text-align: center;
+    align-items: stretch;
+    gap: 10px;
+  }
+  
+  .game-hud .hud-actions {
+    justify-content: space-between;
+    width: 100%;
   }
   
   .hud-actions {
-    justify-content: center;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
   }
   
   .blocka-board {
@@ -539,4 +544,39 @@
     background: #2d2d2d;
     color: #e0e0e0;
   }
+}
+
+/* ========== CONTROLES TÁCTILES (MÓVIL) ========== */
+.mobile-controls {
+  display: none; /* oculto por defecto en desktop */
+  gap: 10px;
+  justify-content: center;
+  margin: 0.75rem 0 1.25rem;
+  width: 100%;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.mobile-controls .btn {
+  flex: 1 1 0;
+  min-width: 0; /* evita overflow en contenedores pequeños */
+  padding: 10px 14px;
+  font-size: 1rem;
+  border-radius: 10px;
+}
+
+/* Mostrar solo en pantallas móviles */
+@media (max-width: 768px) {
+  .mobile-controls {
+    display: flex;
+  }
+
+  /* opcional: agrandar piezas táctiles */
+  .blocka-piece { touch-action: manipulation; }
+}
+
+/* clase visual para pieza seleccionada */
+.blocka-piece.selected {
+  outline: 3px solid rgba(255,255,255,0.85);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
 }

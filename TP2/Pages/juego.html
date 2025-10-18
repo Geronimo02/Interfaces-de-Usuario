@@ -167,7 +167,7 @@
                             <div class="config-item">
                                 <label for="difficultySelect">Nivel de dificultad:</label>
                                 <select id="difficultySelect">
-                                    <option value="1">Nivel 1 - Escala de grises</option>
+                                    <option value="1">Nivel 1 - Sin filtros</option>
                                     <option value="2">Nivel 2 - Brillo reducido</option>
                                     <option value="3">Nivel 3 - Negativo</option>
                                 </select>
@@ -261,6 +261,12 @@
                         <!-- Tablero de juego -->
                         <div class="blocka-board" id="blockaBoard">
                             <!-- Las piezas se generarán dinámicamente aquí -->
+                        </div>
+
+                        <!-- Controles móviles: rotar izquierda / derecha -->
+                        <div class="mobile-controls" aria-hidden="false">
+                          <button id="rotateLeftBtn" class="btn btn-small" aria-label="Rotar izquierda">⟲ Rotar izquierda</button>
+                          <button id="rotateRightBtn" class="btn btn-small" aria-label="Rotar derecha">⟳ Rotar derecha</button>
                         </div>
 
                         <!-- Imagen de referencia pequeña -->
