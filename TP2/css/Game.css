@@ -80,13 +80,13 @@
 .game-fullwidth {
   position: relative;
   z-index: 1;
-  margin-bottom: 30px; /* Aumentado de forma significativa */
+  margin-bottom: 60px !important; /* Aumentado significativamente */
   /* Si la altura es fija, asegurarnos que haya suficiente espacio */
   min-height: 400px; /* Altura mínima consistente */
   overflow: visible; /* Permitir que el contenido sea visible fuera del contenedor */
   background: #181828;
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* Cambiado para mejor flujo de contenido */
   align-items: center;
   animation: fadeInUp 0.8s ease-out;
 }
@@ -107,13 +107,13 @@
 
 #game-area {
   position: relative;
-  z-index: 1;
-  margin-bottom: 2.5rem !important; /* Forzar más separación */
-  padding-bottom: 15px; /* Más espacio abajo */
+  z-index: 2; /* Aumentado para estar por encima */
+  margin-bottom: 2.5rem !important;
+  padding-bottom: 30px; /* Aumentado para mayor separación */
   overflow: visible; /* Permitir que el contenido sea visible */
   height: auto !important; /* Altura automática basada en el contenido */
   min-height: 350px; /* Asegurar altura mínima */
-  display: block; /* Cambiado de flex para evitar problemas de altura */
+  width: 100%; /* Asegurar que ocupe todo el ancho */
   max-width: 1400px;
 }
 
@@ -236,12 +236,13 @@
 @media (max-width: 768px) {
   .game-fullwidth {
     height: 350px; /* Reducir para móvil */
-    margin-bottom: 40px;
+    margin-bottom: 70px !important;
   }
   
   #game-area {
     min-height: 300px; /* Reducir para móvil */
-    margin-bottom: 3rem !important;
+    margin-bottom: 4rem !important;
+    padding-bottom: 40px;
   }
   
   .game-placeholder {
@@ -308,7 +309,8 @@
   animation: fadeInUp 0.6s ease-out 0.3s both;
   position: relative;
   z-index: 3; /* Mayor que game-area */
-  margin-top: 2rem !important; /* Forzar separación mayor */
+  margin-top: 3rem !important; /* Aumentado */
+  padding-top: 1rem; /* Espacio adicional arriba */
   clear: both;
 }
 
@@ -1690,70 +1692,65 @@
   }
 }
 
-/* Contenedor principal del juego - ajuste para evitar solapamiento */
+/* Contenedor principal del juego - ajustado para evitar solapamiento */
 .game-fullwidth {
   position: relative;
   z-index: 1;
-  margin-bottom: 30px; /* Aumentado de forma significativa */
+  margin-bottom: 60px !important; /* Aumentado significativamente */
   /* Si la altura es fija, asegurarnos que haya suficiente espacio */
   min-height: 400px; /* Altura mínima consistente */
   overflow: visible; /* Permitir que el contenido sea visible fuera del contenedor */
+  background: #181828;
+  display: flex;
+  flex-direction: column; /* Cambiado para mejor flujo de contenido */
+  align-items: center;
+  animation: fadeInUp 0.8s ease-out;
 }
 
 /* Soluciona problemas de altura y desbordamiento */
 #game-area {
   position: relative;
-  z-index: 1;
-  margin-bottom: 2.5rem !important; /* Forzar más separación */
-  padding-bottom: 15px; /* Más espacio abajo */
+  z-index: 2; /* Aumentado para estar por encima */
+  margin-bottom: 2.5rem !important;
+  padding-bottom: 30px; /* Aumentado para mayor separación */
   overflow: visible; /* Permitir que el contenido sea visible */
   height: auto !important; /* Altura automática basada en el contenido */
   min-height: 350px; /* Asegurar altura mínima */
-  display: block; /* Cambiado de flex para evitar problemas de altura */
+  width: 100%; /* Asegurar que ocupe todo el ancho */
+  max-width: 1400px;
 }
 
-/* Fix para contenedores de juego específicos */
-#game-area .blocka-game-container {
+/* Fix específico para el contenedor Blocka */
+.blocka-game-container {
   position: relative;
-  z-index: 2; /* Mayor que elementos de fondo */
-  height: auto;
+  z-index: 2;
+  width: 100%;
   min-height: 300px;
-}
-
-/* Clearfix para asegurar que todos los elementos flotantes se despegan */
-#game-area::after {
-  content: "";
-  display: table;
-  clear: both;
+  padding-bottom: 20px; /* Espacio adicional al final */
 }
 
 /* Ajuste al header del juego para mejor separación */
 .game-header {
   position: relative;
-  z-index: 3; /* Mayor que game-area */
-  margin-top: 2rem !important; /* Forzar separación mayor */
+  z-index: 3;
+  margin-top: 3rem !important; /* Aumentado */
+  padding-top: 1rem; /* Espacio adicional arriba */
   clear: both;
+  width: 100%;
 }
 
-/* Añadir separación extra después de los elementos del juego */
-#game-area .game-placeholder,
-#game-area .blocka-game-container,
-#game-area canvas,
-#game-area .mobile-controls {
-  margin-bottom: 15px;
-}
-
-/* Ajustes mobile - más espacio en pantallas pequeñas */
+/* Media queries ajustados para móvil */
 @media (max-width: 768px) {
   .game-fullwidth {
-    margin-bottom: 40px;
+    margin-bottom: 70px !important;
   }
   
   #game-area {
-    margin-bottom: 3rem !important;
+    margin-bottom: 4rem !important;
+    padding-bottom: 40px;
   }
   
   .game-header {
-    margin-top: 2.5rem !important;
+    margin-top: 3.5rem !important;
   }
 }
