@@ -78,16 +78,16 @@
 
 /* Estilos para el área del juego con animación */
 .game-fullwidth {
-  width: 100vw;
-  max-width: 100vw;
-  height: 400px; /* Reducir de 500px a 400px */
-  margin-left: calc(-50vw + 50%);
+  position: relative;
+  z-index: 1;
+  margin-bottom: 60px !important; /* Aumentado significativamente */
+  /* Si la altura es fija, asegurarnos que haya suficiente espacio */
+  min-height: 500px; /* Altura mínima consistente */
+  overflow: visible; /* Permitir que el contenido sea visible fuera del contenedor */
   background: #181828;
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* Cambiado para mejor flujo de contenido */
   align-items: center;
-  position: relative;
-  overflow: hidden;
   animation: fadeInUp 0.8s ease-out;
 }
 
@@ -113,7 +113,14 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  z-index: 1;
+  z-index: 2; /* Aumentado para estar por encima */
+  margin-bottom: 2.5rem !important;
+  padding-bottom: 30px; /* Aumentado para mayor separación */
+  overflow: visible; /* Permitir que el contenido sea visible */
+  height: auto !important; /* Altura automática basada en el contenido */
+  min-height: 350px; /* Asegurar altura mínima */
+  width: 100%; /* Asegurar que ocupe todo el ancho */
+  max-width: 1400px;
 }
 
 /* Estilos mejorados para la pantalla de carga */
@@ -235,10 +242,13 @@
 @media (max-width: 768px) {
   .game-fullwidth {
     height: 350px; /* Reducir para móvil */
+    margin-bottom: 70px !important;
   }
   
   #game-area {
     min-height: 300px; /* Reducir para móvil */
+    margin-bottom: 4rem !important;
+    padding-bottom: 40px;
   }
   
   .game-placeholder {
@@ -303,6 +313,11 @@
   flex-wrap: wrap;
   gap: 1rem;
   animation: fadeInUp 0.6s ease-out 0.3s both;
+  position: relative;
+  z-index: 3; /* Mayor que game-area */
+  margin-top: 3rem !important; /* Aumentado */
+  padding-top: 1rem; /* Espacio adicional arriba */
+  clear: both;
 }
 
 .game-header h2 {
@@ -1681,5 +1696,68 @@
   
   .video-btn {
     justify-content: center;
+  }
+}
+
+/* Contenedor principal del juego - ajustado para evitar solapamiento */
+.game-fullwidth {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 60px !important; /* Aumentado significativamente */
+  /* Si la altura es fija, asegurarnos que haya suficiente espacio */
+  min-height: 450px; /* Altura mínima consistente (actualizado a 500px) */
+  overflow: visible; /* Permitir que el contenido sea visible fuera del contenedor */
+  background: #181828;
+  display: flex;
+  flex-direction: column; /* Cambiado para mejor flujo de contenido */
+  align-items: center;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* Soluciona problemas de altura y desbordamiento */
+#game-area {
+  position: relative;
+  z-index: 2; /* Aumentado para estar por encima */
+  margin-bottom: 2.5rem !important;
+  padding-bottom: 30px; /* Aumentado para mayor separación */
+  overflow: visible; /* Permitir que el contenido sea visible */
+  height: auto !important; /* Altura automática basada en el contenido */
+  min-height: 350px; /* Asegurar altura mínima */
+  width: 100%; /* Asegurar que ocupe todo el ancho */
+  max-width: 1400px;
+}
+
+/* Fix específico para el contenedor Blocka */
+.blocka-game-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 300px;
+  padding-bottom: 20px; /* Espacio adicional al final */
+}
+
+/* Ajuste al header del juego para mejor separación */
+.game-header {
+  position: relative;
+  z-index: 3;
+  margin-top: 3rem !important; /* Aumentado */
+  padding-top: 1rem; /* Espacio adicional arriba */
+  clear: both;
+  width: 100%;
+}
+
+/* Media queries ajustados para móvil */
+@media (max-width: 768px) {
+  .game-fullwidth {
+    margin-bottom: 70px !important;
+  }
+  
+  #game-area {
+    margin-bottom: 4rem !important;
+    padding-bottom: 40px;
+  }
+  
+  .game-header {
+    margin-top: 3.5rem !important;
   }
 }
