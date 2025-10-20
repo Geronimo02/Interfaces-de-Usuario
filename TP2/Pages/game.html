@@ -2,9 +2,15 @@
 <html lang="es">
 
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Peg Solitaire: Los Simpson - GAMEBIT</title>
+
+
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Peg Solitaire: Los Simpson - GAMEBIT</title>
+    <title>GAMEBIT</title>
 
     <!-- CSS modularizado -->
     <link rel="stylesheet" href="../css/Variables.css" />
@@ -45,7 +51,6 @@
           <input type="search" class="search-input" placeholder="Buscar juegos...">
         </div>
       </div>
-    </div>
 
     <!-- Grupo Derecho -->
     <div class="header-group header-right">
@@ -61,41 +66,42 @@
         <img src="/Interfaces-de-Usuario/TP2/assets/icons/usuario.png" alt="Perfil" width="24" height="24" />
       </button>
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- Drawer (menú hamburguesa) -->
-<aside class="drawer" id="sidebarNav" aria-hidden="true">
-  <div class="drawer-head">
-    <div class="brand" style="gap:8px">
-      <span class="brand-badge logo-svg" aria-hidden="true">
-        <svg fill="#14123A" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M21.986 9.74a3.193 3.193 0 0 0-.008-.088A5.003 5.003 0 0 0 17 5H7a4.97 4.97 0 0 0-4.987 4.737c-.01.079-.013.161-.013.253v6.51c0 .925.373 1.828 1.022 2.476A3.524 3.524 0 0 0 5.5 20c1.8 0 2.504-1 3.5-3 .146-.292.992-2 3-2 1.996 0 2.853 1.707 3 2 1.004 2 1.7 3 3.5 3 .925 0 1.828-.373 2.476-1.022A3.524 3.524 0 0 0 22 16.5V10c0-.095-.004-.18-.014-.26zM7 12.031a2 2 0 1 1-.001-3.999A2 2 0 0 1 7 12.031zm10-5a1 1 0 1 1 0 2 1 1 0 1 1 0-2zm-2 4a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2 2a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2-2a1 1 0 1 1 0-2 1 1 0 1 1 0 2z"></path>
-        </svg>
-      </span>
-      <span>GAMEBIT</span>
+  <!-- Drawer (menú hamburguesa) -->
+  <aside class="drawer" id="sidebarNav" aria-hidden="true">
+    <div class="drawer-head">
+      <div class="brand" style="gap:8px">
+        <span class="brand-badge logo-svg" aria-hidden="true">
+          <svg fill="#14123A" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path
+              d="M21.986 9.74a3.193 3.193 0 0 0-.008-.088A5.003 5.003 0 0 0 17 5H7a4.97 4.97 0 0 0-4.987 4.737c-.01.079-.013.161-.013.253v6.51c0 .925.373 1.828 1.022 2.476A3.524 3.524 0 0 0 5.5 20c1.8 0 2.504-1 3.5-3 .146-.292.992-2 3-2 1.996 0 2.853 1.707 3 2 1.004 2 1.7 3 3.5 3 .925 0 1.828-.373 2.476-1.022A3.524 3.524 0 0 0 22 16.5V10c0-.095-.004-.18-.014-.26zM7 12.031a2 2 0 1 1-.001-3.999A2 2 0 0 1 7 12.031zm10-5a1 1 0 1 1 0 2 1 1 0 1 1 0-2zm-2 4a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2 2a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2-2a1 1 0 1 1 0-2 1 1 0 1 1 0 2z">
+            </path>
+          </svg>
+        </span>
+        <span>GAMEBIT</span>
+      </div>
+      <button class="icon-btn" id="btnCloseMenu" aria-label="Cerrar menú">✕</button>
     </div>
-    <button class="icon-btn" id="btnCloseMenu" aria-label="Cerrar menú">✕</button>
-  </div>
-  <form class="search drawer-search" role="search" aria-label="Buscar juegos">
-    <input type="search" placeholder="Buscar juegos..." />
-  </form> 
+    <form class="search drawer-search" role="search" aria-label="Buscar juegos">
+      <input type="search" placeholder="Buscar juegos..." />
+    </form>
 
-  <nav class="drawer-nav" aria-label="Categorías">
-    <h2>Categoría</h2>
-    <a href="#">🏅 Deportes</a>
-    <a href="#">🏎️ Shooter</a>
-    <a href="#">🕹️ Clásicos</a>
-    <a href="#">👥 RPG</a>
-    <a href="#">🧭 Aventura</a>
-    <a href="#">🍳 Cocina</a>
-    <a href="#">🧠 Cartas</a>
-    <a href="#">🧒 Infantiles</a>
-    <a href="#">🔥 Acción</a>
-    <a href="#">🧩 Mesa</a>
-  </nav>
-</aside>
-<div class="scrim" id="scrimMenu" hidden></div>
+    <nav class="drawer-nav" aria-label="Categorías">
+      <h2>Categoría</h2>
+      <a href="#">🏅 Deportes</a>
+      <a href="#">🏎️ Shooter</a>
+      <a href="#">🕹️ Clásicos</a>
+      <a href="#">👥 RPG</a>
+      <a href="#">🧭 Aventura</a>
+      <a href="#">🍳 Cocina</a>
+      <a href="#">🧠 Cartas</a>
+      <a href="#">🧒 Infantiles</a>
+      <a href="#">🔥 Acción</a>
+      <a href="#">🧩 Mesa</a>
+    </nav>
+  </aside>
+  <div class="scrim" id="scrimMenu" hidden></div>
 
 <!-- Dropdown Perfil -->
 <aside class="dropdown" id="profileDropdown" aria-hidden="true">
@@ -135,9 +141,20 @@
     <a href="#" aria-label="Facebook">
       <img src="../assets/icons/facebook2.png" alt="Facebook" width="20" height="20">
     </a>
-  </div>
-</aside>
-<div class="scrim" id="scrimProfile" hidden></div>
+    <hr class="profile-divider">
+    <div class="profile-social">
+      <a href="#" aria-label="Instagram">
+        <img src="/Interfaces-de-Usuario/TP2/assets/icons/instagram.png" alt="Instagram" width="20" height="20">
+      </a>
+      <a href="#" aria-label="X">
+        <img src="/Interfaces-de-Usuario/TP2/assets/icons/twiter.png" alt="X" width="20" height="20">
+      </a>
+      <a href="#" aria-label="Facebook">
+        <img src="/Interfaces-de-Usuario/TP2/assets/icons/facebook2.png" alt="Facebook" width="20" height="20">
+      </a>
+    </div>
+  </aside>
+  <div class="scrim" id="scrimProfile" hidden></div>
 
     <main>
         <!-- Breadcrumb navigation -->
@@ -152,129 +169,129 @@
             </div>
         </nav>
 
-       
 
-        <!-- Contenedor principal del juego a pantalla completa -->
-        <section class="game-fullwidth">
-            <div id="game-area">
-                <div class="game-placeholder">
-                    <h1>🎮 Peg Solitaire: Los Simpson</h1>
-                    <div class="loading-content">
-                        <p>Cargando juego...</p>
-                        <div class="loading-spinner"></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill"></div>
-                        </div>
-                        <div class="loading-percentage">85%</div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Título principal del juego -->
-        <div class="game-header">
-            <h2>Peg Solitaire: Los Simpson</h2>
-            <div class="game-rating">
-                <span class="stars">★★★★☆</span>
-                <span class="rating-text">4.2/5 (1,847 reseñas)</span>
+    <!-- Contenedor principal del juego a pantalla completa -->
+    <section class="game-fullwidth">
+      <div id="game-area">
+        <div class="game-placeholder">
+          <h1>🎮 Peg Solitaire: Los Simpson</h1>
+          <div class="loading-content">
+            <p>Cargando juego...</p>
+            <div class="loading-spinner"></div>
+            <div class="progress-bar">
+              <div class="progress-fill"></div>
             </div>
+            <div class="loading-percentage">85%</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Título principal del juego -->
+    <div class="game-header">
+      <h2>Peg Solitaire: Los Simpson</h2>
+      <div class="game-rating">
+        <span class="stars">★★★★☆</span>
+        <span class="rating-text">4.2/5 (1,847 reseñas)</span>
+      </div>
+    </div>
+
+    <!-- Información del juego ocupa todo el ancho -->
+    <section class="game-info-full">
+      <div class="game-desc-controls">
+        <div class="rules-section">
+          <h3>⚙️ Reglas e instrucciones</h3>
+          <ol>
+            <li>El tablero está compuesto por agujeros en forma de cruz, con las fichas distribuidas en ellos
+            </li>
+            <li>Cada ficha puede saltar sobre otra adyacente (horizontal o vertical), cayendo en un hueco libre
+            </li>
+            <li>La ficha "saltada" se elimina (desaparece del tablero)</li>
+            <li>El juego continúa hasta que no haya más movimientos posibles</li>
+          </ol>
         </div>
 
-        <!-- Información del juego ocupa todo el ancho -->
-        <section class="game-info-full">
-            <div class="game-desc-controls">
-                <div class="rules-section">
-                    <h3>⚙️ Reglas e instrucciones</h3>
-                    <ol>
-                        <li>El tablero está compuesto por agujeros en forma de cruz, con las fichas distribuidas en ellos
-                        </li>
-                        <li>Cada ficha puede saltar sobre otra adyacente (horizontal o vertical), cayendo en un hueco libre
-                        </li>
-                        <li>La ficha "saltada" se elimina (desaparece del tablero)</li>
-                        <li>El juego continúa hasta que no haya más movimientos posibles</li>
-                    </ol>
-                </div>
+        <div class="objective-section">
+          <h3>🎯 Objetivo del juego</h3>
+          <p>El objetivo es el mismo que en el Peg Solitaire clásico: dejar la menor cantidad posible de
+            fichas en el tablero. En esta versión, los jugadores ven cómo Bart y Homero saltan entre sí,
+            eliminándose con cada jugada. Cuando un personaje desaparece, aparece un efecto característico,
+            como el clásico "¡D'oh!" de Homero.</p>
+        </div>
 
-                <div class="objective-section">
-                    <h3>🎯 Objetivo del juego</h3>
-                    <p>El objetivo es el mismo que en el Peg Solitaire clásico: dejar la menor cantidad posible de
-                        fichas en el tablero. En esta versión, los jugadores ven cómo Bart y Homero saltan entre sí,
-                        eliminándose con cada jugada. Cuando un personaje desaparece, aparece un efecto característico,
-                        como el clásico "¡D'oh!" de Homero.</p>
-                </div>
+        <div class="description-section">
+          <h3>📖 Descripción del juego</h3>
+          <p class="game-description">
+            Peg Solitaire clásico reinventado con la temática de Los Simpson. El tablero
+            representa la sala de la familia Simpson, con Homero y Bart como las fichas principales.
+            Cada movimiento es un duelo entre padre e hijo, donde la estrategia decide quién queda en pie.
+          </p>
+        </div>
 
-                <div class="description-section">
-                    <h3>📖 Descripción del juego</h3>
-                    <p class="game-description">
-                        Peg Solitaire clásico reinventado con la temática de Los Simpson. El tablero
-                        representa la sala de la familia Simpson, con Homero y Bart como las fichas principales.
-                        Cada movimiento es un duelo entre padre e hijo, donde la estrategia decide quién queda en pie.
-                    </p>
-                </div>
-
-                <div class="control-section">
-                    <h3>🎮 Controles</h3>
-                    <div class="controls-grid">
-                        <div class="control-item">
-                            <kbd>↑↓←→</kbd>
-                            <span>Mover ficha</span>
-                        </div>
-                        <div class="control-item">
-                            <kbd>Space</kbd>
-                            <span>Saltar ficha</span>
-                        </div>
-                        <div class="control-item">
-                            <kbd>Ctrl + Z</kbd>
-                            <span>Deshacer</span>
-                        </div>
-                        <div class="control-item">
-                            <kbd>R</kbd>
-                            <span>Reiniciar</span>
-                        </div>
-                        <div class="control-item">
-                            <kbd>M</kbd>
-                            <span>Silenciar</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="control-section">
+          <h3>🎮 Controles</h3>
+          <div class="controls-grid">
+            <div class="control-item">
+              <kbd>↑↓←→</kbd>
+              <span>Mover ficha</span>
             </div>
-        </section>
-         <!-- Enlaces relacionados -->
-        <section class="game-links-section">
-            <div class="game-links-container">
-                <h3>🔗 Enlaces relacionados</h3>
-                <div class="links-grid">
-                    <a href="#" class="game-link-item">
-                        <div class="link-icon">🎮</div>
-                        <div class="link-content">
-                            <h4>Más juegos de Los Simpson</h4>
-                            <p>Descubre otros juegos de la famosa serie</p>
-                        </div>
-                    </a>
-                    <a href="#" class="game-link-item">
-                        <div class="link-icon">🧩</div>
-                        <div class="link-content">
-                            <h4>Juegos de mesa clásicos</h4>
-                            <p>Explora más puzzles y juegos tradicionales</p>
-                        </div>
-                    </a>
-                    <a href="#" class="game-link-item">
-                        <div class="link-icon">🏆</div>
-                        <div class="link-content">
-                            <h4>Tutorial completo</h4>
-                            <p>Aprende las estrategias avanzadas</p>
-                        </div>
-                    </a>
-                    <a href="#" class="game-link-item">
-                        <div class="link-icon">👥</div>
-                        <div class="link-content">
-                            <h4>Comunidad del juego</h4>
-                            <p>Únete a otros jugadores y comparte tips</p>
-                        </div>
-                    </a>
-                </div>
+            <div class="control-item">
+              <kbd>Space</kbd>
+              <span>Saltar ficha</span>
             </div>
-        </section>
+            <div class="control-item">
+              <kbd>Ctrl + Z</kbd>
+              <span>Deshacer</span>
+            </div>
+            <div class="control-item">
+              <kbd>R</kbd>
+              <span>Reiniciar</span>
+            </div>
+            <div class="control-item">
+              <kbd>M</kbd>
+              <span>Silenciar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Enlaces relacionados -->
+    <section class="game-links-section">
+      <div class="game-links-container">
+        <h3>🔗 Enlaces relacionados</h3>
+        <div class="links-grid">
+          <a href="#" class="game-link-item">
+            <div class="link-icon">🎮</div>
+            <div class="link-content">
+              <h4>Más juegos de Los Simpson</h4>
+              <p>Descubre otros juegos de la famosa serie</p>
+            </div>
+          </a>
+          <a href="#" class="game-link-item">
+            <div class="link-icon">🧩</div>
+            <div class="link-content">
+              <h4>Juegos de mesa clásicos</h4>
+              <p>Explora más puzzles y juegos tradicionales</p>
+            </div>
+          </a>
+          <a href="#" class="game-link-item">
+            <div class="link-icon">🏆</div>
+            <div class="link-content">
+              <h4>Tutorial completo</h4>
+              <p>Aprende las estrategias avanzadas</p>
+            </div>
+          </a>
+          <a href="#" class="game-link-item">
+            <div class="link-icon">👥</div>
+            <div class="link-content">
+              <h4>Comunidad del juego</h4>
+              <p>Únete a otros jugadores y comparte tips</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
 
         <!-- Galería separada, abajo de la información -->
         <section class="gallery-section">
@@ -305,89 +322,75 @@
                     </div>
                 </div>
             </div>
-        </section>
+            <button class="gallery-nav gallery-nav-right" aria-label="Imagen siguiente">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9,18 15,12 9,6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- Sección de video después de la galería -->
-        <section class="video-section">
-            <div class="game-video">
-                <h3>📹 Gameplay y Tutorial</h3>
-                <div class="video-container">
-                    <div class="video-player">
-                        <iframe 
-                            src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                            title="Peg Solitaire: Los Simpson - Gameplay"
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <div class="video-info">
-                        <h4>🎯 Cómo jugar Peg Solitaire: Los Simpson</h4>
-                        <p>
-                            Mira este tutorial completo donde te explicamos todas las estrategias 
-                            para dominar el Peg Solitaire con la temática de Los Simpson. 
-                            Aprende los movimientos básicos, trucos avanzados y cómo conseguir 
-                            la puntuación perfecta.
-                        </p>
-                        <div class="video-stats">
-                            <span class="video-stat">👁️ 125,847 visualizaciones</span>
-                            <span class="video-stat">👍 4,582 likes</span>
-                            <span class="video-stat">⏱️ 8:42 minutos</span>
-                        </div>
-                        <div class="video-actions">
-                            <button class="video-btn primary">▶️ Ver en YouTube</button>
-                            <button class="video-btn secondary">💾 Guardar</button>
-                            <button class="video-btn secondary">📤 Compartir</button>
-                        </div>
-                    </div>
-                </div>
+    <!-- Sección de video después de la galería -->
+    <section class="video-section">
+      <div class="game-video">
+        <h3>📹 Gameplay y Tutorial</h3>
+        <div class="video-container">
+          <div class="video-player">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Peg Solitaire: Los Simpson - Gameplay"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="video-info">
+            <h4>🎯 Cómo jugar Peg Solitaire: Los Simpson</h4>
+            <p>
+              Mira este tutorial completo donde te explicamos todas las estrategias
+              para dominar el Peg Solitaire con la temática de Los Simpson.
+              Aprende los movimientos básicos, trucos avanzados y cómo conseguir
+              la puntuación perfecta.
+            </p>
+            <div class="video-stats">
+              <span class="video-stat">👁️ 125,847 visualizaciones</span>
+              <span class="video-stat">👍 4,582 likes</span>
+              <span class="video-stat">⏱️ 8:42 minutos</span>
             </div>
-        </section>
+            <div class="video-actions">
+              <button class="video-btn primary">▶️ Ver en YouTube</button>
+              <button class="video-btn secondary">💾 Guardar</button>
+              <button class="video-btn secondary">📤 Compartir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- Sección de comentarios separada, abajo de todo -->
-        <section class="comments-section">
-            <div class="game-comments">
-                <h3>💬 Comentarios</h3>
-                <form class="comment-form">
-                    <div class="form-group">
-                        <textarea placeholder="Comparte tu experiencia con este juego..." rows="4"></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn btn-primary" type="submit">
-                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
-                            </svg>
-                            Enviar comentario
-                        </button>
-                    </div>
-                </form>
-                <div class="comments-list">
-                    <div class="comment-item">
-                        <div class="comment-header">
-                            <strong class="username">GamerPro87</strong>
-                            <span class="comment-date">hace 2 horas</span>
-                            <div class="comment-rating">★★★★★</div>
-                        </div>
-                        <p class="comment-text">¡Excelente adaptación del clásico! Los efectos de sonido de Los Simpson son geniales.</p>
-                    </div>
-                    <div class="comment-item">
-                        <div class="comment-header">
-                            <strong class="username">RetroFan42</strong>
-                            <span class="comment-date">hace 1 día</span>
-                            <div class="comment-rating">★★★★☆</div>
-                        </div>
-                        <p class="comment-text">Me encantó la jugabilidad. Solo me gustaría que tuviera más niveles temáticos.</p>
-                    </div>
-                    <div class="comment-item">
-                        <div class="comment-header">
-                            <strong class="username">SimpsonsFan</strong>
-                            <span class="comment-date">hace 3 días</span>
-                            <div class="comment-rating">★★★★★</div>
-                        </div>
-                        <p class="comment-text">¡D'oh! Este juego es adictivo. Perfecto para los fans de la serie.</p>
-                    </div>
-                </div>
+    <!-- Sección de comentarios separada, abajo de todo -->
+    <section class="comments-section">
+      <div class="game-comments">
+        <h3>💬 Comentarios</h3>
+        <form class="comment-form">
+          <div class="form-group">
+            <textarea placeholder="Comparte tu experiencia con este juego..." rows="4"></textarea>
+          </div>
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+              </svg>
+              Enviar comentario
+            </button>
+          </div>
+        </form>
+        <div class="comments-list">
+          <div class="comment-item">
+            <div class="comment-header">
+              <strong class="username">GamerPro87</strong>
+              <span class="comment-date">hace 2 horas</span>
+              <div class="comment-rating">★★★★★</div>
             </div>
         </section>
     </main>
@@ -417,6 +420,27 @@
           <img src="../assets/icons/facebook2.png" alt="Facebook" class="social-icon">
         </a>
       </div>
+      <!-- Columna derecha -->
+      <nav class="footer-cols" aria-label="Enlaces del sitio">
+        <div class="col">
+          <h4>Conózcanos</h4>
+          <a href="#">Sobre nosotros</a>
+          <a href="#">InterGames for Developers</a>
+          <a href="#">InterGames</a>
+          <a href="#">Empleos</a>
+        </div>
+        <div class="col">
+          <h4>Privacidad y términos</h4>
+          <a href="#">Centro de Privacidad</a>
+          <a href="#">Términos y condiciones</a>
+        </div>
+        <div class="col">
+          <h4>Ayuda y asistencia</h4>
+          <a href="#">Preguntas frecuentes</a>
+          <a href="#">Contacto</a>
+          <a href="#">Soporte Técnico</a>
+        </div>
+      </nav>
     </div>
     <!-- Columna derecha -->
     <nav class="footer-cols" aria-label="Enlaces del sitio">

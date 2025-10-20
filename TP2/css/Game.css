@@ -106,6 +106,12 @@
 }
 
 #game-area {
+  width: 100%;
+  max-width: 1200px;
+  min-height: 350px; /* Reducir de 450px a 350px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   z-index: 2; /* Aumentado para estar por encima */
   margin-bottom: 2.5rem !important;
@@ -350,7 +356,7 @@
 
 /* Contenedor principal de detalles */
 .game-details-container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem 2rem;
   display: grid;
@@ -698,6 +704,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   overflow: hidden;
 }

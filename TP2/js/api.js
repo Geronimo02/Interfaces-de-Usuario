@@ -91,25 +91,6 @@ function crearCardHTML(juego) {
   `;
 }
 
-// Selecciona el contenedor donde quieres mostrar las imágenes
-const contenedorImagenes = document.getElementById('imagenes-api'); // crea este div en tu HTML
-
-fetch('https://vj.interfaces.jima.com.ar/api/v2')
-  .then(res => res.json())
-  .then(juegos => {
-    juegos.forEach(juego => {
-      // Solo la imagen y el alt
-      const img = document.createElement('img');
-      img.src = juego.background_image_low_res;
-      img.alt = juego.name;
-      img.width = 240; // opcional, igual que tus cards
-      img.height = 140; // opcional
-      contenedorImagenes.appendChild(img);
-    });
-  })
-  .catch(err => {
-    contenedorImagenes.innerHTML = '<p>Error al cargar imágenes</p>';
-  });
 
 obtenerJuegos()
   .then(juegos => mostrarJuegos(juegos))
