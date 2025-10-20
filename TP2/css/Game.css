@@ -82,7 +82,7 @@
   z-index: 1;
   margin-bottom: 60px !important; /* Aumentado significativamente */
   /* Si la altura es fija, asegurarnos que haya suficiente espacio */
-  min-height: 400px; /* Altura mínima consistente */
+  min-height: 500px; /* Altura mínima consistente */
   overflow: visible; /* Permitir que el contenido sea visible fuera del contenedor */
   background: #181828;
   display: flex;
@@ -1698,7 +1698,7 @@
   z-index: 1;
   margin-bottom: 60px !important; /* Aumentado significativamente */
   /* Si la altura es fija, asegurarnos que haya suficiente espacio */
-  min-height: 400px; /* Altura mínima consistente */
+  min-height: 450px; /* Altura mínima consistente (actualizado a 500px) */
   overflow: visible; /* Permitir que el contenido sea visible fuera del contenedor */
   background: #181828;
   display: flex;
