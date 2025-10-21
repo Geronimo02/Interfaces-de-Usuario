@@ -14,8 +14,8 @@ const GAME_CONFIG = {
     levels: {
         1: { filterTypes: ['none'], name: 'Nivel 1' },
         2: { filterTypes: ['grayscale'], name: 'Nivel 2' },
-        3: { filterTypes: ['brightness', 'grayscale'], name: 'Nivel 3', maxTime: 20 }, // <-- Múltiples filtros y tiempo máximo
-        4: { filterTypes: ['invert', 'brightness'], name: 'Nivel 4', maxTime: 15 }   // <-- Múltiples filtros y tiempo máximo
+        3: { filterTypes: ['brightness', 'grayscale'], name: 'Nivel 3', maxTime: 20 },
+        4: { filterTypes: ['invert', 'brightness'], name: 'Nivel 4', maxTime: 15 }
     },
     blockConfigs: {
         4: { rows: 2, cols: 2 },
@@ -41,9 +41,11 @@ const GAME_CONFIG = {
     // Estado del menú
     const menuState = {
         selectedBlocks: 4,
-        hovered: null, // 'opt-4' | 'opt-6' | 'opt-8' | 'start' | null
+        hovered: null,
         rects: {},
-        enabled: true
+        enabled: true,
+        isLoading: true, // <-- Nuevo estado para precarga
+        loadingError: null // <-- AÑADIR ESTA LÍNEA
     };
 
     const styles = {
@@ -64,7 +66,7 @@ const GAME_CONFIG = {
         canvas.style.width = cssW + 'px';
         canvas.style.height = cssH + 'px';
         if (ctx) ctx.setTransform(dpr,0,0,dpr,0,0);
-        if (gameState.active || gameState.win || gameState.lost) calculateGameLayout();
+        if (gameState.phase !== 'menu') calculateGameLayout();
         else layoutRects();
         render();
     }
@@ -109,6 +111,21 @@ const GAME_CONFIG = {
         ctx.fillStyle = styles.subtitle;
         ctx.font = '16px Inter, system-ui, sans-serif';
         ctx.fillText('Gira las piezas y reconstruye la imagen', w/2, topY + 58);
+
+        if (menuState.isLoading) {
+            ctx.fillStyle = '#fff';
+            ctx.font = '16px Inter, system-ui, sans-serif';
+            ctx.fillText('Cargando imágenes...', w/2, h/2 + 40);
+            return;
+        }
+
+        // AÑADIR ESTE BLOQUE PARA MOSTRAR EL ERROR
+        if (menuState.loadingError) {
+            ctx.fillStyle = '#ff8a80'; // Un color rojo para el error
+            ctx.font = '14px Inter, system-ui, sans-serif';
+            ctx.fillText(menuState.loadingError, w/2, h - 50);
+        }
+
         for (const opt of menuState.rects.opts){
             const isSel = menuState.selectedBlocks === parseInt(opt.id.split('-')[1]);
             const isHover = menuState.hovered === opt.id;
@@ -158,6 +175,7 @@ const GAME_CONFIG = {
         return { x: evt.clientX - r.left, y: evt.clientY - r.top };
     }
     function hitTest(x,y){
+        if (menuState.isLoading) return null;
         for (const opt of menuState.rects.opts){
             if (x >= opt.x && x <= opt.x + opt.w && y >= opt.y && y <= opt.y + opt.h) return opt.id;
         }
@@ -212,42 +230,29 @@ const GAME_CONFIG = {
             render();
         }
     });
-    function init(){
-        fitCanvas();
-        const r = canvas.getBoundingClientRect();
-        if (r.height < 120){
-            canvas.style.height = '450px';
-            fitCanvas();
-        }
-    }
-    window.blockaCanvasMenu = {
-        setBlocks(n){ menuState.selectedBlocks = n; render(); },
-        enable(){ menuState.enabled = true; render(); },
-        disable(){ menuState.enabled = false; render(); }
-    };
-
+    
     /* =====================
        Lógica del juego
        ===================== */
     const gameState = {
-        active: false,
+        phase: 'menu', // 'menu', 'image-selection', 'playing', 'win', 'lost'
+        allImages: [], // <-- Para guardar las imágenes precargadas
         level: 1,
         blocks: 4,
         rows: 0,
         cols: 0,
         pieces: [],
         image: null,
-        unfilteredOffCanvas: null, // <-- Canvas con la imagen original
+        unfilteredOffCanvas: null,
         moves: 0,
-        win: false,
         showWinScreen: false,
-        lost: false, // <-- Nuevo estado de derrota
         startTime: null,
         elapsed: 0,
-        timeLeft: 0, // <-- Para el temporizador de cuenta regresiva
+        timeLeft: 0,
         timerId: null,
         isPaused: false,
-        hud: { height: 56, pauseRect: null, ayudaRect: null, helpUsed: false }
+        hud: { height: 56, pauseRect: null, ayudaRect: null, helpUsed: false },
+        selectionAnimation: { running: false, startTime: 0, duration: 3000, finalIndex: 0 }
     };
 
     const touchState = {
@@ -264,6 +269,22 @@ const GAME_CONFIG = {
             img.onload = () => resolve(img);
             img.onerror = reject;
             img.src = src;
+        });
+    }
+
+    function preloadAllImages() {
+        const imagePromises = GAME_CONFIG.images.map(src => loadImage(src));
+        Promise.all(imagePromises).then(loadedImages => {
+            gameState.allImages = loadedImages;
+            menuState.isLoading = false;
+            render();
+            console.log('Todas las imágenes han sido precargadas.');
+        }).catch(err => {
+            console.error("Error precargando una o más imágenes:", err);
+            // AÑADIR ESTAS LÍNEAS PARA MANEJAR EL ERROR
+            menuState.isLoading = false;
+            menuState.loadingError = "Error al cargar imágenes. Revisa las rutas.";
+            render();
         });
     }
 
@@ -294,9 +315,7 @@ const GAME_CONFIG = {
         }
     }
     
-    // ========================================================================
-    // --- NUEVAS FUNCIONES PARA GESTIONAR RÉCORDS ---
-    // ========================================================================
+    // --- GESTIÓN DE RÉCORDS ---
     function getBestTime(level, blocks) {
         const key = `blocka_best_time_${level}_${blocks}`;
         return localStorage.getItem(key) ? parseInt(localStorage.getItem(key), 10) : null;
@@ -307,44 +326,48 @@ const GAME_CONFIG = {
         const existingBest = getBestTime(level, blocks);
         if (!existingBest || time < existingBest) {
             localStorage.setItem(key, time);
-            console.log(`Nuevo récord guardado para Nivel ${level} (${blocks} piezas): ${time}ms`);
         }
     }
 
     function startGame(blocks, level = 1){
         menuState.enabled = false;
         Object.assign(gameState, {
-            active: false, level, blocks, moves: 0, win: false, lost: false,
+            level, blocks, moves: 0, showWinScreen: false,
             elapsed: 0, timeLeft: 0, isPaused: false, pieces: [], image: null, unfilteredOffCanvas: null
         });
         gameState.hud.helpUsed = false;
+        
+        // Iniciar la animación de selección
+        gameState.phase = 'image-selection';
+        gameState.selectionAnimation.running = true;
+        gameState.selectionAnimation.startTime = Date.now();
+        gameState.selectionAnimation.finalIndex = Math.floor(Math.random() * gameState.allImages.length);
+        
+        requestAnimationFrame(render);
+    }
 
-        const imgSrc = GAME_CONFIG.images[Math.floor(Math.random() * GAME_CONFIG.images.length)];
-        loadImage(imgSrc).then(img => {
-            const square = Math.min(img.naturalWidth, img.naturalHeight);
-            const sx = (img.naturalWidth - square) / 2;
-            const sy = (img.naturalHeight - square) / 2;
+    function initializeLevel() {
+        const img = gameState.allImages[gameState.selectionAnimation.finalIndex];
+        const square = Math.min(img.naturalWidth, img.naturalHeight);
+        const sx = (img.naturalWidth - square) / 2;
+        const sy = (img.naturalHeight - square) / 2;
 
-            const unfilteredCanvas = document.createElement('canvas');
-            unfilteredCanvas.width = square;
-            unfilteredCanvas.height = square;
-            unfilteredCanvas.getContext('2d').drawImage(img, sx, sy, square, square, 0, 0, square, square);
-            gameState.unfilteredOffCanvas = unfilteredCanvas;
-            gameState.image = img;
+        const unfilteredCanvas = document.createElement('canvas');
+        unfilteredCanvas.width = square;
+        unfilteredCanvas.height = square;
+        unfilteredCanvas.getContext('2d').drawImage(img, sx, sy, square, square, 0, 0, square, square);
+        gameState.unfilteredOffCanvas = unfilteredCanvas;
+        gameState.image = img;
 
-            const cfg = GAME_CONFIG.blockConfigs[gameState.blocks];
-            gameState.rows = cfg.rows;
-            gameState.cols = cfg.cols;
-            
-            setupPieces();
-            
-            gameState.active = true;
-            startTimer();
-            render();
-        }).catch(err => {
-            console.error('Error cargando imagen', err);
-            menuState.enabled = true; render();
-        });
+        const cfg = GAME_CONFIG.blockConfigs[gameState.blocks];
+        gameState.rows = cfg.rows;
+        gameState.cols = cfg.cols;
+        
+        setupPieces();
+        
+        gameState.phase = 'playing';
+        startTimer();
+        render();
     }
 
     function setupPieces(){
@@ -410,22 +433,21 @@ const GAME_CONFIG = {
         };
     }
     
-        function startTimer(){
+    function startTimer(){
         const levelConfig = GAME_CONFIG.levels[gameState.level];
-        // CORRECCIÓN: Si hay tiempo máximo, el tiempo inicial para el cálculo debe ser 0, no el tiempo restante.
-        const initialTime = levelConfig.maxTime ? gameState.timeLeft : gameState.elapsed;
+        const initialTime = levelConfig.maxTime ? 0 : gameState.elapsed;
         gameState.startTime = Date.now() - initialTime;
         
         if (gameState.timerId) clearInterval(gameState.timerId);
         
         gameState.timerId = setInterval(() => {
-            if (!gameState.isPaused && !gameState.win && !gameState.lost) {
+            if (!gameState.isPaused && gameState.phase === 'playing') {
                 if (levelConfig.maxTime) {
                     const elapsed = Date.now() - gameState.startTime;
                     gameState.timeLeft = (levelConfig.maxTime * 1000) - elapsed;
                     if (gameState.timeLeft <= 0) {
                         gameState.timeLeft = 0;
-                        gameState.lost = true;
+                        gameState.phase = 'lost';
                         stopTimer();
                     }
                 } else {
@@ -440,7 +462,7 @@ const GAME_CONFIG = {
     function formatTime(ms){ const s = Math.floor(ms/1000); const m = Math.floor(s/60); const sec = s%60; return `${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`; }
     
     function useHelp() {
-        if (gameState.hud.helpUsed || gameState.win || gameState.lost) return;
+        if (gameState.hud.helpUsed || gameState.phase !== 'playing') return;
         
         const incorrectPiece = gameState.pieces.find(p => p.rotation % 360 !== 0 && !p.isFixed);
         
@@ -450,13 +472,13 @@ const GAME_CONFIG = {
             gameState.hud.helpUsed = true;
             gameState.moves = (gameState.moves || 0) + 1;
             
-            const penalty = 5000; // 5 segundos
+            const penalty = 5000;
             gameState.startTime -= penalty;
             
             const won = gameState.pieces.every(p => (p.rotation % 360) === 0);
             if (won) {
                 stopTimer();
-                gameState.win = true;
+                gameState.phase = 'win';
             }
             render();
         }
@@ -494,7 +516,7 @@ const GAME_CONFIG = {
         ctx.fillStyle = '#06202a'; ctx.textAlign='center'; ctx.fillText(gameState.isPaused ? 'Reanudar' : 'Pausa', px + pauseW/2, py + pauseH/2 + 1);
         gameState.hud.pauseRect = { x: px, y: py, w: pauseW, h: pauseH };
 
-        if (!gameState.hud.helpUsed && !gameState.win && !gameState.lost) {
+        if (!gameState.hud.helpUsed && gameState.phase === 'playing') {
             const ayudaW = 80, ayudaH = 32;
             const ax = px - ayudaW - 12;
             const ay = py;
@@ -520,7 +542,7 @@ const GAME_CONFIG = {
             ctx.translate(dx + dw/2, dy + dh/2);
             ctx.rotate((p.rotation * Math.PI) / 180);
 
-            if (gameState.win) {
+            if (gameState.phase === 'win') {
                 const sx = p.c * sW, sy = p.r * sH;
                 ctx.drawImage(gameState.unfilteredOffCanvas, sx, sy, sW, sH, -dw/2, -dh/2, dw, dh);
             } else {
@@ -542,15 +564,15 @@ const GAME_CONFIG = {
             ctx.fillStyle = '#fff'; ctx.font = '600 22px Inter, sans-serif'; ctx.textAlign='center'; ctx.fillText('PAUSADO', w/2, h/2);
         }
 
-        if ((gameState.win && gameState.showWinScreen) || gameState.lost) { // <-- MODIFICAR ESTA CONDICIÓN
-            ctx.fillStyle = gameState.lost ? 'rgba(40,0,0,0.66)' : 'rgba(0,0,0,0.66)';
+        if ((gameState.phase === 'win' && gameState.showWinScreen) || gameState.phase === 'lost') {
+            ctx.fillStyle = gameState.phase === 'lost' ? 'rgba(40,0,0,0.66)' : 'rgba(0,0,0,0.66)';
             ctx.fillRect(0,0,w,h);
             const boxW = Math.min(520, w - 80), boxH = 280, bx = (w - boxW)/2, by = (h - boxH)/2;
-            ctx.fillStyle = gameState.lost ? 'rgba(255,80,80,0.08)' : 'rgba(255,255,255,0.06)';
+            ctx.fillStyle = gameState.phase === 'lost' ? 'rgba(255,80,80,0.08)' : 'rgba(255,255,255,0.06)';
             roundRectFill(ctx, bx, by, boxW, boxH, 14);
             ctx.fillStyle = '#fff'; ctx.textAlign = 'center';
             
-            if (gameState.lost) {
+            if (gameState.phase === 'lost') {
                 ctx.font = '700 28px Inter, sans-serif';
                 ctx.fillText('¡Tiempo Agotado!', w/2, by + 60);
                 ctx.font = '600 16px Inter, sans-serif';
@@ -580,21 +602,89 @@ const GAME_CONFIG = {
 
             ctx.fillStyle = styles.buttonBg; roundRectFill(ctx, bx2, byBtn, btnW, btnH, 10);
             ctx.fillStyle = '#06202a';
-            const nextText = gameState.lost ? 'Volver al Menú' : (!!GAME_CONFIG.levels[gameState.level + 1] ? 'Siguiente Nivel' : 'Volver al Menú');
+            const nextText = gameState.phase === 'lost' ? 'Volver al Menú' : (!!GAME_CONFIG.levels[gameState.level + 1] ? 'Siguiente Nivel' : 'Volver al Menú');
             ctx.fillText(nextText, bx2 + btnW/2, byBtn + btnH/2 + 1);
 
             gameState.hud.winRect = { x: bx, y: by, w: boxW, h: boxH };
             gameState.hud.winBtns = {
                 retry: { id: 'retry', x: bx1, y: byBtn, w: btnW, h: btnH },
-                next: { id: gameState.lost ? 'menu' : (!!GAME_CONFIG.levels[gameState.level + 1] ? 'next' : 'menu'), x: bx2, y: byBtn, w: btnW, h: btnH }
+                next: { id: gameState.phase === 'lost' ? 'menu' : (!!GAME_CONFIG.levels[gameState.level + 1] ? 'next' : 'menu'), x: bx2, y: byBtn, w: btnW, h: btnH }
             };
         } else {
             gameState.hud.winRect = null; gameState.hud.winBtns = null;
         }
     }
 
+    function renderImageSelection() {
+        const anim = gameState.selectionAnimation;
+        const now = Date.now();
+        const elapsed = now - anim.startTime;
+        const progress = Math.min(elapsed / anim.duration, 1);
+
+        // Función de easing (desaceleración cúbica)
+        const easeOut = t => 1 - Math.pow(1 - t, 3);
+        const easedProgress = easeOut(progress);
+
+        clear();
+        const w = canvas.width / dpr;
+        const h = canvas.height / dpr;
+        ctx.fillStyle = styles.bg;
+        ctx.fillRect(0, 0, w, h);
+
+        const thumbHeight = 100;
+        const thumbWidth = thumbHeight * 1.6;
+        const thumbGap = 20;
+        const totalStripHeight = gameState.allImages.length * (thumbHeight + thumbGap);
+        
+        // Duplicamos las imágenes para un bucle infinito
+        const extendedImages = [...gameState.allImages, ...gameState.allImages];
+
+        const finalY = -(totalStripHeight + anim.finalIndex * (thumbHeight + thumbGap));
+        const currentY = finalY * easedProgress;
+
+        ctx.save();
+        ctx.translate(w / 2 - thumbWidth / 2, h / 2 - thumbHeight / 2);
+
+        for (let i = 0; i < extendedImages.length; i++) {
+            const yPos = i * (thumbHeight + thumbGap) + (currentY % totalStripHeight);
+            if (yPos > -thumbHeight && yPos < h) {
+                ctx.drawImage(extendedImages[i], 0, yPos, thumbWidth, thumbHeight);
+            }
+        }
+        
+        ctx.restore();
+
+        // Dibujar un marco de selección
+        ctx.strokeStyle = styles.buttonBg;
+        ctx.lineWidth = 4;
+        ctx.strokeRect(w / 2 - thumbWidth / 2, h / 2 - thumbHeight / 2, thumbWidth, thumbHeight);
+        
+        ctx.fillStyle = 'rgba(15, 18, 32, 0.7)';
+        ctx.fillRect(0, 0, w, h / 2 - thumbHeight / 2);
+        ctx.fillRect(0, h / 2 + thumbHeight / 2, w, h / 2 - thumbHeight / 2);
+
+        if (progress >= 1) {
+            anim.running = false;
+            setTimeout(initializeLevel, 400); // Pequeña pausa en la imagen seleccionada
+        } else {
+            requestAnimationFrame(render);
+        }
+    }
+
     function render(){
-        if (gameState.active || gameState.win || gameState.lost) renderGame(); else renderMenuOriginal();
+        switch(gameState.phase) {
+            case 'menu':
+                renderMenuOriginal();
+                break;
+            case 'image-selection':
+                renderImageSelection();
+                break;
+            case 'playing':
+            case 'win':
+            case 'lost':
+                renderGame();
+                break;
+        }
     }
 
     function processPieceInteraction(col, row, isRightClick){
@@ -612,20 +702,21 @@ const GAME_CONFIG = {
             const levelConfig = GAME_CONFIG.levels[gameState.level];
             const finalTime = levelConfig.maxTime ? (levelConfig.maxTime * 1000 - gameState.timeLeft) : gameState.elapsed;
             saveBestTime(gameState.level, gameState.blocks, finalTime);
-            gameState.win = true;
-            console.info(`Blocka: Nivel ${gameState.level} completado`);
-            render(); // Renderiza la imagen sin filtros inmediatamente
+            gameState.phase = 'win';
+            render();
             setTimeout(() => {
                 gameState.showWinScreen = true;
-                render(); // Tras 1.5s, renderiza la pantalla de estadísticas
+                render();
             }, 1500);
-            return true; // Salimos para evitar el renderizado final
+            return true;
         }
         render();
         return true;
     }
 
     function handleGamePointerDown(p, button){
+        if (gameState.phase === 'image-selection') return;
+
         const pr = gameState.hud.pauseRect;
         if (pr && p.x >= pr.x && p.x <= pr.x+pr.w && p.y >= pr.y && p.y <= pr.y+pr.h){
             gameState.isPaused = !gameState.isPaused;
@@ -642,7 +733,7 @@ const GAME_CONFIG = {
 
         if (gameState.isPaused) return;
 
-        if ((gameState.win || gameState.lost) && gameState.hud && gameState.hud.winBtns){
+        if ((gameState.phase === 'win' || gameState.phase === 'lost') && gameState.hud && gameState.hud.winBtns){
             const btns = gameState.hud.winBtns;
             if (p.x >= btns.retry.x && p.x <= btns.retry.x + btns.retry.w && p.y >= btns.retry.y && p.y <= btns.retry.y + btns.retry.h){
                 startGame(gameState.blocks, gameState.level);
@@ -652,7 +743,7 @@ const GAME_CONFIG = {
                 if (btns.next.id === 'next') {
                     startGame(gameState.blocks, gameState.level + 1);
                 } else {
-                    Object.assign(gameState, { win: false, lost: false, active: false, level: 1 });
+                    gameState.phase = 'menu';
                     menuState.enabled = true;
                     render();
                 }
@@ -662,7 +753,7 @@ const GAME_CONFIG = {
         }
 
         const area = gameState.layout;
-        if (!area || gameState.win || gameState.lost) return;
+        if (!area || gameState.phase !== 'playing') return;
         const localX = p.x - area.gridX;
         const localY = p.y - area.gridY;
         if (localX < 0 || localY < 0) return;
@@ -674,7 +765,7 @@ const GAME_CONFIG = {
 
     canvas.addEventListener('pointerdown', e => {
         if (e.pointerType === 'touch' || e.pointerType === 'pen') return;
-        if (!gameState.active && !gameState.win && !gameState.lost) return;
+        if (gameState.phase === 'menu' && !menuState.enabled) return;
         const p = getPointerPos(e);
         handleGamePointerDown(p, e.button);
     });
@@ -726,6 +817,17 @@ const GAME_CONFIG = {
         const blocks = ev.detail && ev.detail.blocks ? ev.detail.blocks : menuState.selectedBlocks;
         startGame(blocks, 1);
     });
+
+    // AÑADIR ESTA FUNCIÓN
+    function init() {
+        fitCanvas();
+        preloadAllImages(); // Llamada a la precarga
+        const r = canvas.getBoundingClientRect();
+        if (r.height < 120){
+            canvas.style.height = '450px';
+            fitCanvas();
+        }
+    }
 
     new ResizeObserver(fitCanvas).observe(canvas);
     init();
