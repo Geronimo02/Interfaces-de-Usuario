@@ -136,3 +136,15 @@
 .register-card .badge.g {
   background: #fff
 }
+
+/* Estilos para el mock de reCAPTCHA (movidos desde el HTML) */
+.recaptcha-logo-container {
+  margin-left: auto;
+  display: grid;
+  place-items: center;
+}
+
+.recaptcha-links {
+  font-size: 10px;
+  opacity: .8;
+}

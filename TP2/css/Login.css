@@ -241,3 +241,13 @@
 .badge.g {
   background: #fff
 }
+
+/* Estilos movidos desde login.html */
+.loading-card .logo-puck {
+    margin-bottom: 10px;
+}
+
+.loading-card .pct {
+    text-align: center;
+    margin-top: 8px;
+}
