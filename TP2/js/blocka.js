@@ -146,7 +146,7 @@ const GAME_CONFIG = {
         drawStart(st.x, st.y, st.w, st.h, hoverStart);
         ctx.fillStyle = 'rgba(255,255,255,0.06)';
         ctx.font = '12px Inter, system-ui, sans-serif';
-        ctx.fillText('Selecciona número de piezas y pulsa Comenzar', w/2, h - 28);
+        ctx.fillText('', w/2, h - 28);
     }
     function drawOption(x,y,w,h,label,selected,hover){
         ctx.save();
