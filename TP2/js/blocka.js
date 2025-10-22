@@ -80,14 +80,17 @@ const GAME_CONFIG = {
         const gap = 18;
         const totalW = optW*3 + gap*2;
         const startX = centerX - totalW/2;
+        // Bajamos los botones para dejar espacio al texto explicativo
+        const optsYOffset = 100; // antes 60
+        const startYOffset = 180; // antes 140
         menuState.rects = {
             title: { x: centerX, y: topY-20 },
             opts: [
-                { id: 'opt-4', x: startX, y: topY + 60, w: optW, h: optH },
-                { id: 'opt-6', x: startX + (optW+gap), y: topY + 60, w: optW, h: optH },
-                { id: 'opt-8', x: startX + 2*(optW+gap), y: topY + 60, w: optW, h: optH }
+                { id: 'opt-4', x: startX, y: topY + optsYOffset, w: optW, h: optH },
+                { id: 'opt-6', x: startX + (optW+gap), y: topY + optsYOffset, w: optW, h: optH },
+                { id: 'opt-8', x: startX + 2*(optW+gap), y: topY + optsYOffset, w: optW, h: optH }
             ],
-            start: { x: centerX - 120/2, y: topY + 140, w: 120, h: 52 }
+            start: { x: centerX - 120/2, y: topY + startYOffset, w: 120, h: 52 }
         };
     }
     function clear() {
@@ -104,15 +107,22 @@ const GAME_CONFIG = {
         ctx.fillStyle = styles.bg;
         ctx.fillRect(0,0,w,h);
         const topY = Math.max(40, h*0.18);
-        ctx.fillStyle = styles.title;
-        ctx.textAlign = 'center';
-        ctx.font = 'bold 34px Inter, system-ui, sans-serif';
-        ctx.fillText('BLOCKA', w/2, topY + 28);
-        ctx.fillStyle = styles.subtitle;
-        ctx.font = '16px Inter, system-ui, sans-serif';
-        ctx.fillText('Gira las piezas y reconstruye la imagen', w/2, topY + 58);
 
-        if (menuState.isLoading) {
+    ctx.fillStyle = styles.title;
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 34px Inter, system-ui, sans-serif';
+    ctx.fillText('BLOCKA', w/2, topY + 18);
+
+    ctx.fillStyle = styles.subtitle;
+    ctx.font = '16px Inter, system-ui, sans-serif';
+    ctx.fillText('Gira las piezas y reconstruye la imagen', w/2, topY + 48);
+
+    // Texto explicativo sobre los botones de cantidad de piezas
+    ctx.font = '15px Inter, system-ui, sans-serif';
+    ctx.fillStyle = '#b6c6e2';
+    ctx.fillText('Elegí la cantidad de piezas:', w/2, topY + 78);
+
+        if (menuState.isLoading) {  
             ctx.fillStyle = '#fff';
             ctx.font = '16px Inter, system-ui, sans-serif';
             ctx.fillText('Cargando imágenes...', w/2, h/2 + 40);
@@ -559,9 +569,32 @@ const GAME_CONFIG = {
             ctx.restore();
         }
         
+
         if (gameState.isPaused){
-            ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillRect(0,0,w,h);
-            ctx.fillStyle = '#fff'; ctx.font = '600 22px Inter, sans-serif'; ctx.textAlign='center'; ctx.fillText('PAUSADO', w/2, h/2);
+            // Dibujar fondo oscuro
+            ctx.fillStyle = 'rgba(0,0,0,0.45)';
+            ctx.fillRect(0,0,w,h);
+
+            // Dibujar el botón "Reanudar" encima con opacidad normal
+            if (gameState.hud && gameState.hud.pauseRect) {
+                const pr = gameState.hud.pauseRect;
+                // Redibujar el botón con opacidad completa
+                ctx.save();
+                ctx.fillStyle = styles.buttonBg;
+                roundRectFill(ctx, pr.x, pr.y, pr.w, pr.h, 8);
+                ctx.fillStyle = '#06202a';
+                ctx.font = '600 13px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('Reanudar', pr.x + pr.w/2, pr.y + pr.h/2 + 1);
+                ctx.restore();
+            }
+
+            // Texto de pausa
+            ctx.fillStyle = '#fff';
+            ctx.font = '600 22px Inter, sans-serif';
+            ctx.textAlign='center';
+            ctx.fillText('PAUSADO', w/2, h/2);
         }
 
         if ((gameState.phase === 'win' && gameState.showWinScreen) || gameState.phase === 'lost') {
@@ -642,8 +675,14 @@ const GAME_CONFIG = {
         const finalY = -(totalStripHeight + anim.finalIndex * (thumbHeight + thumbGap));
         const currentY = finalY * easedProgress;
 
-        ctx.save();
-        ctx.translate(w / 2 - thumbWidth / 2, h / 2 - thumbHeight / 2);
+
+    // Centrar el carrusel en el canvas (más centrado visualmente)
+    // Calculamos el centro del área visible para el carrusel
+    const visibleThumbs = 3; // cuántas miniaturas se ven a la vez (ajustable)
+    const stripHeight = visibleThumbs * thumbHeight + (visibleThumbs - 1) * thumbGap;
+    const centerY = h / 2 - stripHeight / 2;
+    ctx.save();
+    ctx.translate(w / 2 - thumbWidth / 2, centerY);
 
         for (let i = 0; i < extendedImages.length; i++) {
             const yPos = i * (thumbHeight + thumbGap) + (currentY % totalStripHeight);
