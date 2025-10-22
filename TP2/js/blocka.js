@@ -487,10 +487,10 @@ const GAME_CONFIG = {
             
             const won = gameState.pieces.every(p => (p.rotation % 360) === 0);
             if (won) {
-                stopTimer();
-                gameState.phase = 'win';
+                triggerWinSequence(); // <-- REEMPLAZAR LÓGICA ANTERIOR
+            } else {
+                render();
             }
-            render();
         }
     }
 
@@ -675,25 +675,24 @@ const GAME_CONFIG = {
         const finalY = -(totalStripHeight + anim.finalIndex * (thumbHeight + thumbGap));
         const currentY = finalY * easedProgress;
 
-
-    // Centrar el carrusel en el canvas (más centrado visualmente)
-    // Calculamos el centro del área visible para el carrusel
-    const visibleThumbs = 3; // cuántas miniaturas se ven a la vez (ajustable)
-    const stripHeight = visibleThumbs * thumbHeight + (visibleThumbs - 1) * thumbGap;
-    const centerY = h / 2 - stripHeight / 2;
-    ctx.save();
-    ctx.translate(w / 2 - thumbWidth / 2, centerY);
+        // --- CORRECCIÓN ---
+        // Eliminar los cálculos de 'visibleThumbs', 'stripHeight' y 'centerY'.
+        // Usar el centro de la pantalla como único punto de referencia.
+        ctx.save();
+        // Mover el origen del canvas al centro exacto donde se dibujará el marco.
+        ctx.translate(w / 2 - thumbWidth / 2, h / 2 - thumbHeight / 2);
 
         for (let i = 0; i < extendedImages.length; i++) {
+            // El cálculo de yPos ahora se alinea perfectamente con el nuevo origen.
             const yPos = i * (thumbHeight + thumbGap) + (currentY % totalStripHeight);
-            if (yPos > -thumbHeight && yPos < h) {
+            if (yPos > -h/2 && yPos < h/2 + thumbHeight) { // Ajustar condición de visibilidad
                 ctx.drawImage(extendedImages[i], 0, yPos, thumbWidth, thumbHeight);
             }
         }
         
         ctx.restore();
 
-        // Dibujar un marco de selección
+        // Dibujar un marco de selección (esta parte ya era correcta)
         ctx.strokeStyle = styles.buttonBg;
         ctx.lineWidth = 4;
         ctx.strokeRect(w / 2 - thumbWidth / 2, h / 2 - thumbHeight / 2, thumbWidth, thumbHeight);
@@ -726,6 +725,20 @@ const GAME_CONFIG = {
         }
     }
 
+    // AÑADIR ESTA NUEVA FUNCIÓN
+    function triggerWinSequence() {
+        stopTimer();
+        const levelConfig = GAME_CONFIG.levels[gameState.level];
+        const finalTime = levelConfig.maxTime ? (levelConfig.maxTime * 1000 - gameState.timeLeft) : gameState.elapsed;
+        saveBestTime(gameState.level, gameState.blocks, finalTime);
+        gameState.phase = 'win';
+        render(); // Renderiza la imagen sin filtros inmediatamente
+        setTimeout(() => {
+            gameState.showWinScreen = true;
+            render(); // Tras 1.5s, renderiza la pantalla de estadísticas
+        }, 1500);
+    }
+
     function processPieceInteraction(col, row, isRightClick){
         const idx = row * gameState.cols + col;
         const piece = gameState.pieces[idx];
@@ -737,16 +750,7 @@ const GAME_CONFIG = {
         
         const won = gameState.pieces.every(p => (p.rotation % 360) === 0);
         if (won){
-            stopTimer();
-            const levelConfig = GAME_CONFIG.levels[gameState.level];
-            const finalTime = levelConfig.maxTime ? (levelConfig.maxTime * 1000 - gameState.timeLeft) : gameState.elapsed;
-            saveBestTime(gameState.level, gameState.blocks, finalTime);
-            gameState.phase = 'win';
-            render();
-            setTimeout(() => {
-                gameState.showWinScreen = true;
-                render();
-            }, 1500);
+            triggerWinSequence(); // <-- REEMPLAZAR LÓGICA ANTERIOR
             return true;
         }
         render();
@@ -798,6 +802,7 @@ const GAME_CONFIG = {
         if (localX < 0 || localY < 0) return;
         const col = Math.floor(localX / area.pieceSize);
         const row = Math.floor(localY / area.pieceSize);
+        // CORRECCIÓN: Añadir paréntesis a la condición 'if'
         if (col < 0 || col >= gameState.cols || row < 0 || row >= gameState.rows) return;
         processPieceInteraction(col, row, button === 2);
     }
