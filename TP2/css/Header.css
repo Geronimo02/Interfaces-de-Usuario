@@ -540,3 +540,26 @@ html, body{
     left: auto;
   }
 }
+
+/* Estilos movidos desde el HTML para los menús desplegables */
+.drawer-head .brand {
+    gap: 8px;
+}
+
+.profile-head .muted {
+    font-size: 13px;
+}
+
+/* Estilos para los iconos del menú de perfil (movidos desde el HTML) */
+.profile-nav .profile-icon,
+.logout .profile-icon,
+.profile-social img {
+  width: 20px;
+  height: 20px;
+}
+
+/* Estilo para el icono de perfil en el header (movido desde el HTML) */
+#btnProfile img {
+  width: 24px;
+  height: 24px;
+}
