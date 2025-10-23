@@ -154,7 +154,7 @@
 
       <div class="carousel-banner">
           <span class="badge suscripcion">SUSCRIPCION</span>
-          <a href="Pages/juego.html" aria-label="Ver detalles de BLOCKA">
+          <a href="../TP3/juego.html" aria-label="Ver detalles de BLOCKA">
           <img src="assets/img/img_blocka.png" alt="BLOCKA" />
           </a>
           <div class="banner-meta sr-only">
@@ -345,13 +345,6 @@
 <script src="js/main.js" defer></script>
 <script src="js/carrusel.js" defer></script>
 <script src="js/api.js" defer></script>
-<<<<<<< HEAD
-</body>
-
-</html>
-
-=======
-<!-- Script: sincroniza el botón 'Jugar' con el banner activo del carrusel -->
 <script>
   (function(){
     function updatePlayLink(){
@@ -368,7 +361,7 @@
         } else {
           // fallback: busco por título para BLOCKA
           const title = (active.querySelector('.banner-title') || {}).textContent || '';
-          if(title.toLowerCase().includes('blocka')) href = 'Pages/juego.html';
+          if (title.toLowerCase().includes('blocka')) href = './TP3/juego.html';
           else href = 'Pages/game.html';
         }
         const playBtn = document.querySelector('.destacados-actions .btn-play');
@@ -397,4 +390,3 @@
 </body>
 
 </html>
->>>>>>> 9e7c888b76e7776a3cfc516c63924eb2a47d5741

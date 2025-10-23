@@ -1,13 +1,13 @@
 // Configuración del juego
 const GAME_CONFIG = {
-    images: [
-        '../assets/img/images-4.jpeg',
-        '../assets/img/images-5.jpeg',
-        '../assets/img/images-6.jpeg',
-        '../assets/img/images-7.jpeg',
-        '../assets/img/images-8.jpeg',
-        '../assets/img/simp.jpg',
-        '../assets/img/simps.jpg'
+     images: [
+        '../TP2/assets/img/images-4.jpeg',
+        '../TP2/assets/img/images-5.jpeg',
+        '../TP2/assets/img/images-6.jpeg',
+        '../TP2/assets/img/images-7.jpeg',
+        '../TP2/assets/img/images-8.jpeg',
+        '../TP2/assets/img/simp.jpg',
+        '../TP2/assets/img/simps.jpg'
     ],
     levels: {
         1: { filterTypes: ['none'], name: 'Nivel 1' },
