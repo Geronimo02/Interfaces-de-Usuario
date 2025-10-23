@@ -1,6 +1,4 @@
-// ========================================================================
-// --- CONFIGURACIÓN DEL JUEGO CON NUEVAS PROPIEDADES ---
-// ========================================================================
+// Configuración del juego
 const GAME_CONFIG = {
     images: [
         '../assets/img/images-4.jpeg',
@@ -877,3 +875,4 @@ const GAME_CONFIG = {
     init();
 
 })();
+

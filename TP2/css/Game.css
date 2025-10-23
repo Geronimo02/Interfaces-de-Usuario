@@ -84,7 +84,7 @@
   /* Si la altura es fija, asegurarnos que haya suficiente espacio */
   min-height: 500px; /* Altura mínima consistente */
   overflow: visible; /* Permitir que el contenido sea visible fuera del contenedor */
-  background: #08111a;
+  background: #181828;
   display: flex;
   flex-direction: column; /* Cambiado para mejor flujo de contenido */
   align-items: center;
@@ -106,7 +106,8 @@
 }
 
 #game-area {
-  max-width: 1400px;
+  width: 100%;
+  max-width: 1200px;
   min-height: 350px; /* Reducir de 450px a 350px */
   display: flex;
   justify-content: center;
