@@ -1229,6 +1229,30 @@
   position: relative;
 }
 
+/* Pegs como círculos de color (en lugar de imágenes) */
+.peg-circle {
+  width: calc(var(--cell-size) - 24px);
+  height: calc(var(--cell-size) - 24px);
+  border-radius: 50%;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+  display: block;
+  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+  border: 2px solid rgba(255,255,255,0.08);
+}
+
+/* pequeño efecto al pasar/activar */
+.cell[draggable="true"] .peg-circle:hover {
+  transform: translateY(-6px) scale(1.03);
+  filter: saturate(1.05);
+}
+
+/* si quieres distinguir Homer/Bart por borde */
+.cell.homer .peg-circle { border-color: rgba(0,0,0,0.08); }
+.cell.bart .peg-circle  { border-color: rgba(255,255,255,0.06); }
+
+/* Opcional: reducir sombras cuando la celda está deshabilitada */
+.cell.invalid .peg-circle { box-shadow: none; }
+
 .cell.hole {
   background: radial-gradient(circle, #2a2a2a 30%, #1a1a1a 100%);
   border: 2px solid #444;
@@ -1760,4 +1784,143 @@
   .game-header {
     margin-top: 3.5rem !important;
   }
+}
+
+/* ===== Peg Solitaire styles (moved from inline in game.html) ===== */
+
+/* Tablero: 7x7, fondo temático */
+#game-board {
+  display: grid;
+  grid-template-columns: repeat(7, 64px);
+  grid-template-rows: repeat(7, 64px);
+  gap: 6px;
+  width: calc(7 * 64px + 6 * 6px);
+  height: calc(7 * 64px + 6 * 6px);
+  margin: 18px auto;
+  background-image: url("../assets/img/board-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.cell {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Celdas inválidas: invisibles pero ocupan el espacio (no romper la rejilla) */
+.cell.invalid {
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+/* Hoyo visible */
+.cell.hole {
+  background: rgba(0, 0, 0, 0.04);
+  border: 2px dashed rgba(0, 0, 0, 0.06);
+  box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Imagen de la ficha (obligatorio: imagen, no color sólido) */
+.cell .peg-img {
+  width: calc(var(--cell-size) - 20px);
+  height: calc(var(--cell-size) - 20px);
+  pointer-events: none; /* el drag lo maneja la celda */
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.34);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+/* Cursor / interacción para celdas con fichas */
+.cell[draggable="true"] { cursor: grab; }
+.cell[draggable="true"]:active { cursor: grabbing; }
+
+/* Efecto hover en fichas para mayor feedback */
+.cell[draggable="true"]:hover { transform: translateY(-6px); }
+
+/* Selección y sombra destacada */
+.cell.selected {
+  transform: scale(1.08);
+  box-shadow: 0 12px 30px rgba(255,213,79,0.12), 0 6px 14px rgba(0,0,0,0.25);
+  z-index: 5;
+}
+
+/* Hint animada: flecha arriba y barra de luz (mejor contraste) */
+.cell.possible-move::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 18px solid var(--accent);
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
+  animation: bounce 0.9s infinite;
+  opacity: .98;
+}
+
+.cell.possible-move::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 8px;
+  background: rgba(255,213,79,0.14);
+  border-radius: 8px;
+  animation: glow 0.9s infinite;
+}
+
+/* Mantener las animaciones previas (ajustadas) */
+@keyframes bounce {
+  0% { transform: translateX(-50%) translateY(0) scale(1); }
+  50% { transform: translateX(-50%) translateY(-8px) scale(1.03); }
+  100% { transform: translateX(-50%) translateY(0) scale(1); }
+}
+@keyframes glow {
+  0% { opacity: .6; transform: translateX(-50%) scaleX(1); }
+  50% { opacity: 1; transform: translateX(-50%) scaleX(1.08); }
+  100% { opacity: .6; transform: translateX(-50%) scaleX(1); }
+}
+
+/* Animaciones de movimiento/desaparición */
+.cell.jumping { animation: jumpTo .55s ease-in-out; z-index: 6; }
+.cell.disappearing { animation: fadeOut .45s linear forwards; }
+@keyframes jumpTo { 0%{ transform: translateY(0); } 50%{ transform: translateY(-22px); } 100%{ transform: translateY(0); } }
+@keyframes fadeOut { to{ opacity: 0; transform: scale(.7); } }
+
+/* Controles y barra de info más integrados */
+.game-controls { display:flex; gap:12px; align-items:center; justify-content:center; margin:6px auto 12px; flex-wrap:wrap; }
+.info-chip { background: rgba(20,18,58,0.9); color:#fff; padding:8px 14px; border-radius:20px; font-weight:700; box-shadow: 0 6px 14px rgba(20,18,58,0.12); }
+.btn-small { background:#14123A; color:#fff; padding:10px 14px; border-radius:10px; cursor:pointer; border: 1px solid rgba(255,255,255,0.06); box-shadow: 0 8px 18px rgba(0,0,0,0.12); transition: transform .12s ease, box-shadow .12s ease; }
+.btn-small:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(0,0,0,0.18); }
+
+/* Mensaje principal */
+#gameMessage { text-align:center; margin-top:8px; min-height:20px; font-weight:600; color: rgba(20,18,58,0.9); }
+
+/* Ajustes para Full HD / evitar scroll en canvas: escalar si fuese preciso */
+@media (max-width: 1200px) {
+  :root { --cell-size: 64px; --gap:6px; --board-padding: 12px; }
+  #game-area { padding: 14px; }
 }
