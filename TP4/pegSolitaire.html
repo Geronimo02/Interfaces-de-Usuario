@@ -166,14 +166,10 @@
           <button id="hintBtn" class="btn-small" aria-label="Mostrar pista">💡 Pista (H)</button>
         </div>
 
-        <!-- Tablero del juego -->
-        <div id="game-board" aria-label="Tablero de Peg Solitaire" role="application" tabindex="0">
-          <!-- Las celdas se generan desde pegSolitaire.js -->
+        <!-- Área del juego (canvas estático insedido en el HTML) -->
+        <div id="game-area" aria-label="Área del juego" role="application" tabindex="0">
+          <canvas id="pegCanvas" width="1200" height="520" style="width:100%;height:520px;display:block;" aria-label="Tablero de Peg Solitaire"></canvas>
         </div>
-
-        <!-- Mensajes y ayuda rápida -->
-        <div id="gameMessage" class="muted">Haz clic en una ficha para seleccionarla o arrástrala a una posición válida.</div>
-      </div>
     </section>
 
     <!-- Título principal del juego -->
@@ -434,7 +430,7 @@
 
   <script src="/Interfaces-de-Usuario/TP2/js/main.js" defer></script>
   <script src="/Interfaces-de-Usuario/TP2/js/gallery.js"></script>
-  <script src="/Interfaces-de-Usuario/TP2/js/pegSolitaire.js"></script>
+  <script type="module" src="/Interfaces-de-Usuario/TP4/js/main.js"></script>
 </body>
 
 </html>
