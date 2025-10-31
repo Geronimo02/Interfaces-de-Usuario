@@ -154,7 +154,7 @@
 
       <div class="carousel-banner">
           <span class="badge suscripcion">SUSCRIPCION</span>
-          <a href="../TP3/juego.html" aria-label="Ver detalles de BLOCKA">
+          <a href="../TP3/gameBlocka.html" aria-label="Ver detalles de BLOCKA">
           <img src="assets/img/img_blocka.png" alt="BLOCKA" />
           </a>
           <div class="banner-meta sr-only">
@@ -361,7 +361,7 @@
         } else {
           // fallback: busco por título para BLOCKA
           const title = (active.querySelector('.banner-title') || {}).textContent || '';
-          if (title.toLowerCase().includes('blocka')) href = './TP3/juego.html';
+          if (title.toLowerCase().includes('blocka')) href = './TP3/gameBlocka.html';
           else href = 'Pages/game.html';
         }
         const playBtn = document.querySelector('.destacados-actions .btn-play');
