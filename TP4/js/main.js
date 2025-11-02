@@ -2,6 +2,8 @@ import PegView from './views/PegView.js';
 import PegController from './controllers/PegController.js';
 
 window.addEventListener('DOMContentLoaded', ()=>{
+    // prevent small horizontal scrollbar caused by accidental overflow
+    try{ document.documentElement.style.overflowX = 'hidden'; } catch(e){}
     // Usar canvas estático si existe en el HTML, sino crear uno como fallback
     let canvas = document.getElementById('pegCanvas');
     const boardContainer = document.getElementById('game-area');
@@ -16,19 +18,12 @@ window.addEventListener('DOMContentLoaded', ()=>{
         if (boardContainer) boardContainer.insertBefore(canvas, boardContainer.firstChild);
     }
 
-    const uiSelectors = {
-        pegsLeftEl: document.getElementById('pegsLeft'),
-        moveCountEl: document.getElementById('moveCount'),
-        timerEl: document.getElementById('timer'),
-        messageEl: document.getElementById('gameMessage'),
-        resetBtn: document.getElementById('resetBtn'),
-        undoBtn: document.getElementById('undoBtn'),
-        hintBtn: document.getElementById('hintBtn'),
-        initialTime: 300
-    };
+    // Let the view create or wire UI controls; pass only initial config here
+    const uiSelectors = { initialTime: 300 };
 
     const view = new PegView(canvas, uiSelectors);
-    const controller = new PegController(canvas, uiSelectors);
+    // use the UI that the view provides (it creates controls if they were missing)
+    const controller = new PegController(canvas, view.ui);
     controller.init(view);
     window.pegController = controller;
 });

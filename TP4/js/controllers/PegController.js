@@ -14,12 +14,17 @@ export default class PegController {
     init(view){
         this.view = view;
         this.view.onClick((r,c)=> this.handleClick(r,c));
-        // render callback so view can request a re-render
+    // callback de render para que la vista pueda solicitar un re-render
         if (this.view.setRenderCallback) this.view.setRenderCallback(()=> this.view.render(this.model));
-        // pointer (drag/drop) handlers
+    // manejadores pointer (arrastrar/soltar)
         if (this.view.onPointerDown) this.view.onPointerDown((r,c,e)=> this._onPointerDown(r,c,e));
         if (this.view.onPointerUp) this.view.onPointerUp((r,c,e)=> this._onPointerUp(r,c,e));
-        // wire buttons
+    if (this.view.onPointerMove) this.view.onPointerMove((r,c,e)=> this._onPointerMove && this._onPointerMove(r,c,e));
+    // botones del HUD dentro del canvas
+    if (this.view.onReset) this.view.onReset(()=> this.reset());
+    if (this.view.onUndo) this.view.onUndo(()=> this.undo());
+    if (this.view.onHint) this.view.onHint(()=> this.showHint());
+    // conectar botones DOM (compatibilidad)
         if (this.ui.resetBtn) this.ui.resetBtn.addEventListener('click', ()=> this.reset());
         if (this.ui.undoBtn) this.ui.undoBtn.addEventListener('click', ()=> this.undo());
         if (this.ui.hintBtn) this.ui.hintBtn.addEventListener('click', ()=> this.showHint());
@@ -32,14 +37,14 @@ export default class PegController {
         if (!this.selected){
             if (this.model.board[row][col] === 1){
                 this.selected = {row,col};
-                // highlight valid destinations
+                // resaltar destinos válidos
                 const moves = [];
                 const dirs = [[-2,0],[2,0],[0,-2],[0,2]];
                 dirs.forEach(([dr,dc])=>{
                     const nr = row+dr, nc = col+dc;
                     if (this.model.canMove(row,col,nr,nc)) moves.push([nr,nc]);
                 });
-                if (moves.length) this.view.highlightCells(moves);
+                if (moves.length) this.view.highlightCells({ source: { r: row, c: col }, targets: moves });
                 this.view.showMessage('Ficha seleccionada');
             }
         } else {
@@ -61,7 +66,7 @@ export default class PegController {
                         const nr = row+dr, nc = col+dc;
                         if (this.model.canMove(row,col,nr,nc)) moves.push([nr,nc]);
                     });
-                    this.view.highlightCells(moves);
+                    this.view.highlightCells({ source: { r: row, c: col }, targets: moves });
                     this.view.showMessage('Ficha seleccionada');
                 } else {
                     this.view.showMessage('Movimiento inválido');
@@ -71,11 +76,11 @@ export default class PegController {
     }
 
     _onPointerDown(row,col,e){
-        // begin selection/drag if peg exists
+    // iniciar selección/arrastre si existe ficha
         if (!this.model.isValidPosition(row,col)) return;
         if (this.model.board[row][col] === 1){
             this.selected = {row,col};
-            // compute valid destinations and highlight
+            // calcular destinos válidos y resaltarlos
             const moves = [];
             const dirs = [[-2,0],[2,0],[0,-2],[0,2]];
             dirs.forEach(([dr,dc])=>{
@@ -83,13 +88,15 @@ export default class PegController {
                 if (this.model.canMove(row,col,nr,nc)) moves.push([nr,nc]);
             });
             this._possibleMoves = moves;
-            this.view.highlightCells(moves);
+            this.view.highlightCells({ source: { r: row, c: col }, targets: moves });
             this.view.showMessage('Arrastrando ficha...');
+            return true;
         }
+        return false;
     }
 
     _onPointerUp(row,col,e){
-        // drop: if target in possibleMoves, perform move
+    // soltar: si el destino está en possibleMoves, realizar el movimiento
         if (this.selected && Array.isArray(this._possibleMoves)){
             const match = this._possibleMoves.find(m => m[0] === row && m[1] === col);
             if (match){
@@ -104,7 +111,7 @@ export default class PegController {
                 return;
             }
         }
-        // otherwise clear selection/highlights
+    // si no, limpiar selección/resaltados
         this.selected = null;
         this._possibleMoves = null;
         this.view.clearHighlights && this.view.clearHighlights();
@@ -142,10 +149,14 @@ export default class PegController {
         this.timer = setInterval(()=>{
             if (this.gameOver) { this.stopTimer(); return; }
             this.remainingTime--;
+            // actualizar timer en DOM si está presente
             if (timerEl) timerEl.textContent = `${String(Math.floor(this.remainingTime/60)).padStart(2,'0')}:${String(this.remainingTime%60).padStart(2,'0')}`;
+            // pedir a la vista que vuelva a renderizar para actualizar el HUD dentro del canvas
+            if (this.view && this.view.render) this.view.render(this.model);
             if (this.remainingTime <= 0){
+                this.remainingTime = 0;
                 this.gameOver = true;
-                this.view.showMessage('Tiempo agotado');
+                if (this.view) this.view.showMessage('Tiempo agotado');
                 this.stopTimer();
             }
         },1000);
