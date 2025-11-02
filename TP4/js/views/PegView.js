@@ -294,8 +294,20 @@ export default class PegView {
             // dibujar la pieza arrastrada con el estilo "selected/elevated"
             this._drawSelectedPeg(ctx, originX + dx, originY + dy, this.cellSize*0.34);
         }
+        // Actualizar HUD en el DOM si existen los elementos
         if (this.ui.pegsLeftEl) this.ui.pegsLeftEl.textContent = model.pegCount;
         if (this.ui.moveCountEl) this.ui.moveCountEl.textContent = model.moveCount;
+        if (this.ui.timerEl && window.pegController && typeof window.pegController.remainingTime === 'number') {
+            const t = window.pegController.remainingTime;
+            this.ui.timerEl.textContent = `${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
+            // Forzar estilos visibles
+            this.ui.timerEl.style.color = '#FFD54F';
+            this.ui.timerEl.style.fontWeight = 'bold';
+            this.ui.timerEl.style.fontSize = '1.5rem';
+            this.ui.timerEl.style.background = 'transparent';
+            this.ui.timerEl.style.display = 'inline';
+            this.ui.timerEl.style.visibility = 'visible';
+        }
     }
 
     showMessage(text){ if (this.ui.messageEl) this.ui.messageEl.textContent = text; }
@@ -526,5 +538,38 @@ export default class PegView {
     clearHighlights(){ this._highlightedCells = []; this._arrowSource = null; this._arrowTargets = null; this._stopArrowAnim && this._stopArrowAnim(); if (this._renderOnUpdate) this._renderOnUpdate(); }
 
     setRenderCallback(cb){ this._renderOnUpdate = cb; }
+
+    showBanner(text, type='info'){
+        // Elimina cualquier banner anterior
+        if (this._bannerEl && this._bannerEl.parentNode) {
+            this._bannerEl.parentNode.removeChild(this._bannerEl);
+            this._bannerEl = null;
+        }
+        const banner = document.createElement('div');
+        banner.className = `peg-banner peg-banner-${type}`;
+        banner.textContent = text;
+        // Estilos básicos inline para asegurar visibili    dad
+        banner.style.position = 'absolute';
+        banner.style.top = '24px';
+        banner.style.left = '50%';
+        banner.style.transform = 'translateX(-50%)';
+        banner.style.padding = '16px 32px';
+        banner.style.background = type === 'warning' ? '#ff9800' :  '#1976d2';
+        banner.style.color = '#fff';
+        banner.style.fontSize = '1.2rem';
+        banner.style.fontWeight = 'bold';
+        banner.style.borderRadius = '8px';
+        banner.style.boxShadow = '0 4px 16px rgba(0,0,0,0.18)';
+        banner.style.zIndex = '1000';
+        banner.style.pointerEvents = 'none';
+        // Insertar sobre el canvas
+        const parent = this.canvas.parentElement || document.body;
+        parent.appendChild(banner);
+        this._bannerEl = banner;
+        setTimeout(()=> {
+            if (banner.parentNode) banner.parentNode.removeChild(banner);
+            if (this._bannerEl === banner) this._bannerEl = null;
+        }, 2200);
+    }
 
 }

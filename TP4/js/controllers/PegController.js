@@ -138,9 +138,21 @@ export default class PegController {
 
     showHint(){
         const moves = this.model.getAllPossibleMoves();
-        if (moves.length === 0) { this.view.showMessage('No hay movimientos'); return; }
+        if (moves.length === 0) { 
+            this.view.showMessage('No hay movimientos'); 
+            this.view.showBanner && this.view.showBanner('No hay movimientos posibles', 'warning');
+            this.view.clearHighlights && this.view.clearHighlights();
+            return; 
+        }
         const mv = moves[Math.floor(Math.random()*moves.length)];
-        this.view.showMessage(`Pista: ${mv.from} → ${mv.to}`);
+        // Resalta la ficha origen y el destino sugerido
+        this.view.highlightCells({ 
+            source: { r: mv.from[0], c: mv.from[1] }, 
+            targets: [mv.to] 
+        });
+        const msg = `Pista: (${mv.from[0]+1},${mv.from[1]+1}) → (${mv.to[0]+1},${mv.to[1]+1})`;
+        this.view.showMessage(msg);
+        this.view.showBanner && this.view.showBanner(msg, 'info');
     }
 
     startTimer(){
