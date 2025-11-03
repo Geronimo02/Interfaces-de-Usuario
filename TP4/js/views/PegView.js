@@ -9,6 +9,18 @@ export default class PegView {
             this.canvas.style.boxSizing = 'border-box';
         }
         this.ctx = canvas.getContext('2d');
+
+        // --- INICIO: Cargar imagen de la ficha ---
+        this.pegImage = new Image();
+        this.pegImage.src = './assets/images/homer.png'; // Asegúrate de que la ruta a tu imagen sea correcta
+        this.pegImageLoaded = false;
+        this.pegImage.onload = () => {
+            this.pegImageLoaded = true;
+            // Vuelve a dibujar la vista una vez que la imagen se haya cargado
+            if (this._renderOnUpdate) this._renderOnUpdate();
+        };
+        // --- FIN: Cargar imagen de la ficha ---
+
     this.ui = uiSelectors; // { pegsLeftEl, moveCountEl, timerEl, messageEl } elementos DOM opcionales
         this.rows = 7; this.cols = 7;
         this.cellSize = 64; // tamaño por defecto, se ajustará en resize
@@ -244,10 +256,31 @@ export default class PegView {
                         // guardar la posición para dibujar la ficha seleccionada al final (sobre otras)
                         _selectedPos = { r, c };
                     } else {
+                        // --- INICIO DEL CAMBIO CON CLIPPING ---
+                        ctx.save(); // 1. Guardar estado
+                        
+                        // 2. Definir la forma circular para el recorte
                         ctx.beginPath();
-                        ctx.fillStyle = '#FFD54F';
-                        ctx.arc(x + this.cellSize/2, y + this.cellSize/2, this.cellSize*0.32, 0, Math.PI*2);
-                        ctx.fill();
+                        ctx.arc(x + this.cellSize/2, y + this.cellSize/2, this.cellSize*0.42, 0, Math.PI*2);
+                        
+                        // 3. Aplicar la máscara de recorte
+                        ctx.clip();
+
+                        // 4. Dibujar la imagen (solo se verá la parte dentro del círculo)
+                        if (this.pegImageLoaded) {
+                            const pegSize = this.cellSize * 0.85;
+                            const pegX = x + (this.cellSize - pegSize) / 2;
+                            const pegY = y + (this.cellSize - pegSize) / 2;
+                            ctx.drawImage(this.pegImage, pegX, pegY, pegSize, pegSize);
+                        } else {
+                            // Fallback si la imagen no ha cargado (no se recortará, pero es un fallback)
+                            ctx.fillStyle = '#FFD54F';
+                            ctx.fill(); // Rellena el círculo definido en el paso 2
+                        }
+
+                        // 5. Restaurar para eliminar la máscara y no afectar otros dibujos
+                        ctx.restore(); 
+                        // --- FIN DEL CAMBIO CON CLIPPING ---
                     }
                 } else if (model.board[r][c] === 0 && model.isValidPosition(r,c)){
                     ctx.beginPath();
@@ -449,13 +482,31 @@ export default class PegView {
     ctx.fill();
     ctx.restore();
 
-        // cuerpo de la ficha
-        ctx.beginPath();
-        ctx.fillStyle = '#FFD54F';
-        ctx.arc(0, 0, radius, 0, Math.PI*2);
-        ctx.fill();
+        // --- INICIO DEL CAMBIO CON CLIPPING ---
+        ctx.save(); // 1. Guardar estado
 
-        // borde sutil
+        // 2. Definir la forma circular para el recorte (en el centro, ya que estamos transladados)
+        ctx.beginPath();
+        ctx.arc(0, 0, radius, 0, Math.PI*2);
+
+        // 3. Aplicar la máscara de recorte
+        ctx.clip();
+
+        // 4. Dibujar la imagen
+        if (this.pegImageLoaded) {
+            const imgRadius = radius * 1.1;
+            ctx.drawImage(this.pegImage, -imgRadius, -imgRadius, imgRadius * 2, imgRadius * 2);
+        } else {
+            // Fallback si la imagen no carga
+            ctx.fillStyle = '#FFD54F';
+            ctx.fill(); // Rellena el círculo del paso 2
+        }
+
+        // 5. Restaurar para quitar la máscara
+        ctx.restore();
+        // --- FIN DEL CAMBIO CON CLIPPING ---
+
+        // borde sutil (lo dibujamos después de restaurar para que no se recorte)
         ctx.beginPath();
         ctx.lineWidth = Math.max(1, this.cellSize * 0.02);
         ctx.strokeStyle = 'rgba(0,0,0,0.12)';
