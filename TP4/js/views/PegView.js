@@ -9,6 +9,10 @@ export default class PegView {
             this.canvas.style.boxSizing = 'border-box';
         }
         this.ctx = canvas.getContext('2d');
+    // fondo: imagen (se carga una vez y se vuelve a renderizar cuando carga)
+    this._bgImage = new Image();
+    this._bgImage.src = '../TP2/assets/img/background_simpson.jpg';
+    this._bgImage.onload = () => { if (this._renderOnUpdate) this._renderOnUpdate(); };
     this.ui = uiSelectors; // { pegsLeftEl, moveCountEl, timerEl, messageEl } elementos DOM opcionales
         this.rows = 7; this.cols = 7;
         this.cellSize = 64; // tamaño por defecto, se ajustará en resize
@@ -212,12 +216,89 @@ export default class PegView {
         const w = this.canvas.width / dpr;
         const h = this.canvas.height / dpr;
         ctx.clearRect(0,0,w,h);
-        ctx.fillStyle = '#0b1720';
-        ctx.fillRect(0,0,w,h);
+        // dibujar imagen de fondo si está cargada, si no usar color de fallback
+        if (this._bgImage && this._bgImage.complete && this._bgImage.naturalWidth){
+            try{
+                ctx.drawImage(this._bgImage, 0, 0, w, h);
+            } catch(err){
+                ctx.fillStyle = '#0b1720';
+                ctx.fillRect(0,0,w,h);
+            }
+        } else {
+            ctx.fillStyle = '#0b1720';
+            ctx.fillRect(0,0,w,h);
+        }
 
 
     const originX = this._originX;
     const originY = this._originY;
+
+        // Dibujar un panel detrás del tablero para separarlo del fondo y hacerlo más nítido
+        try{
+            const panelPad = Math.max(6, Math.floor(this.cellSize * 0.12));
+            const totalGridW = this.cellSize * this.cols;
+            const totalGridH = this.cellSize * this.rows;
+            const panelX = originX - panelPad;
+            const panelY = originY - panelPad;
+            const panelW = totalGridW + panelPad*2;
+            const panelH = totalGridH + panelPad*2;
+            const radius = Math.max(12, Math.floor(this.cellSize * 0.12));
+
+            ctx.save();
+            // rounded rect path for center panel
+            ctx.beginPath();
+            ctx.moveTo(panelX + radius, panelY);
+            ctx.arcTo(panelX + panelW, panelY, panelX + panelW, panelY + panelH, radius);
+            ctx.arcTo(panelX + panelW, panelY + panelH, panelX, panelY + panelH, radius);
+            ctx.arcTo(panelX, panelY + panelH, panelX, panelY, radius);
+            ctx.arcTo(panelX, panelY, panelX + panelW, panelY, radius);
+            ctx.closePath();
+            // fill panel (slightly darker / semi-opaque to contrast with background)
+            ctx.fillStyle = 'rgba(6,10,14,0.82)';
+            ctx.fill();
+            // subtle border
+            ctx.lineWidth = Math.max(1, Math.floor(this.cellSize * 0.015));
+            ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+            ctx.stroke();
+            ctx.restore();
+
+            // side panels (left and right) anchored to the canvas extremes
+            // We'll make them full-height bars at the edges so the board contrasts
+            // aumentar el ancho para dar más espacio a botones y estadísticas
+            const sideW = Math.max(180, Math.floor(this.cellSize * 2.4));
+            // anchor flush to edges (left at x=0, right at x = canvasWidth - sideW)
+            const leftX = 0;
+            const rightX = Math.max(0, Math.floor(w - sideW));
+            const sideY = 0; // full canvas height
+            const sideH = h;
+
+            // store for HUD drawing
+            this._sidePanelLeft = { x: leftX, y: sideY, w: sideW, h: sideH };
+            this._sidePanelRight = { x: rightX, y: sideY, w: sideW, h: sideH };
+
+            // draw left panel (solid background)
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(leftX, sideY, sideW, sideH);
+            ctx.fillStyle = '#060a0e'; // sólido para contraste con fondo
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+            ctx.stroke();
+            ctx.restore();
+
+            // draw right panel (solid background)
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(rightX, sideY, sideW, sideH);
+            ctx.fillStyle = '#060a0e'; // sólido para contraste con fondo
+            ctx.fill();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+            ctx.stroke();
+            ctx.restore();
+
+        } catch(err){ /* ignore drawing panel if anything fails */ }
 
 
         let _selectedPos = null;
@@ -267,6 +348,22 @@ export default class PegView {
             }
         }
 
+        // aplicar un sombreado suave (vignette) alrededor del tablero para que destaque sobre el fondo
+        try{
+            const totalGridW = this.cellSize * this.cols;
+            const totalGridH = this.cellSize * this.rows;
+            const boardCx = originX + totalGridW * 0.5;
+            const boardCy = originY + totalGridH * 0.5;
+            const outerR = Math.max(w, h) * 0.9;
+            const innerR = Math.min(totalGridW, totalGridH) * 0.45;
+            const vignette = ctx.createRadialGradient(boardCx, boardCy, innerR, boardCx, boardCy, outerR);
+            vignette.addColorStop(0, 'rgba(0,0,0,0)');
+            vignette.addColorStop(0.6, 'rgba(0,0,0,0.12)');
+            vignette.addColorStop(1, 'rgba(0,0,0,0.42)');
+            ctx.fillStyle = vignette;
+            ctx.fillRect(0,0,w,h);
+        } catch(err){ /* ignore if gradient fails */ }
+
         // draw arrow animations (if any)
         if (this._arrowAnimating && this._arrowSource && Array.isArray(this._arrowTargets) && this._arrowTargets.length){
             this._drawArrows(ctx, originX, originY, model);
@@ -313,41 +410,63 @@ export default class PegView {
     showMessage(text){ if (this.ui.messageEl) this.ui.messageEl.textContent = text; }
 
     _drawHud(ctx, originX, originY, w, h, model){
-        const hudY = 8;
+        // Dibujar HUD dentro de los paneles laterales (si existen), con medidas relativas
         ctx.save();
-        ctx.font = `14px Arial`;
+        const pad = Math.max(10, Math.floor(this.cellSize * 0.12));
+        const labelFont = `${Math.max(12, Math.floor(this.cellSize * 0.18))}px Arial`;
+        const valueFont = `${Math.max(16, Math.floor(this.cellSize * 0.22))}px Arial`;
         ctx.fillStyle = 'rgba(255,255,255,0.95)';
 
-    const chipGap = 12;
-    let x = 12; 
-        const y = hudY + 16;
-        ctx.fillText(`Fichas: ${model.pegCount}`, x, y);
-        x += ctx.measureText(`Fichas: ${model.pegCount}`).width + chipGap;
-        ctx.fillText(`Movimientos: ${model.moveCount}`, x, y);
-        x += ctx.measureText(`Movimientos: ${model.moveCount}`).width + chipGap;
+        // Texto / estadísticas en el panel izquierdo
+        if (this._sidePanelLeft){
+            const p = this._sidePanelLeft;
+            const sx = p.x + pad;
+            let sy = p.y + pad + Math.floor(this.cellSize * 0.2);
 
-        // --- INICIO DEL CAMBIO ---
-        let timerText = '00:00';
-        if (window.pegController && typeof window.pegController.remainingTime === 'number') {
-            const t = window.pegController.remainingTime;
-            timerText = `${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
+            ctx.font = labelFont;
+            ctx.fillText('Fichas', sx, sy);
+            ctx.font = valueFont;
+            ctx.fillText(String(model.pegCount), sx, sy + Math.floor(this.cellSize * 0.9));
+
+            sy += Math.floor(this.cellSize * 1.6);
+            ctx.font = labelFont;
+            ctx.fillText('Movimientos', sx, sy);
+            ctx.font = valueFont;
+            ctx.fillText(String(model.moveCount), sx, sy + Math.floor(this.cellSize * 0.9));
+
+            // Tiempo
+            sy += Math.floor(this.cellSize * 1.6);
+            ctx.font = labelFont;
+            ctx.fillText('Tiempo', sx, sy);
+            ctx.font = valueFont;
+            let timerText = '00:00';
+            if (window.pegController && typeof window.pegController.remainingTime === 'number') {
+                const t = window.pegController.remainingTime;
+                timerText = `${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
+            }
+            ctx.fillText(timerText, sx, sy + Math.floor(this.cellSize * 0.9));
         }
-        // --- FIN DEL CAMBIO ---
 
-        ctx.fillText(`Tiempo: ${timerText}`, x, y);
+        // Botones apilados en el panel derecho
+        if (this._sidePanelRight){
+            const p = this._sidePanelRight;
+            const btnW = Math.max(96, Math.floor(p.w - pad*2));
+            const btnH = Math.max(36, Math.floor(this.cellSize * 0.32));
+            const spacing = Math.max(10, Math.floor(this.cellSize * 0.18));
+            let bx = p.x + (p.w - btnW)/2;
+            let by = p.y + pad + Math.floor(this.cellSize * 0.2);
 
-        const btnW = 110, btnH = 28, btnGap = 8;
-    let bx = w - btnW - 12;
-        const by = hudY + 4;
+            this._hudRegions.reset = { x: bx, y: by, w: btnW, h: btnH };
+            this._drawButton(ctx, bx, by, btnW, btnH, '🔁 Reiniciar');
 
-        this._hudRegions.reset = { x: bx, y: by, w: btnW, h: btnH };
-        this._drawButton(ctx, bx, by, btnW, btnH, '🔁 Reiniciar');
-        bx -= (btnW + btnGap);
-        this._hudRegions.undo = { x: bx, y: by, w: btnW, h: btnH };
-        this._drawButton(ctx, bx, by, btnW, btnH, '↶ Deshacer');
-        bx -= (btnW + btnGap);
-        this._hudRegions.hint = { x: bx, y: by, w: btnW, h: btnH };
-        this._drawButton(ctx, bx, by, btnW, btnH, '💡 Pista');
+            by += btnH + spacing;
+            this._hudRegions.undo = { x: bx, y: by, w: btnW, h: btnH };
+            this._drawButton(ctx, bx, by, btnW, btnH, '↶ Deshacer');
+
+            by += btnH + spacing;
+            this._hudRegions.hint = { x: bx, y: by, w: btnW, h: btnH };
+            this._drawButton(ctx, bx, by, btnW, btnH, '💡 Pista');
+        }
 
         ctx.restore();
     }
