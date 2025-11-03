@@ -9,10 +9,35 @@ export default class PegView {
             this.canvas.style.boxSizing = 'border-box';
         }
         this.ctx = canvas.getContext('2d');
-    // fondo: imagen (se carga una vez y se vuelve a renderizar cuando carga)
-    this._bgImage = new Image();
-    this._bgImage.src = '../TP2/assets/img/background_simpson.jpg';
-    this._bgImage.onload = () => { if (this._renderOnUpdate) this._renderOnUpdate(); };
+
+        // --- INICIO: Cargar imagen de la ficha ---
+        this.pegImage = new Image();
+        this.pegImage.src = './assets/images/homer.png'; // Asegúrate de que la ruta a tu imagen sea correcta
+        this.pegImageLoaded = false;
+        this.pegImage.onload = () => {
+            this.pegImageLoaded = true;
+            // Vuelve a dibujar la vista una vez que la imagen se haya cargado
+            if (this._renderOnUpdate) this._renderOnUpdate();
+        };
+        // --- FIN: Cargar imagen de la ficha ---
+
+        // --- INICIO: Cargar imagen de FONDO ---
+        // Usamos `this._bgImage` porque `render()` comprueba esa propiedad.
+        this._bgImage = new Image();
+        // evitar problemas CORS si la imagen se carga desde otra ruta
+        try { this._bgImage.crossOrigin = 'anonymous'; } catch(e){}
+        // ruta solicitada por el usuario (archivo compartido en TP2)
+        this._bgImage.src = '../TP2/assets/img/background_simpson.jpg';
+        this._bgImage.onload = () => {
+            // Cuando cargue, forzamos re-render
+            if (this._renderOnUpdate) this._renderOnUpdate();
+        };
+        this._bgImage.onerror = () => {
+            // fallo de carga: no hacer nada extra, render() usará el color de fallback
+            // console.warn('No se pudo cargar background_simpson.jpg');
+        };
+        // --- FIN: Cargar imagen de FONDO ---
+
     this.ui = uiSelectors; // { pegsLeftEl, moveCountEl, timerEl, messageEl } elementos DOM opcionales
         this.rows = 7; this.cols = 7;
         this.cellSize = 64; // tamaño por defecto, se ajustará en resize
@@ -253,14 +278,60 @@ export default class PegView {
             ctx.arcTo(panelX, panelY + panelH, panelX, panelY, radius);
             ctx.arcTo(panelX, panelY, panelX + panelW, panelY, radius);
             ctx.closePath();
-            // fill panel (slightly darker / semi-opaque to contrast with background)
-            ctx.fillStyle = 'rgba(6,10,14,0.82)';
-            ctx.fill();
-            // subtle border
-            ctx.lineWidth = Math.max(1, Math.floor(this.cellSize * 0.015));
-            ctx.strokeStyle = 'rgba(255,255,255,0.04)';
-            ctx.stroke();
-            ctx.restore();
+            // --- Cambio: fondo tipo madera para el panel central ---
+            // Crear un gradiente marrón para simular madera
+                const woodGrad = ctx.createLinearGradient(panelX, panelY, panelX + panelW, panelY + panelH);
+                woodGrad.addColorStop(0, '#d2a06a'); // marrón claro
+                woodGrad.addColorStop(0.5, '#b07a43'); // tono medio
+                woodGrad.addColorStop(1, '#8a5a2a'); // marrón más oscuro
+                ctx.fillStyle = woodGrad;
+                ctx.fill();
+
+                // Dibujar vetas sutiles para efecto madera (más visibles)
+                ctx.save();
+                ctx.globalAlpha = 0.16;
+                ctx.lineWidth = Math.max(1, Math.floor(this.cellSize * 0.02));
+                ctx.strokeStyle = '#3b2a18';
+                const lines = Math.max(7, Math.floor(panelH / 26));
+                for (let i = 0; i < lines; i++) {
+                    const yy = panelY + (i + 0.5) * (panelH / lines);
+                    ctx.beginPath();
+                    // curva ligera para simular veta
+                    ctx.moveTo(panelX - panelW * 0.02, yy + Math.sin(i * 1.2) * (this.cellSize * 0.09));
+                    ctx.quadraticCurveTo(panelX + panelW * 0.45, yy + Math.cos(i * 0.85) * (this.cellSize * 0.06), panelX + panelW + panelW * 0.02, yy + Math.sin(i * 0.7) * (this.cellSize * 0.08));
+                    ctx.stroke();
+                }
+                ctx.restore();
+
+                // Sutil sombra interior (inner shadow) para dar profundidad
+                ctx.save();
+                // clip to rounded panel so shadow stays inside
+                ctx.beginPath();
+                ctx.moveTo(panelX + radius, panelY);
+                ctx.arcTo(panelX + panelW, panelY, panelX + panelW, panelY + panelH, radius);
+                ctx.arcTo(panelX + panelW, panelY + panelH, panelX, panelY + panelH, radius);
+                ctx.arcTo(panelX, panelY + panelH, panelX, panelY, radius);
+                ctx.arcTo(panelX, panelY, panelX + panelW, panelY, radius);
+                ctx.closePath();
+                ctx.clip();
+
+                // radial gradient that is darker near the edges -> looks like inner shadow
+                const centerX = panelX + panelW * 0.5;
+                const centerY = panelY + panelH * 0.5;
+                const maxR = Math.max(panelW, panelH) * 0.7;
+                const innerGrad = ctx.createRadialGradient(centerX, centerY, Math.min(panelW, panelH) * 0.25, centerX, centerY, maxR);
+                innerGrad.addColorStop(0, 'rgba(0,0,0,0)');
+                innerGrad.addColorStop(0.85, 'rgba(0,0,0,0.06)');
+                innerGrad.addColorStop(1, 'rgba(0,0,0,0.18)');
+                ctx.fillStyle = innerGrad;
+                ctx.fillRect(panelX, panelY, panelW, panelH);
+                ctx.restore();
+
+                // sutil borde para separar del fondo
+                ctx.lineWidth = Math.max(1, Math.floor(this.cellSize * 0.015));
+                ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+                ctx.stroke();
+                // --- fin cambio madera ---
 
             // side panels (left and right) anchored to the canvas extremes
             // We'll make them full-height bars at the edges so the board contrasts
@@ -325,10 +396,31 @@ export default class PegView {
                         // guardar la posición para dibujar la ficha seleccionada al final (sobre otras)
                         _selectedPos = { r, c };
                     } else {
+                        // --- INICIO DEL CAMBIO CON CLIPPING ---
+                        ctx.save(); // 1. Guardar estado
+                        
+                        // 2. Definir la forma circular para el recorte
                         ctx.beginPath();
-                        ctx.fillStyle = '#FFD54F';
-                        ctx.arc(x + this.cellSize/2, y + this.cellSize/2, this.cellSize*0.32, 0, Math.PI*2);
-                        ctx.fill();
+                        ctx.arc(x + this.cellSize/2, y + this.cellSize/2, this.cellSize*0.42, 0, Math.PI*2);
+                        
+                        // 3. Aplicar la máscara de recorte
+                        ctx.clip();
+
+                        // 4. Dibujar la imagen (solo se verá la parte dentro del círculo)
+                        if (this.pegImageLoaded) {
+                            const pegSize = this.cellSize * 0.85;
+                            const pegX = x + (this.cellSize - pegSize) / 2;
+                            const pegY = y + (this.cellSize - pegSize) / 2;
+                            ctx.drawImage(this.pegImage, pegX, pegY, pegSize, pegSize);
+                        } else {
+                            // Fallback si la imagen no ha cargado (no se recortará, pero es un fallback)
+                            ctx.fillStyle = '#FFD54F';
+                            ctx.fill(); // Rellena el círculo definido en el paso 2
+                        }
+
+                        // 5. Restaurar para eliminar la máscara y no afectar otros dibujos
+                        ctx.restore(); 
+                        // --- FIN DEL CAMBIO CON CLIPPING ---
                     }
                 } else if (model.board[r][c] === 0 && model.isValidPosition(r,c)){
                     ctx.beginPath();
@@ -550,7 +642,7 @@ export default class PegView {
     _drawSelectedPeg(ctx, cx, cy, radius){
         // Dibuja la ficha seleccionada con leve escala y una sombra manual (elipse) para "elevarla"
         ctx.save();
-        const scale = 1.08;
+        const scale = 1.4;
         ctx.translate(cx, cy);
         ctx.scale(scale, scale);
 
@@ -568,13 +660,31 @@ export default class PegView {
     ctx.fill();
     ctx.restore();
 
-        // cuerpo de la ficha
-        ctx.beginPath();
-        ctx.fillStyle = '#FFD54F';
-        ctx.arc(0, 0, radius, 0, Math.PI*2);
-        ctx.fill();
+        // --- INICIO DEL CAMBIO CON CLIPPING ---
+        ctx.save(); // 1. Guardar estado
 
-        // borde sutil
+        // 2. Definir la forma circular para el recorte (en el centro, ya que estamos transladados)
+        ctx.beginPath();
+        ctx.arc(0, 0, radius, 0, Math.PI*2);
+
+        // 3. Aplicar la máscara de recorte
+        ctx.clip();
+
+        // 4. Dibujar la imagen
+        if (this.pegImageLoaded) {
+            const imgRadius = radius * 1.1;
+            ctx.drawImage(this.pegImage, -imgRadius, -imgRadius, imgRadius * 2, imgRadius * 2);
+        } else {
+            // Fallback si la imagen no carga
+            ctx.fillStyle = '#FFD54F';
+            ctx.fill(); // Rellena el círculo del paso 2
+        }
+
+        // 5. Restaurar para quitar la máscara
+        ctx.restore();
+        // --- FIN DEL CAMBIO CON CLIPPING ---
+
+        // borde sutil (lo dibujamos después de restaurar para que no se recorte)
         ctx.beginPath();
         ctx.lineWidth = Math.max(1, this.cellSize * 0.02);
         ctx.strokeStyle = 'rgba(0,0,0,0.12)';
