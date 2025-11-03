@@ -325,7 +325,15 @@ export default class PegView {
         x += ctx.measureText(`Fichas: ${model.pegCount}`).width + chipGap;
         ctx.fillText(`Movimientos: ${model.moveCount}`, x, y);
         x += ctx.measureText(`Movimientos: ${model.moveCount}`).width + chipGap;
-        const timerText = (this.ui.timerEl && this.ui.timerEl.textContent) ? this.ui.timerEl.textContent : '';
+
+        // --- INICIO DEL CAMBIO ---
+        let timerText = '00:00';
+        if (window.pegController && typeof window.pegController.remainingTime === 'number') {
+            const t = window.pegController.remainingTime;
+            timerText = `${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
+        }
+        // --- FIN DEL CAMBIO ---
+
         ctx.fillText(`Tiempo: ${timerText}`, x, y);
 
         const btnW = 110, btnH = 28, btnGap = 8;
