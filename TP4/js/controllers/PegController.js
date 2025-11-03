@@ -125,6 +125,8 @@ export default class PegController {
         this.gameOver = false;
         this.view.render(this.model);
         this.view.showMessage('Juego reiniciado');
+        // --- AÑADIR ESTA LÍNEA ---
+        this.startTimer();
     }
 
     undo(){
