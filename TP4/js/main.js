@@ -19,7 +19,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
     }
 
     // Let the view create or wire UI controls; pass only initial config here
-    const uiSelectors = { initialTime: 300 };
+    const uiSelectors = { initialTime: 5 };
 
     const view = new PegView(canvas, uiSelectors);
     // use the UI that the view provides (it creates controls if they were missing)

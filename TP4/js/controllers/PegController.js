@@ -161,28 +161,52 @@ export default class PegController {
         this.timer = setInterval(()=>{
             if (this.gameOver) { this.stopTimer(); return; }
             this.remainingTime--;
+            if (this.remainingTime < 0) this.remainingTime = 0; // Evitar números negativos
+
             // actualizar timer en DOM si está presente
             if (timerEl) timerEl.textContent = `${String(Math.floor(this.remainingTime/60)).padStart(2,'0')}:${String(this.remainingTime%60).padStart(2,'0')}`;
+            
             // pedir a la vista que vuelva a renderizar para actualizar el HUD dentro del canvas
             if (this.view && this.view.render) this.view.render(this.model);
+
+            // --- INICIO DEL CAMBIO ---
+            // Si el tiempo se agota, llamar a checkStatus para que maneje el fin del juego
             if (this.remainingTime <= 0){
-                this.remainingTime = 0;
-                this.gameOver = true;
-                if (this.view) this.view.showMessage('Tiempo agotado');
-                this.stopTimer();
+                this.checkStatus();
             }
+            // --- FIN DEL CAMBIO --- (Eliminar el bloque if anterior que estaba aquí)
+
         },1000);
     }
 
-    stopTimer(){ if (this.timer) clearInterval(this.timer); this.timer = null; }
+    stopTimer(){
+        if (this.timer) clearInterval(this.timer);
+        this.timer = null;
+    }
 
     checkStatus(){
-        const moves = this.model.getAllPossibleMoves();
-        if (moves.length === 0){
+        if (this.gameOver) return;
+
+        // --- INICIO DEL CAMBIO ---
+        // Mover la comprobación del tiempo para que tenga prioridad
+        if (this.remainingTime <= 0){
             this.gameOver = true;
-            if (this.model.pegCount === 1) this.view.showMessage('¡Ganaste!');
-            else this.view.showMessage(`Juego terminado. Quedaron ${this.model.pegCount} fichas.`);
             this.stopTimer();
+            this.view.showBanner('¡Se acabó el tiempo!', 'warning');
+            return; // Salir para no mostrar otros mensajes
         }
+        // --- FIN DEL CAMBIO ---
+
+        const possibleMoves = this.model.getAllPossibleMoves();
+        if (this.model.pegCount === 1){
+            this.gameOver = true;
+            this.stopTimer();
+            this.view.showBanner('¡Has ganado!', 'success');
+        } else if (possibleMoves.length === 0){
+            this.gameOver = true;
+            this.stopTimer();
+            this.view.showBanner('¡Fin del juego! No hay más movimientos', 'warning');
+        }
+        // Se elimina la comprobación del tiempo de aquí porque ya se hizo arriba
     }
 }
