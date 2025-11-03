@@ -21,6 +21,18 @@ export default class PegView {
         };
         // --- FIN: Cargar imagen de la ficha ---
 
+        // --- INICIO: Cargar imagen de FONDO ---
+        this.backgroundImage = new Image();
+        // Asegúrate de que la ruta a tu imagen de fondo sea correcta
+        this.backgroundImage.src = './assets/images/fondo_tablero.png'; 
+        this.backgroundImageLoaded = false;
+        this.backgroundImage.onload = () => {
+            this.backgroundImageLoaded = true;
+            // Vuelve a dibujar la vista una vez que el fondo se haya cargado
+            if (this._renderOnUpdate) this._renderOnUpdate();
+        };
+        // --- FIN: Cargar imagen de FONDO ---
+
     this.ui = uiSelectors; // { pegsLeftEl, moveCountEl, timerEl, messageEl } elementos DOM opcionales
         this.rows = 7; this.cols = 7;
         this.cellSize = 64; // tamaño por defecto, se ajustará en resize
@@ -224,8 +236,17 @@ export default class PegView {
         const w = this.canvas.width / dpr;
         const h = this.canvas.height / dpr;
         ctx.clearRect(0,0,w,h);
-        ctx.fillStyle = '#0b1720';
-        ctx.fillRect(0,0,w,h);
+
+        // --- INICIO DEL CAMBIO: DIBUJAR FONDO ---
+        // 1. Dibujar la imagen de fondo si ya se cargó
+        if (this.backgroundImageLoaded) {
+            ctx.drawImage(this.backgroundImage, 0, 0, w, h);
+        } else {
+            // 2. Si no, dibujar un color sólido como fallback
+            ctx.fillStyle = '#0b1720';
+            ctx.fillRect(0,0,w,h);
+        }
+        // --- FIN DEL CAMBIO: DIBUJAR FONDO ---
 
 
     const originX = this._originX;
