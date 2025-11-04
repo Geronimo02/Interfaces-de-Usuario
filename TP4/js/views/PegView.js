@@ -56,6 +56,7 @@ export default class PegView {
             undo: null,
             hint: null
         };
+        this._hoveredHud = null; // 'reset'|'undo'|'hint' when pointer is over a button
         this._onResetCallback = null;
         this._onUndoCallback = null;
         this._onHintCallback = null;
@@ -70,6 +71,9 @@ export default class PegView {
         this.canvas.addEventListener('click', (e)=> this._onClick(e));
         this.canvas.addEventListener('pointerdown', (e)=> this._onPointerDownEvent(e));
         this.canvas.addEventListener('pointermove', (e)=> this._onPointerMoveEvent(e));
+        this.canvas.addEventListener('pointerleave', ()=>{
+            if (this._hoveredHud){ this._hoveredHud = null; if (this._renderOnUpdate) this._renderOnUpdate(); }
+        });
         this.canvas.addEventListener('pointerup', (e)=> this._onPointerUpEvent(e));
         this.canvas.addEventListener('pointercancel', (e)=> this._onPointerCancelEvent(e));
         window.addEventListener('resize', ()=> this._onResize());
@@ -167,9 +171,20 @@ export default class PegView {
     }
 
     _onPointerMoveEvent(e){
+        // actualizar hover sobre HUD aunque no estemos arrastrando
+        const rect = this.canvas.getBoundingClientRect();
+        const px = e.clientX - rect.left;
+        const py = e.clientY - rect.top;
+        let newHover = null;
+        if (this._hudRegions.reset && this._pointInRect(px,py,this._hudRegions.reset)) newHover = 'reset';
+        else if (this._hudRegions.undo && this._pointInRect(px,py,this._hudRegions.undo)) newHover = 'undo';
+        else if (this._hudRegions.hint && this._pointInRect(px,py,this._hudRegions.hint)) newHover = 'hint';
+        if (newHover !== this._hoveredHud){ this._hoveredHud = newHover; if (this._renderOnUpdate) this._renderOnUpdate(); }
+
+        // si no estamos arrastrando o el pointerId no coincide, no actualizar la posición de arrastre
         if (!this._dragging || e.pointerId !== this._dragPointerId) return;
         const {localX, localY, row, col} = this._getCellFromEvent(e);
-      
+
         this._dragPos = { x: localX - this._dragPointerOffset.x, y: localY - this._dragPointerOffset.y };
         if (this._pointerMoveHandler) this._pointerMoveHandler(row,col,e);
         if (this._renderOnUpdate) this._renderOnUpdate();
@@ -348,28 +363,7 @@ export default class PegView {
             this._sidePanelLeft = { x: leftX, y: sideY, w: sideW, h: sideH };
             this._sidePanelRight = { x: rightX, y: sideY, w: sideW, h: sideH };
 
-            // draw left panel (solid background)
-            ctx.save();
-            ctx.beginPath();
-            ctx.rect(leftX, sideY, sideW, sideH);
-            ctx.fillStyle = '#060a0e'; // sólido para contraste con fondo
-            ctx.fill();
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
-            ctx.stroke();
-            ctx.restore();
-
-            // draw right panel (solid background)
-            ctx.save();
-            ctx.beginPath();
-            ctx.rect(rightX, sideY, sideW, sideH);
-            ctx.fillStyle = '#060a0e'; // sólido para contraste con fondo
-            ctx.fill();
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = 'rgba(255,255,255,0.03)';
-            ctx.stroke();
-            ctx.restore();
-
+    
         } catch(err){ /* ignore drawing panel if anything fails */ }
 
 
@@ -379,8 +373,14 @@ export default class PegView {
                 const x = originX + c*this.cellSize;
                 const y = originY + r*this.cellSize;
 
-                ctx.fillStyle = model.isValidPosition(r,c) ? 'rgba(255,255,255,0.03)' : 'transparent';
-                ctx.fillRect(x+2,y+2,this.cellSize-4,this.cellSize-4);
+                // fondo de la celda: hacerlo un poco más oscuro para separarlo del fondo de madera
+                ctx.fillStyle = model.isValidPosition(r,c) ? 'rgba(0,0,0,0.18)' : 'transparent';
+                // dibujar fondo de celda con esquinas redondeadas
+                ctx.save();
+                ctx.beginPath();
+                this._roundRectPath(ctx, x+2, y+2, this.cellSize-4, this.cellSize-4, Math.max(6, Math.floor(this.cellSize * 0.08)));
+                ctx.fill();
+                ctx.restore();
                 const isDragSource = this._dragging && this._dragOrigin && this._dragOrigin.row === r && this._dragOrigin.col === c;
                 const isSelectedSource = this._arrowSource && this._arrowSource.r === r && this._arrowSource.c === c;
 
@@ -431,8 +431,12 @@ export default class PegView {
                     ctx.stroke();
                 }
                 if (this._highlightedCells.some(hc => hc.r === r && hc.c === c)){
+                    ctx.save();
+                    ctx.beginPath();
                     ctx.fillStyle = 'rgba(100, 181, 246, 0.22)';
-                    ctx.fillRect(x+2,y+2,this.cellSize-4,this.cellSize-4);
+                    this._roundRectPath(ctx, x+2, y+2, this.cellSize-4, this.cellSize-4, Math.max(6, Math.floor(this.cellSize * 0.08)));
+                    ctx.fill();
+                    ctx.restore();
                     ctx.beginPath();
                     ctx.fillStyle = 'rgba(2,35,45,0.9)';
                     ctx.arc(x + this.cellSize/2, y + this.cellSize/2, this.cellSize*0.08, 0, Math.PI*2);
@@ -473,7 +477,10 @@ export default class PegView {
             }
         }
 
-        this._drawHud(ctx, originX, originY, w, h, model);
+    this._drawHud(ctx, originX, originY, w, h, model);
+
+    // actualizar cursor según hover sobre HUD
+    try{ this.canvas.style.cursor = this._hoveredHud ? 'pointer' : 'default'; } catch(e){}
 
         // si hay una pieza siendo arrastrada, dibujarla en la posición del pointer
         // usando el mismo efecto de la ficha seleccionada (scale + shadow) para que parezca
@@ -504,48 +511,72 @@ export default class PegView {
 
     _drawHud(ctx, originX, originY, w, h, model){
         // Estadísticas como botones, alineación mejorada y números más integrados
-        ctx.save();
-        const pad = Math.max(18, Math.floor(this.cellSize * 0.18));
-        const btnW = Math.max(120, Math.floor(this.cellSize * 1.8));
-        const btnH = Math.max(38, Math.floor(this.cellSize * 0.38));
-        const spacing = Math.max(4, Math.floor(this.cellSize * 0.38));
-        const iconFont = `bold ${Math.max(5, Math.floor(this.cellSize * 0.20))}px Arial`;
-        const labelFont = `bold ${Math.max(4, Math.floor(this.cellSize * 0.15))}px Arial`;
-        const valueFont = `bold ${Math.max(3, Math.floor(this.cellSize * 0.15))}px Arial`;
+    ctx.save();
+    // Aumenté los valores para que los controles sean más grandes/legibles
+    const pad = Math.max(22, Math.floor(this.cellSize * 0.22));
+    const btnW = Math.max(150, Math.floor(this.cellSize * 2.0));
+    const btnH = Math.max(48, Math.floor(this.cellSize * 0.46));
+    // reducir espacio entre estadísticas para que queden más compactas
+    const spacing = Math.max(4, Math.floor(this.cellSize * 0.28));
+    const iconFont = `bold ${Math.max(6, Math.floor(this.cellSize * 0.24))}px Arial`;
+    const labelFont = `bold ${Math.max(5, Math.floor(this.cellSize * 0.18))}px Arial`;
+    const valueFont = `bold ${Math.max(5, Math.floor(this.cellSize * 0.18))}px Arial`;
 
         if (this._sidePanelLeft){
             const p = this._sidePanelLeft;
             let bx = p.x + (p.w - btnW)/2;
             let by = p.y + pad + Math.floor(this.cellSize * 0.2);
 
-            // Helper para dibujar cada estadística con mejor alineación
+            // Helper para dibujar cada estadística con el mismo estilo que los botones
+            // (fondo oscuro, esquinas redondeadas y sombra sutil)
             function drawStat(icon, label, value, color, valueColor) {
                 ctx.save();
-                ctx.fillStyle = 'rgba(255,255,255,0.08)';
-                ctx.fillRect(bx, by, btnW, btnH);
-                ctx.strokeStyle = 'rgba(255,255,255,0.18)';
-                ctx.strokeRect(bx, by, btnW, btnH);
 
-                // Icono alineado verticalmente con label
+                // parámetros de forma
+                const radiusStat = Math.min(12, Math.floor(btnH * 0.35));
+
+                // sombra ligera para separar del fondo
+                ctx.shadowColor = 'rgba(0,0,0,0.18)';
+                ctx.shadowBlur = Math.max(4, Math.floor(btnH * 0.12));
+                ctx.shadowOffsetY = 1;
+
+                ctx.fillStyle = 'rgba(20,24,28,0.86)';
+
+                // ruta redondeada
+                ctx.beginPath();
+                ctx.moveTo(bx + radiusStat, by);
+                ctx.arcTo(bx + btnW, by, bx + btnW, by + btnH, radiusStat);
+                ctx.arcTo(bx + btnW, by + btnH, bx, by + btnH, radiusStat);
+                ctx.arcTo(bx, by + btnH, bx, by, radiusStat);
+                ctx.arcTo(bx, by, bx + btnW, by, radiusStat);
+                ctx.closePath();
+                ctx.fill();
+
+                // borde sutil sin sombra
+                ctx.shadowColor = 'transparent';
+                ctx.lineWidth = Math.max(1, Math.floor(btnH * 0.06));
+                ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+                ctx.stroke();
+
+                // Icono
                 ctx.font = iconFont;
                 ctx.textAlign = 'left';
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = color;
                 ctx.fillText(icon, bx + 12, by + btnH/2);
 
-                // Label alineado verticalmente
+                // Label
                 ctx.font = labelFont;
                 ctx.textAlign = 'left';
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = '#fff';
                 ctx.fillText(label, bx + 38, by + btnH/2);
 
-                // Valor pegado al label (no alineado a la derecha)
+                // Valor
                 ctx.font = valueFont;
                 ctx.textAlign = 'left';
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = valueColor;
-                // Calcula el ancho del label para ubicar el valor justo después
                 const labelWidth = ctx.measureText(label).width;
                 ctx.fillText(String(value), bx + 38 + labelWidth + 12, by + btnH/2);
 
@@ -567,22 +598,23 @@ export default class PegView {
         // Panel derecho: botones (sin cambios)
         if (this._sidePanelRight){
             const p = this._sidePanelRight;
-            const btnW2 = Math.max(96, Math.floor(p.w - pad*2));
-            const btnH2 = Math.max(36, Math.floor(this.cellSize * 0.32));
-            const spacing2 = Math.max(10, Math.floor(this.cellSize * 0.18));
+            // botones del panel derecho más grandes
+            const btnW2 = Math.max(120, Math.floor(p.w - pad*2));
+            const btnH2 = Math.max(44, Math.floor(this.cellSize * 0.42));
+            const spacing2 = Math.max(12, Math.floor(this.cellSize * 0.22));
             let bx2 = p.x + (p.w - btnW2)/2;
             let by2 = p.y + pad + Math.floor(this.cellSize * 0.2);
 
             this._hudRegions.reset = { x: bx2, y: by2, w: btnW2, h: btnH2 };
-            this._drawButton(ctx, bx2, by2, btnW2, btnH2, '🔁 Reiniciar');
+            this._drawButton(ctx, bx2, by2, btnW2, btnH2, '🔁 Reiniciar', this._hoveredHud === 'reset');
 
             by2 += btnH2 + spacing2;
             this._hudRegions.undo = { x: bx2, y: by2, w: btnW2, h: btnH2 };
-            this._drawButton(ctx, bx2, by2, btnW2, btnH2, '↶ Deshacer');
+            this._drawButton(ctx, bx2, by2, btnW2, btnH2, '↶ Deshacer', this._hoveredHud === 'undo');
 
             by2 += btnH2 + spacing2;
             this._hudRegions.hint = { x: bx2, y: by2, w: btnW2, h: btnH2 };
-            this._drawButton(ctx, bx2, by2, btnW2, btnH2, '💡 Pista');
+            this._drawButton(ctx, bx2, by2, btnW2, btnH2, '💡 Pista', this._hoveredHud === 'hint');
         }
 
         ctx.restore();
@@ -718,17 +750,57 @@ export default class PegView {
         ctx.restore();
     }
 
-    _drawButton(ctx, x, y, w, h, label){
+    _drawButton(ctx, x, y, w, h, label, hovered = false){
         ctx.save();
-        ctx.fillStyle = 'rgba(255,255,255,0.06)';
-        ctx.fillRect(x, y, w, h);
-        ctx.strokeStyle = 'rgba(255,255,255,0.12)';
-        ctx.strokeRect(x, y, w, h);
-        ctx.fillStyle = 'rgba(255,255,255,0.95)';
-        ctx.font = '13px Arial';
-        const textW = ctx.measureText(label).width;
-        ctx.fillText(label, x + (w - textW)/2, y + h/2 + 5);
+        const radius = Math.min(12, Math.floor(h * 0.35));
+
+        // drop shadow for depth; slightly stronger when hovered
+        ctx.shadowColor = 'rgba(0,0,0,0.28)';
+        ctx.shadowBlur = Math.max(6, Math.floor(this.cellSize * 0.06)) * (hovered ? 1.2 : 1);
+        ctx.shadowOffsetY = hovered ? 3 : 2;
+
+        // background that combines well with varied page backgrounds (dark, slightly warm)
+        ctx.fillStyle = hovered ? 'rgba(40,44,48,0.96)' : 'rgba(20,24,28,0.86)';
+
+        // rounded rect path
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.arcTo(x + w, y, x + w, y + h, radius);
+        ctx.arcTo(x + w, y + h, x, y + h, radius);
+        ctx.arcTo(x, y + h, x, y, radius);
+        ctx.arcTo(x, y, x + w, y, radius);
+        ctx.closePath();
+        ctx.fill();
+
+        // subtle border
+        ctx.shadowColor = 'transparent'; // don't shadow stroke/text
+        ctx.lineWidth = Math.max(1, Math.floor(this.cellSize * 0.02));
+        ctx.strokeStyle = hovered ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.06)';
+        ctx.stroke();
+
+        // label
+        ctx.fillStyle = 'rgba(255,255,255,0.98)';
+        const fontSize = Math.max(12, Math.floor(h * (hovered ? 0.48 : 0.45)));
+        ctx.font = `${fontSize}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(label, x + w/2, y + h/2);
         ctx.restore();
+    }
+
+    _roundRectPath(ctx, x, y, w, h, r){
+        // crea la ruta de un rectángulo redondeado (no la rellena ni la dibuja)
+        if (r <= 0) {
+            ctx.rect(x, y, w, h);
+            return;
+        }
+        const radius = Math.min(r, w/2, h/2);
+        ctx.moveTo(x + radius, y);
+        ctx.arcTo(x + w, y, x + w, y + h, radius);
+        ctx.arcTo(x + w, y + h, x, y + h, radius);
+        ctx.arcTo(x, y + h, x, y, radius);
+        ctx.arcTo(x, y, x + w, y, radius);
+        ctx.closePath();
     }
 
     _hitHudButton(x,y){
