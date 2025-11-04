@@ -874,6 +874,10 @@ export default class PegView {
     setRenderCallback(cb){ this._renderOnUpdate = cb; }
 
     showBanner(text, type='info'){
+        // Si el banner es de tipo 'warning' (banner naranja de fin de juego),
+        // no lo mostramos para evitar el banner intrusivo en la UI.
+        if (type === 'warning') return;
+
         // Elimina cualquier banner anterior
         if (this._bannerEl && this._bannerEl.parentNode) {
             this._bannerEl.parentNode.removeChild(this._bannerEl);
@@ -904,6 +908,228 @@ export default class PegView {
             if (banner.parentNode) banner.parentNode.removeChild(banner);
             if (this._bannerEl === banner) this._bannerEl = null;
         }, 2200);
+    }
+
+    /**
+     * Muestra una pantalla de fin de juego (overlay rojo) centrada sobre el área del juego.
+     * Opciones: { message, remaining, onRestart }
+     */
+    showGameOver(opts = {}){
+        // limpiar cualquier overlay o banner previo
+        if (this._gameOverEl && this._gameOverEl.parentNode) {
+            this._gameOverEl.parentNode.removeChild(this._gameOverEl);
+            this._gameOverEl = null;
+        }
+
+        const parent = this.canvas.parentElement || document.body;
+        // garantizar que el contenedor padre tenga position: relative para el overlay absoluto
+        const prevPos = parent.style.position;
+        if (!prevPos || prevPos === '') parent.style.position = parent.style.position || 'relative';
+
+        const overlay = document.createElement('div');
+        overlay.className = 'peg-gameover-overlay';
+        // estilos inline para asegurar apariencia consistente
+        overlay.style.position = 'absolute';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.display = 'flex';
+        overlay.style.flexDirection = 'column';
+        overlay.style.justifyContent = 'center';
+        overlay.style.alignItems = 'center';
+        overlay.style.background = 'rgba(180,20,20,0.98)';
+        overlay.style.color = '#fff';
+        overlay.style.zIndex = '9999';
+        overlay.style.padding = '24px';
+        overlay.style.boxSizing = 'border-box';
+
+        const title = document.createElement('h2');
+        title.textContent = opts.message || 'Fin del juego';
+        title.style.margin = '0 0 12px 0';
+        title.style.fontSize = '1.6rem';
+        title.style.textAlign = 'center';
+        title.style.textShadow = '0 2px 8px rgba(0,0,0,0.45)';
+        overlay.appendChild(title);
+
+        if (typeof opts.remaining === 'number'){
+            const p = document.createElement('p');
+            p.textContent = `Quedan ${opts.remaining} fichas en el tablero.`;
+            p.style.margin = '0 0 20px 0';
+            p.style.opacity = '0.95';
+            p.style.fontSize = '1.05rem';
+            overlay.appendChild(p);
+        }
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'peg-gameover-restart';
+        btn.textContent = '🔁 Reiniciar';
+        btn.style.padding = '12px 20px';
+        btn.style.fontSize = '1.05rem';
+        btn.style.border = 'none';
+        btn.style.borderRadius = '8px';
+        btn.style.cursor = 'pointer';
+        btn.style.background = '#ffffff';
+        btn.style.color = '#b00000';
+        btn.style.fontWeight = '700';
+        btn.style.boxShadow = '0 6px 18px rgba(0,0,0,0.28)';
+
+        // handler reinicio: preferir callback pasado, si no usar el callback onReset de la vista
+        btn.addEventListener('click', ()=>{
+            // remover overlay inmediatamente
+            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+            if (this._gameOverEl === overlay) this._gameOverEl = null;
+            // restaurar posicion previa del padre si la cambiamos anteriormente (no forzar override)
+            // (no hacemos nada complejo aquí para no romper estilos globales)
+            if (typeof opts.onRestart === 'function'){
+                try{ opts.onRestart(); } catch(e){ /* ignore errors from controller.reset */ }
+            } else if (this._onResetCallback) {
+                try{ this._onResetCallback(); } catch(e){}
+            } else if (this.ui.resetBtn) {
+                try{ this.ui.resetBtn.click(); } catch(e){}
+            }
+        });
+
+        overlay.appendChild(btn);
+
+        // Insertar overlay sobre el tablero (ajustar tamaño al área del tablero)
+        try{
+            const canvasRect = this.canvas.getBoundingClientRect();
+            const parentRect = parent.getBoundingClientRect();
+            // posición del tablero dentro del parent (en px)
+            const leftPx = (canvasRect.left - parentRect.left) + this._originX;
+            const topPx = (canvasRect.top - parentRect.top) + this._originY;
+            let boardW = this.cellSize * this.cols;
+            let boardH = this.cellSize * this.rows;
+
+            // Expandir el overlay un poco más que el tablero para cubrir también
+            // el panel de madera/sombra alrededor. Usamos un margen relativo a cellSize.
+            const margin = Math.max(12, Math.floor(this.cellSize * 0.2));
+            const adjLeft = leftPx - margin;
+            const adjTop = topPx - margin;
+            boardW = boardW + margin * 2;
+            boardH = boardH + margin * 2;
+
+            overlay.style.position = 'absolute';
+            overlay.style.left = `${adjLeft}px`;
+            overlay.style.top = `${adjTop}px`;
+            overlay.style.width = `${boardW}px`;
+            overlay.style.height = `${boardH}px`;
+            overlay.style.borderRadius = `${Math.max(10, Math.floor(this.cellSize * 0.12))}px`;
+            // reducir alpha para que sea menos intrusiva
+            overlay.style.background = 'rgba(180,20,20,0.78)';
+        } catch(e) {
+            // fallback: cubrir todo el contenedor si algo falla
+            overlay.style.position = 'absolute';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.background = 'rgba(180,20,20,0.78)';
+        }
+        parent.appendChild(overlay);
+        this._gameOverEl = overlay;
+    }
+
+    /**
+     * Pantalla de victoria (verde). Opciones: { message, remaining, onRestart }
+     */
+    showVictory(opts = {}){
+        // eliminar overlay previo
+        if (this._gameOverEl && this._gameOverEl.parentNode) {
+            this._gameOverEl.parentNode.removeChild(this._gameOverEl);
+            this._gameOverEl = null;
+        }
+
+        const parent = this.canvas.parentElement || document.body;
+        // crear contenedor
+        const overlay = document.createElement('div');
+        overlay.className = 'peg-victory-overlay';
+        // estilos base
+        overlay.style.display = 'flex';
+        overlay.style.flexDirection = 'column';
+        overlay.style.justifyContent = 'center';
+        overlay.style.alignItems = 'center';
+        overlay.style.color = '#fff';
+        overlay.style.zIndex = '9999';
+        overlay.style.padding = '20px';
+        overlay.style.boxSizing = 'border-box';
+
+        // intentar ubicar sobre el tablero (igual lógica que showGameOver)
+        try{
+            const canvasRect = this.canvas.getBoundingClientRect();
+            const parentRect = parent.getBoundingClientRect();
+            const leftPx = (canvasRect.left - parentRect.left) + this._originX;
+            const topPx = (canvasRect.top - parentRect.top) + this._originY;
+            let boardW = this.cellSize * this.cols;
+            let boardH = this.cellSize * this.rows;
+            const margin = Math.max(12, Math.floor(this.cellSize * 0.2));
+            const adjLeft = leftPx - margin;
+            const adjTop = topPx - margin;
+            boardW = boardW + margin * 2;
+            boardH = boardH + margin * 2;
+
+            overlay.style.position = 'absolute';
+            overlay.style.left = `${adjLeft}px`;
+            overlay.style.top = `${adjTop}px`;
+            overlay.style.width = `${boardW}px`;
+            overlay.style.height = `${boardH}px`;
+            overlay.style.borderRadius = `${Math.max(10, Math.floor(this.cellSize * 0.12))}px`;
+            overlay.style.background = 'linear-gradient(180deg, rgba(40,167,69,0.92), rgba(20,120,48,0.9))';
+        } catch(e){
+            overlay.style.position = 'absolute';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.background = 'linear-gradient(180deg, rgba(40,167,69,0.92), rgba(20,120,48,0.9))';
+        }
+
+        const title = document.createElement('h2');
+        title.textContent = opts.message || '¡Has ganado!';
+        title.style.margin = '0 0 10px 0';
+        title.style.fontSize = '1.6rem';
+        title.style.textAlign = 'center';
+        title.style.textShadow = '0 2px 8px rgba(0,0,0,0.35)';
+        overlay.appendChild(title);
+
+        const info = document.createElement('p');
+        info.style.margin = '0 0 18px 0';
+        info.style.fontSize = '1.05rem';
+        info.style.opacity = '0.98';
+        info.textContent = opts.remaining === 1 ? '¡Solo queda 1 ficha!' : `Quedan ${opts.remaining} fichas`;
+        overlay.appendChild(info);
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'peg-victory-restart';
+        btn.textContent = '🎉 Jugar de nuevo';
+        btn.style.padding = '12px 22px';
+        btn.style.fontSize = '1rem';
+        btn.style.border = 'none';
+        btn.style.borderRadius = '8px';
+        btn.style.cursor = 'pointer';
+        btn.style.background = '#fff';
+        btn.style.color = '#1b5e20';
+        btn.style.fontWeight = '700';
+        btn.style.boxShadow = '0 6px 18px rgba(0,0,0,0.22)';
+
+        btn.addEventListener('click', ()=>{
+            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+            if (this._gameOverEl === overlay) this._gameOverEl = null;
+            if (typeof opts.onRestart === 'function'){
+                try{ opts.onRestart(); } catch(e){}
+            } else if (this._onResetCallback){
+                try{ this._onResetCallback(); } catch(e){}
+            } else if (this.ui.resetBtn){
+                try{ this.ui.resetBtn.click(); } catch(e){}
+            }
+        });
+
+        overlay.appendChild(btn);
+        parent.appendChild(overlay);
+        this._gameOverEl = overlay;
     }
 
 }

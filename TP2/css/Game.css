@@ -381,6 +381,8 @@
   margin: 0 auto;
   padding: 0 2rem 2rem;
   animation: fadeInUp 0.7s ease-out 0.4s both;
+  will-change: transform, opacity;
+  transform-origin: top center;
 }
 
 .game-desc-controls {
@@ -460,12 +462,15 @@
   margin-bottom: 1rem;
   font-size: 1.3rem;
   position: relative;
-  transition: color 0.3s ease;
+  transition: color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+  will-change: transform, opacity;
+  z-index: 2; /* keep heading above decorative elements */
 }
 
 .game-desc-controls h3:hover {
   color: #7ab8e8;
-  animation: bounce 0.6s ease-in-out;
+  transform: translateY(-4px);
+  opacity: 1;
 }
 
 /* Controles mejorados */
@@ -498,7 +503,10 @@
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(90, 159, 212, 0.2), transparent);
-  transition: left 0.5s ease;
+  transition: left 0.45s ease, opacity 0.25s ease;
+  /* make the decorative pseudo-element non-interactive and behind content */
+  pointer-events: none;
+  z-index: 0;
 }
 
 .control-item:hover {
@@ -528,8 +536,29 @@
 
 .control-item:hover kbd {
   color: #7ab8e8;
-  transform: scale(1.1);
-  animation: glow 1s ease-in-out infinite;
+  transform: scale(1.06);
+  box-shadow: 0 6px 18px rgba(90,159,212,0.12);
+  /* remove infinite keyframe animations on hover to avoid repaints/jumps */
+  animation: none !important;
+}
+
+/* ensure the control content sits above the pseudo-element */
+.control-item > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* For stability: disable entrance/keyframe animations inside the info card which
+   can conflict with interactive hover transforms */
+.game-desc-controls .rules-section,
+.game-desc-controls .objective-section,
+.game-desc-controls .description-section,
+.game-desc-controls .control-section,
+.game-desc-controls .controls-grid,
+.game-desc-controls .control-item {
+  animation: none !important;
+  /* keep simple transitions for hover feedback */
+  transition: transform 0.18s ease, opacity 0.18s ease;
 }
 
 .control-item span {
@@ -1075,8 +1104,20 @@
   }
 }
 
-/* Hover effects mejorados para toda la página */
-* {
+/* Avoid global transitions; apply transitions only to elements that need them to prevent layout thrash */
+.animatable,
+.game-header h2,
+.stars,
+.game-desc-controls,
+.control-item,
+.game-gallery,
+.gallery-nav,
+.btn-primary,
+.comment-item,
+.game-link-item,
+.video-btn,
+.game-btn,
+.cell {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 

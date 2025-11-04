@@ -267,11 +267,30 @@ export default class PegController {
         if (this.model.pegCount === 1){
             this.gameOver = true;
             this.stopTimer();
-            this.view.showBanner('¡Has ganado!', 'success');
+            // Mostrar pantalla de victoria si la vista lo soporta
+            if (this.view && this.view.showVictory){
+                this.view.showVictory({
+                    message: '¡Has ganado!',
+                    remaining: 1,
+                    onRestart: ()=> this.reset()
+                });
+            } else {
+                this.view.showBanner && this.view.showBanner('¡Has ganado!', 'success');
+            }
         } else if (possibleMoves.length === 0){
             this.gameOver = true;
             this.stopTimer();
-            this.view.showBanner('¡Fin del juego! No hay más movimientos', 'warning');
+            // Mostrar overlay de fin de juego (pantalla roja) si la vista lo soporta.
+            if (this.view && this.view.showGameOver){
+                this.view.showGameOver({
+                    message: '¡Fin del juego! No hay más movimientos',
+                    remaining: this.model.pegCount,
+                    onRestart: ()=> this.reset()
+                });
+            } else {
+                // Fallback: banner (antes se usaba warning)
+                this.view.showBanner && this.view.showBanner('¡Fin del juego! No hay más movimientos', 'warning');
+            }
         }
         // Se elimina la comprobación del tiempo de aquí porque ya se hizo arriba
     }
