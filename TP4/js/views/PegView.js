@@ -547,7 +547,7 @@ export default class PegView {
                 ctx.fillStyle = valueColor;
                 // Calcula el ancho del label para ubicar el valor justo después
                 const labelWidth = ctx.measureText(label).width;
-                ctx.fillText(String(value), bx + 38 + labelWidth + 12, by + btnH/2);
+                ctx.fillText(String(value), bx + 35  + labelWidth + 12, by + btnH/2);
 
                 ctx.restore();
             }
