@@ -1,0 +1,107 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+    margin: 0;
+    overflow: hidden;
+}
+
+#game-container {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    background-color: #70c5ce;
+    overflow: hidden; /* Oculta lo que se sale del contenedor */
+}
+
+#gameCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10; /* El canvas está por encima del fondo pero debajo del puntaje */
+}
+
+#score {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    font-size: 24px;
+    font-family: Arial, sans-serif;
+    z-index: 20;
+    text-shadow: 2px 2px 4px #000;
+}
+
+#bird {
+    position: absolute;
+    /* Dimensiones del sprite del pájaro */
+    width: 34px; 
+    height: 24px;
+    /* Usamos la hoja de sprites como fondo */
+    background-image: url('https://i.imgur.com/62H3oY4.png'); /* Reemplaza con la URL de tu imagen */
+    /* Posicionamos el fondo para mostrar solo el primer pájaro */
+    background-position: -6px -982px; 
+    z-index: 15;
+    transition: transform 0.2s ease-out;
+    /* Animación de aleteo */
+    animation: flap-sprite 0.4s steps(3) infinite;
+}
+
+.pipe {
+    position: absolute;
+    width: 52px; /* Ancho del sprite de la tubería */
+    background-image: url('https://i.imgur.com/62H3oY4.png'); /* Reemplaza con la URL de tu imagen */
+    /* Posición del sprite de la tubería verde */
+    background-position: -112px -646px; 
+    z-index: 12;
+}
+
+.pipe-top {
+    transform: rotate(180deg);
+}
+
+/* --- Parallax Scrolling --- */
+@keyframes scroll {
+    0% { background-position-x: 0px; }
+    100% { background-position-x: -1920px; }
+}
+
+.layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: repeat-x;
+    background-size: auto 100%; /* Escala la imagen para que ocupe el alto del contenedor */
+}
+
+.layer-10 { background-image: url("https://i.ibb.co/5sCHJZ7/10.png"); animation: scroll 60s infinite linear; z-index: 1; }
+.layer-9 { background-image: url("https://i.ibb.co/bzFmksL/09.png"); animation: scroll 50s infinite linear; z-index: 2; }
+.layer-8 { background-image: url("https://i.ibb.co/JRKpSzr/08.png"); animation: scroll 40s infinite linear; z-index: 3; }
+.layer-7 { background-image: url("https://i.ibb.co/42hLhX0/07.png"); animation: scroll 35s infinite linear; z-index: 4; }
+.layer-6 { background-image: url("https://i.ibb.co/6Bjg1yt/06.png"); animation: scroll 30s infinite linear; z-index: 5; }
+.layer-5 { background-image: url("https://i.ibb.co/4jwk7vQ/05.png"); animation: scroll 25s infinite linear; z-index: 6; }
+.layer-4 { background-image: url("https://i.ibb.co/6gJhWZb/04.png"); animation: scroll 20s infinite linear; z-index: 7; }
+.layer-3 { background-image: url("https://i.ibb.co/2j1yq16/03.png"); animation: scroll 15s infinite linear; z-index: 8; }
+.layer-2 { background-image: url("https://i.ibb.co/0Kg6mnL/02.png"); animation: scroll 10s infinite linear; z-index: 9; }
+.layer-1 { background-image: url("https://i.ibb.co/Qc5CJvf/01.png"); animation: scroll 5s infinite linear; z-index: 10; }
+/* El suelo (layer-1) debe estar por delante de las tuberías en la base */
+.layer-1 { z-index: 13; }
+
+
+/* Animación del pájaro con spritesheet */
+@keyframes flap-sprite {
+   to {
+       /* Mueve el fondo 3 veces el ancho del sprite (34px * 3 = 102px) */
+       background-position: -108px -982px;
+   }
+}
+
+/* Animación de explosión (ejemplo) */
+@keyframes explode {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(2); opacity: 0; }
+}
