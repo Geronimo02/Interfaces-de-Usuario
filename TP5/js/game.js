@@ -1,129 +1,173 @@
 // game.js
 
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
+// Elimina estas dos líneas
+// const canvas = document.getElementById('gameCanvas');
+// const ctx = canvas.getContext('2d');
 
-let bird;
-let pipes = [];
+const gameContainer = document.getElementById('game-container');
+const birdElement = document.getElementById('bird');
+const scoreElement = document.getElementById('score');
+
 let score = 0;
-let gameOver = false;
+let gameRunning = true;
+const gameSpeed = 3; // Aumentamos un poco la velocidad
+const pipeGap = 200;
+const pipeSpawnInterval = 1800;
 
-function initGame() {
-    bird = new Bird();
-    pipes.push(new Pipe());
-    document.addEventListener('keydown', handleInput);
-    requestAnimationFrame(updateGame);
+// Propiedades del jugador (pájaro)
+const bird = {
+    y: 250,
+    velocityY: 0,
+    gravity: 0.4,
+    jumpStrength: -8,
+    element: birdElement,
+    width: 26, 
+    height: 29,
+    // --- NUEVO: Dimensiones del hitbox para una colisión más justa ---
+    hitbox: {
+        width: 18,
+        height: 13
+    }
+};
+
+// Posición inicial del pájaro
+bird.element.style.top = `${bird.y}px`;
+bird.element.style.left = `150px`;
+
+// Control del jugador
+document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' && gameRunning) {
+        bird.velocityY = bird.jumpStrength;
+    }
+});
+
+// También permite saltar con un clic/toque
+document.addEventListener('pointerdown', () => {
+    if (gameRunning) {
+        bird.velocityY = bird.jumpStrength;
+    }
+});
+
+
+function createPipe() {
+    if (!gameRunning) return;
+
+    const topHeight = Math.random() * (gameContainer.clientHeight - pipeGap - 150) + 50;
+    const bottomHeight = gameContainer.clientHeight - topHeight - pipeGap;
+
+    const pipeTop = document.createElement('div');
+    pipeTop.classList.add('pipe', 'pipe-top');
+    pipeTop.style.height = `${topHeight}px`;
+    pipeTop.style.left = `${gameContainer.clientWidth}px`;
+    pipeTop.style.top = '0px';
+
+    const pipeBottom = document.createElement('div');
+    pipeBottom.classList.add('pipe');
+    pipeBottom.style.height = `${bottomHeight}px`;
+    pipeBottom.style.left = `${gameContainer.clientWidth}px`;
+    pipeBottom.style.bottom = '0px';
+
+    gameContainer.appendChild(pipeTop);
+    gameContainer.appendChild(pipeBottom);
 }
 
-function updateGame() {
-    if (gameOver) return;
+function movePipes() {
+    const pipes = document.querySelectorAll('.pipe');
+    pipes.forEach(pipe => {
+        let pipeX = parseFloat(pipe.style.left);
+        pipeX -= gameSpeed;
+        pipe.style.left = `${pipeX}px`;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    bird.update();
-    bird.draw();
+        if (pipeX + pipe.clientWidth < 0) {
+            pipe.remove();
+        }
 
-    if (pipes.length > 0) {
-        pipes.forEach(pipe => {
-            pipe.update();
-            pipe.draw();
-            if (checkCollision(bird, pipe)) {
-                gameOver = true;
-                bird.explode();
+        if (!pipe.passed && pipeX + pipe.clientWidth < (bird.element.offsetLeft)) {
+            if (pipe.classList.contains('pipe-top')) {
+                score++;
+                scoreElement.textContent = `Puntaje: ${score}`;
+                pipe.passed = true;
             }
-        });
-    }
-
-    if (pipes.length > 0 && pipes[0].x < -pipes[0].width) {
-        pipes.shift();
-        score++;
-        pipes.push(new Pipe());
-    }
-
-    ctx.fillStyle = 'black';
-    ctx.font = '20px Arial';
-    ctx.fillText(`Score: ${score}`, 10, 20);
-
-    requestAnimationFrame(updateGame);
-}
-
-function handleInput(event) {
-    if (event.code === 'Space') {
-        bird.flap();
-    }
-}
-
-function checkCollision(bird, pipe) {
-    return bird.x < pipe.x + pipe.width &&
-           bird.x + bird.width > pipe.x &&
-           bird.y < pipe.height &&
-           bird.y + bird.height > pipe.y;
-}
-
-class Bird {
-    constructor() {
-        this.x = 50;
-        this.y = canvas.height / 2;
-        this.width = 34;
-        this.height = 24;
-        this.gravity = 0.6;
-        this.lift = -15;
-        this.velocity = 0;
-        this.image = new Image();
-        this.image.src = 'assets/images/bird.png';
-    }
-
-    flap() {
-        this.velocity += this.lift;
-        this.animateFlap();
-    }
-
-    animateFlap() {
-        // Implement keyframe animation for flapping
-    }
-
-    explode() {
-        // Implement explosion animation
-    }
-
-    update() {
-        this.velocity += this.gravity;
-        this.y += this.velocity;
-
-        if (this.y + this.height >= canvas.height) {
-            this.y = canvas.height - this.height;
-            this.velocity = 0;
-            gameOver = true;
         }
-        if (this.y < 0) {
-            this.y = 0;
-            this.velocity = 0;
+    });
+}
+
+function checkCollisions() {
+    const birdVisualRect = bird.element.getBoundingClientRect();
+    const groundHeight = 112;
+
+    // --- LÓGICA DE HITBOX MEJORADA ---
+    // 1. Calculamos el centro del pájaro visual.
+    const birdCenterX = birdVisualRect.left + birdVisualRect.width / 2;
+    const birdCenterY = birdVisualRect.top + birdVisualRect.height / 2;
+
+    // 2. Creamos un nuevo rectángulo de colisión (hitbox) más pequeño y centrado.
+    const birdHitbox = {
+        left: birdCenterX - bird.hitbox.width / 2,
+        right: birdCenterX + bird.hitbox.width / 2,
+        top: birdCenterY - bird.hitbox.height / 2,
+        bottom: birdCenterY + bird.hitbox.height / 2
+    };
+    // --- FIN DE LA LÓGICA MEJORADA ---
+
+    // Colisión con el suelo (usamos el hitbox)
+    if (birdHitbox.bottom > (gameContainer.getBoundingClientRect().bottom - groundHeight)) {
+        gameOver();
+        return;
+    }
+    // Colisión con el techo (usamos el hitbox)
+    if (birdHitbox.top < gameContainer.getBoundingClientRect().top) {
+        bird.y = 0;
+        bird.velocityY = 0;
+    }
+
+    const pipes = document.querySelectorAll('.pipe');
+    for (let pipe of pipes) {
+        const pipeRect = pipe.getBoundingClientRect();
+        // Comparamos el hitbox del pájaro con el rectángulo de la tubería.
+        if (birdHitbox.left < pipeRect.right &&
+            birdHitbox.right > pipeRect.left &&
+            birdHitbox.top < pipeRect.bottom &&
+            birdHitbox.bottom > pipeRect.top) {
+            gameOver();
+            return;
         }
     }
-
-    draw() {
-        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-    }
 }
 
-class Pipe {
-    constructor() {
-        this.width = 50;
-        this.height = Math.random() * (canvas.height - 100) + 20;
-        this.x = canvas.width;
-        this.y = 0;
-        this.speed = 2;
-        this.image = new Image();
-        this.image.src = 'assets/images/pipe.png';
-    }
-
-    update() {
-        this.x -= this.speed;
-    }
-
-    draw() {
-        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-        ctx.drawImage(this.image, this.x, this.height + 100, this.width, canvas.height - this.height - 100);
-    }
+function gameOver() {
+    if (!gameRunning) return;
+    gameRunning = false;
+    // Detiene la animación de aleteo
+    bird.element.style.animationPlayState = 'paused';
+    clearInterval(pipeInterval);
+    
+    setTimeout(() => {
+        alert(`Game Over! Tu puntaje: ${score}`);
+        location.reload();
+    }, 500);
 }
 
-window.onload = initGame;
+// Bucle principal del juego
+function gameLoop() {
+    if (!gameRunning) return;
+
+    bird.velocityY += bird.gravity;
+    bird.y += bird.velocityY;
+    bird.element.style.top = `${bird.y}px`;
+
+    // Rotar el pájaro según su velocidad vertical para dar efecto de caída/subida
+    const rotation = Math.min(Math.max(-25, bird.velocityY * 6), 90);
+    bird.element.style.transform = `rotate(${rotation}deg)`;
+
+    movePipes();
+    checkCollisions();
+
+    requestAnimationFrame(gameLoop);
+}
+
+// Iniciar la generación de tuberías
+const pipeInterval = setInterval(createPipe, pipeSpawnInterval);
+
+// Iniciar el juego
+gameLoop();

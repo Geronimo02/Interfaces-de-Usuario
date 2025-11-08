@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Herramientas de Prueba de Sprites</title>
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            font-family: sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .instructions {
+            max-width: 600px;
+            margin: 40px auto 10px auto;
+            text-align: left;
+            background-color: #444;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .instructions code {
+            background-color: #222;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #ffc107;
+        }
+        hr {
+            margin: 50px auto;
+            width: 80%;
+            border-color: #555;
+        }
+
+        /* --- HERRAMIENTA 1: MEDICIÓN ESTÁTICA --- */
+        #measure-container {
+            position: relative;
+            width: 512px; 
+            height: 1024px;
+            margin: 20px auto;
+            border: 1px solid #fff;
+            background-image: url('./assets/images/spritesheet.png');
+            background-repeat: no-repeat;
+        }
+        
+        /* Estilo común para todas las cajas de medición */
+        .bird-box {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.2);
+            box-sizing: border-box;
+            border-width: 2px;
+            border-style: solid;
+            /* Ajusta el tamaño de TODAS las cajas aquí */
+            width: 18px; 
+            height: 13px;
+        }
+
+        /* Caja para el 1er fotograma (rojo) */
+        #bird-box-1 {
+            border-color: rgba(208, 203, 203, 0.197);
+            /* Posición del primer pájaro */
+            top: 490px;
+            left: 2px;
+        }
+
+        /* Caja para el 2do fotograma (amarillo) */
+        #bird-box-2 {
+            border-color: rgba(255, 255, 0, 0.061);
+            /* Posición del segundo pájaro (aprox. 36px a la derecha) */
+            top: 490px;
+            left: 30px;
+        }
+
+        /* Caja para el 3er fotograma (verde) */
+        #bird-box-3 {
+            border-color: rgba(50, 205, 50, 0.098);
+            /* Posición del tercer pájaro (aprox. 72px a la derecha) */
+            top: 490px;
+            left: 58px;
+        }
+
+
+        /* --- HERRAMIENTA 2: PREVISUALIZACIÓN DE ANIMACIÓN --- */
+        #animation-preview {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #70c5ce;
+            border: 2px solid white;
+            margin: 20px auto;
+        }
+        #animated-bird {
+            position: absolute;
+            top: 250px;
+            left: 350px;
+            width: 26px; 
+            height: 29px;
+            background-image: url('./assets/images/spritesheet.png');
+            background-position: 0px -483px; 
+            animation: flap-sprite 0.7s steps(3) infinite;
+            transform: scale(3); /* Hacemos el pájaro más grande para verlo mejor */
+            image-rendering: pixelated; /* Mantiene los píxeles nítidos al escalar */
+        }
+        @keyframes flap-sprite {
+            to {
+                background-position: -82px -483px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= HERRAMIENTA 1: MEDICIÓN ================= -->
+    <div class="instructions">
+        <h3>Herramienta 1: Medición de Sprites</h3>
+        <ol>
+            <li>Usa las <strong>Herramientas de Desarrollador</strong> para seleccionar los divs <code>#bird-box-1</code>, <code>#bird-box-2</code> y <code>#bird-box-3</code>.</li>
+            <li>Modifica sus valores de <code>top</code>, <code>left</code>, <code>width</code> y <code>height</code> hasta que cada caja de color encuadre perfectamente su respectivo fotograma del pájaro.</li>
+        </ol>
+    </div>
+    <div id="measure-container">
+        <!-- Los 3 recuadros para medir los 3 fotogramas -->
+        <div id="bird-box-1" class="bird-box"></div>
+        <div id="bird-box-2" class="bird-box"></div>
+        <div id="bird-box-3" class="bird-box"></div>
+    </div>
+
+    <hr>
+
+    <!-- ================= HERRAMIENTA 2: ANIMACIÓN ================= -->
+    <div class="instructions">
+        <h3>Herramienta 2: Previsualización de Animación</h3>
+        <ol>
+            <li>Observa el pájaro animado en la ventana de abajo.</li>
+            <li>Si la animación no es correcta, edita los valores de <code>#animated-bird</code> y <code>@keyframes flap-sprite</code> en el bloque &lt;style&gt; de este archivo.</li>
+        </ol>
+    </div>
+    <div id="animation-preview">
+        <div id="animated-bird"></div>
+    </div>
+
+</body>
+</html>

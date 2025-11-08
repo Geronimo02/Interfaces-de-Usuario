@@ -16,13 +16,6 @@ body {
     overflow: hidden; /* Oculta lo que se sale del contenedor */
 }
 
-#gameCanvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 10; /* El canvas está por encima del fondo pero debajo del puntaje */
-}
-
 #score {
     position: absolute;
     top: 10px;
@@ -37,12 +30,12 @@ body {
 #bird {
     position: absolute;
     /* Dimensiones del sprite del pájaro */
-    width: 34px; 
-    height: 24px;
+    width: 26px; 
+    height: 29px;
     /* Usamos la hoja de sprites como fondo */
-    background-image: url('https://i.imgur.com/62H3oY4.png'); /* Reemplaza con la URL de tu imagen */
-    /* Posicionamos el fondo para mostrar solo el primer pájaro */
-    background-position: -6px -982px; 
+    background-image: url('../assets/images/spritesheet.png'); /* CAMBIADO */
+    /* Movemos el fondo -6px a la izquierda y -506px hacia arriba */
+    background-position: -0px -483px; 
     z-index: 15;
     transition: transform 0.2s ease-out;
     /* Animación de aleteo */
@@ -52,7 +45,7 @@ body {
 .pipe {
     position: absolute;
     width: 52px; /* Ancho del sprite de la tubería */
-    background-image: url('https://i.imgur.com/62H3oY4.png'); /* Reemplaza con la URL de tu imagen */
+    background-image: url('../assets/images/spritesheet.png'); /* CAMBIADO */
     /* Posición del sprite de la tubería verde */
     background-position: -112px -646px; 
     z-index: 12;
@@ -96,7 +89,7 @@ body {
 @keyframes flap-sprite {
    to {
        /* Mueve el fondo 3 veces el ancho del sprite (34px * 3 = 102px) */
-       background-position: -108px -982px;
+       background-position: -82px -483px;
    }
 }
 
@@ -104,4 +97,11 @@ body {
 @keyframes explode {
     0% { transform: scale(1); opacity: 1; }
     100% { transform: scale(2); opacity: 0; }
+}
+
+/* --- ANIMACIÓN DE PRUEBA --- */
+/* Anula la animación normal y la reemplaza por una versión lenta. */
+.test-animation {
+    /* Animación de aleteo LENTA para depuración (3 segundos) */
+    animation: flap-sprite 3s steps(3) infinite !important;
 }
