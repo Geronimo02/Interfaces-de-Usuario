@@ -19,19 +19,9 @@
             padding: 15px;
             border-radius: 5px;
         }
-        .instructions code {
-            background-color: #222;
-            padding: 2px 5px;
-            border-radius: 3px;
-            color: #ffc107;
-        }
-        hr {
-            margin: 50px auto;
-            width: 80%;
-            border-color: #555;
-        }
+        hr { margin: 50px auto; width: 80%; border-color: #555; }
 
-        /* --- HERRAMIENTA 1: MEDICIÓN ESTÁTICA --- */
+        /* --- HERRAMIENTA 1: MEDICIÓN ESTÁTICA (sin cambios) --- */
         #measure-container {
             position: relative;
             width: 512px; 
@@ -41,51 +31,29 @@
             background-image: url('./assets/images/spritesheet.png');
             background-repeat: no-repeat;
         }
-        
-        /* Estilos para las cajas de medición de los pájaros */
+        .pipe-box {
+            position: absolute;
+            box-sizing: border-box;
+            border: 2px solid;
+            width: 27px;
+            height: 160px;
+        }
+        #pipe-copper-bottom { border-color: magenta; top: 324px; left: -2px; }
+        #pipe-copper-top { border-color: magenta; top: 324px; left: 28px; }
+        #pipe-green-bottom { border-color: cyan; top: 324px; left: 83px; }
+        #pipe-green-top { border-color: cyan; top: 324px; left: 56px; }
         .bird-box {
             position: absolute;
-            background-color: rgba(255, 255, 255, 0.2);
             box-sizing: border-box;
-            border-width: 2px;
-            border-style: solid;
+            border: 2px solid;
             width: 18px; 
             height: 13px;
         }
         #bird-box-1 { border-color: red; top: 490px; left: 2px; }
         #bird-box-2 { border-color: yellow; top: 490px; left: 30px; }
         #bird-box-3 { border-color: limegreen; top: 490px; left: 58px; }
-
-        /* --- NUEVO: Estilos para las cajas de medición de las tuberías --- */
-        .pipe-box {
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.1);
-            box-sizing: border-box;
-            border-width: 2px;
-            border-style: solid;
-            /* Tamaño inicial para todas las tuberías */
-            width: 27px;
-            height: 160px;
-        }
-        /* Tubería verde que apunta hacia arriba */
-        #pipe-green-bottom { border-color: cyan; top: 324px; left: 56px; }
-        /* Tubería verde que apunta hacia abajo */
-        #pipe-green-top { border-color: cyan; top: 324px; left: 83px; }
         
-        /* Tubería marrón que apunta hacia arriba (VALORES AJUSTADOS) */
-        #pipe-copper-bottom { 
-            border-color: magenta; 
-            top: 324px;
-            left: -2px;
-            width: 27px;
-            height: 160px;
-        }
-
-        /* Tubería marrón que apunta hacia abajo */
-        #pipe-copper-top { border-color: magenta; top: 324px; left: 28px; }
-
-
-        /* --- HERRAMIENTA 2: PREVISUALIZACIÓN DE ANIMACIÓN --- */
+        /* --- HERRAMIENTA 2: PREVISUALIZACIÓN (ACTUALIZADA) --- */
         #animation-preview {
             position: relative;
             width: 800px;
@@ -93,24 +61,43 @@
             background-color: #70c5ce;
             border: 2px solid white;
             margin: 20px auto;
+            overflow: hidden;
         }
         #animated-bird {
             position: absolute;
             top: 250px;
-            left: 350px;
+            left: 50px;
             width: 26px; 
             height: 29px;
             background-image: url('./assets/images/spritesheet.png');
             background-position: 0px -483px; 
             animation: flap-sprite 0.7s steps(3) infinite;
-            transform: scale(3);
+            transform: scale(2);
             image-rendering: pixelated;
         }
-        @keyframes flap-sprite {
-            to {
-                background-position: -82px -483px;
-            }
+        @keyframes flap-sprite { to { background-position: -82px -483px; } }
+
+        /* --- NUEVO: Estilos de tuberías con imagen dedicada --- */
+        .pipe-preview {
+            position: absolute;
+            
+            /* --- AJUSTA EL TAMAÑO AQUÍ --- */
+            width: 54px;  /* Ejemplo: el doble del ancho original */
+            height: 320px; /* Alto ajustable */
+
+            /* 1. Apunta a tu nueva imagen (asumiendo que se llama pipe-green.png) */
+            background-image: url('./assets/images/pipe-green.png');
+            
+            /* 2. Haz que la imagen de fondo llene el div */
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
         }
+        
+        /* CORREGIDO: La tubería de arriba es la que se rota */
+        .pipe-top-preview {
+            transform: rotate(180deg);
+        }
+
     </style>
 </head>
 <body>
@@ -118,33 +105,36 @@
     <!-- ================= HERRAMIENTA 1: MEDICIÓN ================= -->
     <div class="instructions">
         <h3>Herramienta 1: Medición de Sprites</h3>
-        <ol>
-            <li>Usa las <strong>Herramientas de Desarrollador</strong> para seleccionar los divs de medición.</li>
-            <li>Ajusta las cajas de colores para los pájaros (<code>#bird-box-*</code>).</li>
-            <li>Ajusta las cajas cian (<code>#pipe-green-*</code>) y magenta (<code>#pipe-copper-*</code>) para que encuadren perfectamente cada tubería.</li>
-        </ol>
+        <p>Usa esta herramienta para obtener las coordenadas y tamaños de los sprites.</p>
     </div>
     <div id="measure-container">
-        <!-- Cajas para pájaros -->
         <div id="bird-box-1" class="bird-box"></div>
         <div id="bird-box-2" class="bird-box"></div>
         <div id="bird-box-3" class="bird-box"></div>
-        <!-- Cajas para tuberías -->
-        <div id="pipe-green-bottom" class="pipe-box"></div>
-        <div id="pipe-green-top" class="pipe-box"></div>
         <div id="pipe-copper-bottom" class="pipe-box"></div>
         <div id="pipe-copper-top" class="pipe-box"></div>
+        <div id="pipe-green-bottom" class="pipe-box"></div>
+        <div id="pipe-green-top" class="pipe-box"></div>
     </div>
 
     <hr>
 
-    <!-- ================= HERRAMIENTA 2: ANIMACIÓN ================= -->
+    <!-- ================= HERRAMIENTA 2: PREVISUALIZACIÓN ================= -->
     <div class="instructions">
-        <h3>Herramienta 2: Previsualización de Animación</h3>
-        <p>Previsualiza la animación del pájaro con los valores ajustados.</p>
+        <h3>Herramienta 2: Previsualización con Imagen Dedicada</h3>
+        <p>Observa cómo la nueva imagen de tubería se escala y se rota.</p>
     </div>
     <div id="animation-preview">
         <div id="animated-bird"></div>
+        <!-- CORREGIDO: Se aplican las clases correctas -->
+        <div class="pipe-preview pipe-top-preview" style="left: 200px; top: -150px;"></div> <!-- Tubería superior espacio grande -->
+        <div class="pipe-preview" style="left: 200px; bottom: -150px;"></div> <!--  Tubería inferior espacio grande -->
+
+        <div class="pipe-preview pipe-top-preview" style="left: 400px; top: -100px;"></div> <!-- Tubería superior espacio medio -->
+        <div class="pipe-preview" style="left: 400px; bottom: -100px;"></div> <!-- Tubería inferior espacio medio -->
+
+        <div class="pipe-preview pipe-top-preview" style="left: 600px; top: -80px;"></div> <!-- Tubería superior espacio chico -->
+        <div class="pipe-preview" style="left: 600px; bottom: -80px;"></div> <!-- Tubería inferior espacio chico -->
     </div>
 
 </body>

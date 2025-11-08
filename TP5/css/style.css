@@ -42,16 +42,30 @@ body {
     animation: flap-sprite 0.4s steps(3) infinite;
 }
 
+/* --- ESTILOS DE TUBERÍAS (CON IMAGEN DEDICADA) --- */
+
+/* Clase única para TODAS las tuberías */
 .pipe {
     position: absolute;
-    width: 52px; /* Ancho medido */
-    background-image: url('../assets/images/spritesheet.png');
-    /* Posición medida (recuerda los negativos) */
-    background-position: -112px -646px; 
     z-index: 12;
+
+    /* --- AJUSTA EL TAMAÑO AQUÍ --- */
+    width: 54px;  /* Cambia este valor para el ancho */
+    height: 640px; /* Cambia este valor para el alto */
+
+    /* 1. Apunta a tu nueva imagen */
+    background-image: url('../assets/images/pipe-green.png');
+    
+    /* 2. Elimina la posición, ya no es necesaria */
+    /* background-position: ...; */
+
+    /* 3. Haz que la imagen de fondo llene el div */
+    background-size: 100% 100%; /* Esto hace que la imagen se estire automáticamente */
+    background-repeat: no-repeat;
 }
 
-.pipe-top {
+/* Modificador para la tubería de abajo: la rota 180 grados */
+.pipe-bottom {
     transform: rotate(180deg);
 }
 

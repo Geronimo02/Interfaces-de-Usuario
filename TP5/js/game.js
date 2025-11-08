@@ -58,31 +58,29 @@ const pipe = {
 };
 
 function createPipe() {
-    const pipeHeight = Math.floor(Math.random() * (gameContainer.clientHeight - pipe.gap - 200)) + 100;
+    const topPipeVisibleHeight = Math.floor(Math.random() * (gameContainer.clientHeight - pipe.gap - 200)) + 100;
     
     const topPipe = document.createElement('div');
     const bottomPipe = document.createElement('div');
 
-    // Esta lógica ya es correcta para los nuevos estilos CSS
-    const pipeColors = ['green', 'copper'];
-    const randomColor = pipeColors[Math.floor(Math.random() * pipeColors.length)];
+    // --- LÓGICA DE CREACIÓN ULTRA-SIMPLIFICADA ---
+    topPipe.classList.add('pipe');
+    bottomPipe.classList.add('pipe', 'pipe-bottom');
+    // --- FIN ---
 
-    // Aplica las clases correctas (ej: pipe-green-top y pipe-green-bottom)
-    topPipe.classList.add('pipe', `pipe-${randomColor}-top`);
-    bottomPipe.classList.add('pipe', `pipe-${randomColor}-bottom`);
-
-    topPipe.style.height = `${pipeHeight}px`;
+    // Posicionamiento para "recortar" la parte sobrante
     topPipe.style.left = `${gameContainer.clientWidth}px`;
-    topPipe.style.top = '0px';
+    topPipe.style.bottom = `${gameContainer.clientHeight - topPipeVisibleHeight}px`;
 
-    bottomPipe.style.height = `${gameContainer.clientHeight - pipeHeight - pipe.gap}px`;
     bottomPipe.style.left = `${gameContainer.clientWidth}px`;
-    bottomPipe.style.bottom = '0px';
+    bottomPipe.style.top = `${topPipeVisibleHeight + pipe.gap}px`;
 
     gameContainer.appendChild(topPipe);
     gameContainer.appendChild(bottomPipe);
 }
 
+// --- ELIMINAR TODA ESTA FUNCIÓN ---
+/*
 function movePipes() {
     const pipes = document.querySelectorAll('.pipe');
     pipes.forEach(pipe => {
@@ -103,6 +101,8 @@ function movePipes() {
         }
     });
 }
+*/
+// --- FIN DE LA ELIMINACIÓN ---
 
 function updatePipes() {
     const pipes = document.querySelectorAll('.pipe');
@@ -203,7 +203,6 @@ function gameLoop() {
     const rotation = Math.min(Math.max(-25, bird.velocityY * 6), 90);
     bird.element.style.transform = `rotate(${rotation}deg)`;
 
-    movePipes();
     updatePipes();
     checkCollisions();
 
