@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Flappy - TP5</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Pantalla de Carga -->
+    <div id="loadingScreen">
+        <div class="loading-content">
+            <h1>SPACE ODYSSEY</h1>
+            <div class="loading-text">Cargando...</div>
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <!-- Parallax Real Background -->
+        <div class="parallax-container">
+            <div class="parallax-layer" data-speed="0.1" id="stars-far"></div>
+            <div class="parallax-layer" data-speed="0.3" id="nebula"></div>
+            <div class="parallax-layer" data-speed="0.6" id="asteroids"></div>
+            <div class="parallax-layer" data-speed="0.8" id="planets"></div>
+        </div>
+        
+        <!-- Game Canvas -->
+        <canvas id="gameCanvas" width="1200" height="700"></canvas>
+        
+        <!-- UI Views -->
+        <div class="ui-container">
+            <!-- Simplified HUD for Flappy Bird -->
+            <div class="hud" id="gameHUD">
+                <div class="score-info">
+                    <div class="score">Puntos: <span id="distance">0</span></div>
+                    <div class="lives">Vidas: <span id="lives">3</span></div>
+                </div>
+            </div>
+            
+            <!-- Menu Principal -->
+            <div class="menu-view active" id="mainMenu">
+                <div class="menu-content">
+                    <h1 class="game-title">SPACE ODYSSEY</h1>
+                    <div class="ship-selection">
+                        <h3>Selecciona tu nave:</h3>
+                        <div class="ship-options">
+                            <div class="ship-option" data-ship="interceptor">
+                                <div class="ship-preview interceptor"></div>
+                                <span>Interceptor</span>
+                            </div>
+                            <div class="ship-option" data-ship="cruiser">
+                                <div class="ship-preview cruiser"></div>
+                                <span>Crucero</span>
+                            </div>
+                            <div class="ship-option selected" data-ship="fighter">
+                                <div class="ship-preview fighter"></div>
+                                <span>Caza</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-primary" id="startGameBtn">INICIAR MISIÓN</button>
+                    <button class="btn-secondary" id="instructionsBtn">INSTRUCCIONES</button>
+                </div>
+            </div>
+            
+            <!-- Pantalla de Game Over -->
+            <div class="menu-view" id="gameOverView">
+                <div class="menu-content">
+                    <h2>MISIÓN TERMINADA</h2>
+                    <div class="final-stats">
+                        <p>Distancia recorrida: <span id="finalDistance">0</span> años luz</p>
+                        <p>Cristales recolectados: <span id="finalCrystals">0</span></p>
+                        <p>Enemigos derrotados: <span id="finalEnemies">0</span></p>
+                    </div>
+                    <button class="btn-primary" id="restartBtn">NUEVA MISIÓN</button>
+                    <button class="btn-secondary" id="backToMenuBtn">MENÚ PRINCIPAL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts en el orden correcto -->
+    <script src="js/models/GameModel.js"></script>
+    <script src="js/models/Player.js"></script>
+    <script src="js/models/SpacePipe.js"></script>
+    <script src="js/models/Collectible.js"></script>
+    <script src="js/models/PowerUp.js"></script>
+    <script src="js/views/GameView.js"></script>
+    <script src="js/views/MenuView.js"></script>
+    <script src="js/controllers/GameController.js"></script>
+    <script src="js/controllers/InputController.js"></script>
+    <script src="js/ParallaxManager.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
