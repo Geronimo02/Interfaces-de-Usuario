@@ -44,9 +44,9 @@ body {
 
 .pipe {
     position: absolute;
-    width: 52px; /* Ancho del sprite de la tubería */
-    background-image: url('../assets/images/spritesheet.png'); /* CAMBIADO */
-    /* Posición del sprite de la tubería verde */
+    width: 52px; /* Ancho medido */
+    background-image: url('../assets/images/spritesheet.png');
+    /* Posición medida (recuerda los negativos) */
     background-position: -112px -646px; 
     z-index: 12;
 }
