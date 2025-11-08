@@ -49,26 +49,38 @@ document.addEventListener('pointerdown', () => {
 });
 
 
+const pipe = {
+    spawnInterval: 2000,
+    lastSpawnTime: 0,
+    gap: 150,
+    width: 27, // Coincide con el CSS
+    speed: 3
+};
+
 function createPipe() {
-    if (!gameRunning) return;
+    const pipeHeight = Math.floor(Math.random() * (gameContainer.clientHeight - pipe.gap - 200)) + 100;
+    
+    const topPipe = document.createElement('div');
+    const bottomPipe = document.createElement('div');
 
-    const topHeight = Math.random() * (gameContainer.clientHeight - pipeGap - 150) + 50;
-    const bottomHeight = gameContainer.clientHeight - topHeight - pipeGap;
+    // Esta lógica ya es correcta para los nuevos estilos CSS
+    const pipeColors = ['green', 'copper'];
+    const randomColor = pipeColors[Math.floor(Math.random() * pipeColors.length)];
 
-    const pipeTop = document.createElement('div');
-    pipeTop.classList.add('pipe', 'pipe-top');
-    pipeTop.style.height = `${topHeight}px`;
-    pipeTop.style.left = `${gameContainer.clientWidth}px`;
-    pipeTop.style.top = '0px';
+    // Aplica las clases correctas (ej: pipe-green-top y pipe-green-bottom)
+    topPipe.classList.add('pipe', `pipe-${randomColor}-top`);
+    bottomPipe.classList.add('pipe', `pipe-${randomColor}-bottom`);
 
-    const pipeBottom = document.createElement('div');
-    pipeBottom.classList.add('pipe');
-    pipeBottom.style.height = `${bottomHeight}px`;
-    pipeBottom.style.left = `${gameContainer.clientWidth}px`;
-    pipeBottom.style.bottom = '0px';
+    topPipe.style.height = `${pipeHeight}px`;
+    topPipe.style.left = `${gameContainer.clientWidth}px`;
+    topPipe.style.top = '0px';
 
-    gameContainer.appendChild(pipeTop);
-    gameContainer.appendChild(pipeBottom);
+    bottomPipe.style.height = `${gameContainer.clientHeight - pipeHeight - pipe.gap}px`;
+    bottomPipe.style.left = `${gameContainer.clientWidth}px`;
+    bottomPipe.style.bottom = '0px';
+
+    gameContainer.appendChild(topPipe);
+    gameContainer.appendChild(bottomPipe);
 }
 
 function movePipes() {
@@ -90,6 +102,37 @@ function movePipes() {
             }
         }
     });
+}
+
+function updatePipes() {
+    const pipes = document.querySelectorAll('.pipe');
+    const birdRect = bird.element.getBoundingClientRect();
+
+    pipes.forEach(pipe => {
+        const pipeRect = pipe.getBoundingClientRect();
+        pipe.style.left = `${pipeRect.left - pipe.speed}px`;
+
+        // --- LÓGICA PARA INCREMENTAR EL PUNTAJE (NUEVO) ---
+        // Solo nos interesa la tubería de abajo para no contar doble.
+        // 'dataset.passed' es una forma de marcar la tubería como "ya puntuada".
+        if (!pipe.classList.contains('pipe-top') && !pipe.dataset.passed) {
+            // Si el borde derecho de la tubería ha cruzado el centro del pájaro...
+            if (pipeRect.right < (birdRect.left + birdRect.width / 2)) {
+                pipe.dataset.passed = 'true'; // Marcar como puntuada.
+                score++;
+                updateScoreDisplay();
+            }
+        }
+        // --- FIN DE LA LÓGICA DE PUNTAJE ---
+
+        if (pipeRect.right < 0) {
+            pipe.remove();
+        }
+    });
+}
+
+function updateScoreDisplay() {
+    scoreElement.textContent = `Puntaje: ${score}`;
 }
 
 function checkCollisions() {
@@ -138,17 +181,17 @@ function checkCollisions() {
 function gameOver() {
     if (!gameRunning) return;
     gameRunning = false;
-    // Detiene la animación de aleteo
-    bird.element.style.animationPlayState = 'paused';
-    clearInterval(pipeInterval);
+    // Detener las animaciones de parallax
+    const layers = document.querySelectorAll('.layer');
+    layers.forEach(layer => layer.style.animationPlayState = 'paused');
     
+    // Mostramos un alert y reiniciamos el juego al cerrar.
     setTimeout(() => {
         alert(`Game Over! Tu puntaje: ${score}`);
-        location.reload();
-    }, 500);
+        window.location.reload();
+    }, 100);
 }
 
-// Bucle principal del juego
 function gameLoop() {
     if (!gameRunning) return;
 
@@ -161,6 +204,7 @@ function gameLoop() {
     bird.element.style.transform = `rotate(${rotation}deg)`;
 
     movePipes();
+    updatePipes();
     checkCollisions();
 
     requestAnimationFrame(gameLoop);
