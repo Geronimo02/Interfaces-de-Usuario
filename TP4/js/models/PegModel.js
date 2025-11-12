@@ -5,6 +5,7 @@ export default class PegModel {
         this.board = [];
         this.moveHistory = [];
         this.moveCount = 0;
+        this.moveUp = 0;
         this.pegCount = 0;
         this.initializeBoard();
     }
@@ -50,6 +51,9 @@ export default class PegModel {
         this.board[midR][midC] = 0;
         this.board[toRow][toCol] = 1;
         this.moveCount++;
+        if(toRow < fromRow){
+            this.moveUp++;
+        }
         this.pegCount = this.board.flat().filter(v=>v===1).length;
     }
 

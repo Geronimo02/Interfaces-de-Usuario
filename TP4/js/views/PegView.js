@@ -12,7 +12,7 @@ export default class PegView {
 
         // --- INICIO: Cargar imagen de la ficha ---
         this.pegImage = new Image();
-        this.pegImage.src = './assets/images/homer.png'; // Asegúrate de que la ruta a tu imagen sea correcta
+        this.pegImage.src = './assets/images/homer.png';
         this.pegImageLoaded = false;
         this.pegImage.onload = () => {
             this.pegImageLoaded = true;
@@ -83,6 +83,8 @@ export default class PegView {
         this._ensureControlsInsideBoard();
     }
 
+    // Asegura que los controles HTML (reset, undo, hint, contador, timer)
+    // estén enlazados con la vista y se muevan junto al canvas cuando se redimensiona.
     _ensureControlsInsideBoard(){
 
         let boardContainer = this.canvas.closest('#game-area') || this.canvas.parentElement;
@@ -104,6 +106,8 @@ export default class PegView {
 
     }
 
+    // Maneja cambios de tamaño del canvas cuando cambia el tamaño de la ventana.
+    // Ajusta devicePixelRatio, escala del contexto y recalcula tamaño/offsets del tablero.
     _onResize(){
         const rect = this.canvas.getBoundingClientRect();
         // calcular cellSize en función del ancho disponible
@@ -119,18 +123,30 @@ export default class PegView {
         this._originY = Math.max(this.padding, Math.floor((rect.height - totalGridH) / 2));
     }
 
+    // Registra un manejador para clicks simples sobre celdas.
+    // callback: (row, col) => void
     onClick(handler){ this._clickHandler = handler; }
 
-
+    // Registra callbacks para el flujo de pointer/drag. Estos son usados por
+    // el controlador para coordinar selección, arrastre y suelta.
+    // onPointerDown: (row,col,event) => boolean (retornar true para permitir drag)
     onPointerDown(handler){ this._pointerDownHandler = handler; }
+    // onPointerMove: (row,col,event) => void
     onPointerMove(handler){ this._pointerMoveHandler = handler; }
+    // onPointerUp: (row,col,event) => void
     onPointerUp(handler){ this._pointerUpHandler = handler; }
 
-
+    // Callbacks de control externos: reset, undo, hint. Si no se proveen,
+    // la vista intenta clicar los botones DOM correspondientes (si existen).
     onReset(handler){ this._onResetCallback = handler; }
     onUndo(handler){ this._onUndoCallback = handler; }
     onHint(handler){ this._onHintCallback = handler; }
 
+    // Handler interno para pointerdown en el canvas.
+    // - Traduce la posición del puntero a (row,col)
+    // - Si la posición está sobre el HUD, delega a _hitHudButton
+    // - Pregunta al controlador si se permite iniciar el arrastre
+    // - Si se permite, captura el pointer y guarda el estado de arrastre
     _onPointerDownEvent(e){
 
         // calcular posición del evento y evitar iniciar drag si está fuera del área del tablero
@@ -145,7 +161,7 @@ export default class PegView {
         // si está fuera de los límites de la cuadrícula no iniciamos arrastre
         if (row < 0 || row >= this.rows || col < 0 || col >= this.cols) return;
 
-        // Preguntar al manejador (controlador) si está permitido iniciar arrastre
+        // Preguntar al controller si está permitido iniciar arrastre
         // El controlador debe devolver true si hay una ficha para arrastrar.
         if (this._pointerDownHandler){
             try{
@@ -170,6 +186,9 @@ export default class PegView {
         if (this._renderOnUpdate) this._renderOnUpdate();
     }
 
+    // Handler interno para pointermove.
+    // Actualiza hover del HUD y, si se está arrastrando, calcula la nueva
+    // posición visual de la ficha arrastrada y notifica al controlador.
     _onPointerMoveEvent(e){
         // actualizar hover sobre HUD aunque no estemos arrastrando
         const rect = this.canvas.getBoundingClientRect();
@@ -190,6 +209,8 @@ export default class PegView {
         if (this._renderOnUpdate) this._renderOnUpdate();
     }
 
+    // Handler interno para pointerup: finaliza el arrastre, libera pointer
+    // y notifica al controlador de la celda destino (si corresponde).
     _onPointerUpEvent(e){
         if (this._dragging){
             try{ this.canvas.releasePointerCapture(e.pointerId); } catch(err){}
@@ -215,6 +236,7 @@ export default class PegView {
         }
     }
 
+    // Handler para pointercancel: asegura limpiar el estado si el pointer se pierde.
     _onPointerCancelEvent(e){
  
         if (this._dragging && e.pointerId === this._dragPointerId){
@@ -227,6 +249,7 @@ export default class PegView {
         }
     }
 
+    // Handler para clicks simples (no drag). Traduce a celda y llama a _clickHandler
     _onClick(e){
         const rect = this.canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -242,6 +265,8 @@ export default class PegView {
         this._clickHandler(row, col);
     }
 
+    // Convierte un evento pointer/click a coordenadas de celda y coordenadas locales
+    // Devuelve { row, col, localX, localY } donde localX/Y son relativas al origen del tablero
     _getCellFromEvent(e){
         const r = this.canvas.getBoundingClientRect();
         const x = e.clientX - r.left - this._originX;
@@ -251,6 +276,8 @@ export default class PegView {
         return { row, col, localX: x, localY: y };
     }
 
+    // Render principal: dibuja fondo, panel de madera, celdas, fichas, HUD y overlays.
+    // `model` debe exponer: board[row][col], isValidPosition(r,c), pegCount, moveCount
     render(model){
         const ctx = this.ctx;
         const dpr = window.devicePixelRatio || 1;
@@ -286,7 +313,7 @@ export default class PegView {
             const radius = Math.max(12, Math.floor(this.cellSize * 0.12));
 
             ctx.save();
-            // rounded rect path for center panel
+            // ruta del rectángulo redondeado para el panel central
             ctx.beginPath();
             ctx.moveTo(panelX + radius, panelY);
             ctx.arcTo(panelX + panelW, panelY, panelX + panelW, panelY + panelH, radius);
@@ -302,8 +329,7 @@ export default class PegView {
                 woodGrad.addColorStop(1, '#8a5a2a'); // marrón más oscuro
                 ctx.fillStyle = woodGrad;
                 ctx.fill();
-
-                // Dibujar vetas sutiles para efecto madera (más visibles)
+                // Añade vetas de madera sutiles
                 ctx.save();
                 ctx.globalAlpha = 0.16;
                 ctx.lineWidth = Math.max(1, Math.floor(this.cellSize * 0.02));
@@ -321,7 +347,6 @@ export default class PegView {
 
                 // Sutil sombra interior (inner shadow) para dar profundidad
                 ctx.save();
-                // clip to rounded panel so shadow stays inside
                 ctx.beginPath();
                 ctx.moveTo(panelX + radius, panelY);
                 ctx.arcTo(panelX + panelW, panelY, panelX + panelW, panelY + panelH, radius);
@@ -349,9 +374,7 @@ export default class PegView {
                 ctx.stroke();
                 // --- fin cambio madera ---
 
-            // side panels (left and right) anchored to the canvas extremes
-            // We'll make them full-height bars at the edges so the board contrasts
-            // aumentar el ancho para dar más espacio a botones y estadísticas
+
             const sideW = Math.max(180, Math.floor(this.cellSize * 2.4));
             // anchor flush to edges (left at x=0, right at x = canvasWidth - sideW)
             const leftX = 0;
@@ -384,8 +407,6 @@ export default class PegView {
                 const isDragSource = this._dragging && this._dragOrigin && this._dragOrigin.row === r && this._dragOrigin.col === c;
                 const isSelectedSource = this._arrowSource && this._arrowSource.r === r && this._arrowSource.c === c;
 
-                // Dibujamos la ficha. Si es la fuente del arrastre la ocultamos (la dibujamos al final),
-                // pero mostramos un 'ghost' en su lugar cuando está seleccionada o en arrastre.
                 if (model.board[r][c] === 1){
                     if (isDragSource){
                         // si estamos arrastrando, no dibujar la ficha fija en la celda origen (seguirá al pointer)
@@ -461,7 +482,7 @@ export default class PegView {
             ctx.fillRect(0,0,w,h);
         } catch(err){ /* ignore if gradient fails */ }
 
-        // draw arrow animations (if any)
+        // dibuja circulo animado de ayuda
         if (this._arrowAnimating && this._arrowSource && Array.isArray(this._arrowTargets) && this._arrowTargets.length){
             this._drawArrows(ctx, originX, originY, model);
         }
@@ -509,6 +530,8 @@ export default class PegView {
 
     showMessage(text){ if (this.ui.messageEl) this.ui.messageEl.textContent = text; }
 
+    // Dibuja la HUD dentro del canvas: paneles laterales, estadísticas y botones.
+    // Calcula también las regiones de hit-testing en this._hudRegions para clicks.
     _drawHud(ctx, originX, originY, w, h, model){
         // Estadísticas como botones, alineación mejorada y números más integrados
     ctx.save();
@@ -620,11 +643,12 @@ export default class PegView {
         ctx.restore();
     }
 
+    // Dibuja animaciones de pista (arcos rotando) alrededor de las celdas objetivo.
     _drawArrows(ctx, originX, originY, model){
         const now = performance.now();
         const elapsed = now - this._animStart;
         const p = ((elapsed % this._animDuration) / this._animDuration);
-        // Nuevo: para cada celda objetivo dibujar un 'rotador' compuesto por 3 barras amarillas
+        // dibuja en cada celda objetivo un 'rotador' compuesto por 3 barras amarillas
         // que giren alrededor del centro de la celda. Las barras se dibujan como trazos con
         // extremos redondeados (lineCap='round') y con un contorno negro para contraste.
         const baseAngle = elapsed / this._animDuration * Math.PI * 2;
@@ -670,32 +694,10 @@ export default class PegView {
         });
     }
 
-    _drawGhostPeg(ctx, cx, cy, radius){
-        // ghost: círculo translúcido con halo y borde sutil
-        ctx.save();
-        // sombra/halo
-        ctx.beginPath();
-        // halo más sutil
-        ctx.fillStyle = 'rgba(0,0,0,0.10)';
-        ctx.arc(cx + this.cellSize*0.04, cy + this.cellSize*0.04, radius + this.cellSize*0.03, 0, Math.PI*2);
-        ctx.fill();
 
-        // cuerpo ghost (más translúcido)
-        ctx.beginPath();
-        // aumentar opacidad para que la ficha seleccionada se vea más (efecto atenuado)
-        ctx.fillStyle = 'rgba(255,213,79,0.58)';
-        ctx.arc(cx, cy, radius, 0, Math.PI*2);
-        ctx.fill();
 
-        // borde suave
-        ctx.beginPath();
-        ctx.lineWidth = Math.max(1, this.cellSize * 0.02);
-        ctx.strokeStyle = 'rgba(0,0,0,0.08)';
-        ctx.arc(cx, cy, radius, 0, Math.PI*2);
-        ctx.stroke();
-        ctx.restore();
-    }
-
+    // Dibuja la ficha seleccionada o la que se está arrastrando. Aplica escala, sombra
+    // y usa clipping para pintar la imagen dentro de un círculo.
     _drawSelectedPeg(ctx, cx, cy, radius){
         // Dibuja la ficha seleccionada con leve escala y una sombra manual (elipse) para "elevarla"
         ctx.save();
@@ -750,19 +752,18 @@ export default class PegView {
         ctx.restore();
     }
 
+    // Dibuja un botón estilizado dentro del canvas. No gestiona eventos, solo render.
     _drawButton(ctx, x, y, w, h, label, hovered = false){
         ctx.save();
         const radius = Math.min(12, Math.floor(h * 0.35));
 
-        // drop shadow for depth; slightly stronger when hovered
+        // sombra proyectada para dar profundidad; ligeramente más intensa al pasar el cursor
         ctx.shadowColor = 'rgba(0,0,0,0.28)';
         ctx.shadowBlur = Math.max(6, Math.floor(this.cellSize * 0.06)) * (hovered ? 1.2 : 1);
         ctx.shadowOffsetY = hovered ? 3 : 2;
-
-        // background that combines well with varied page backgrounds (dark, slightly warm)
         ctx.fillStyle = hovered ? 'rgba(40,44,48,0.96)' : 'rgba(20,24,28,0.86)';
 
-        // rounded rect path
+        // ruta del rectángulo redondeado
         ctx.beginPath();
         ctx.moveTo(x + radius, y);
         ctx.arcTo(x + w, y, x + w, y + h, radius);
@@ -788,8 +789,9 @@ export default class PegView {
         ctx.restore();
     }
 
+    // Crea una ruta de rectángulo redondeado en el contexto (no la rellena ni strokea).
+    // Útil como helper para dibujar celdas y paneles con esquinas redondeadas.
     _roundRectPath(ctx, x, y, w, h, r){
-        // crea la ruta de un rectángulo redondeado (no la rellena ni la dibuja)
         if (r <= 0) {
             ctx.rect(x, y, w, h);
             return;
@@ -803,6 +805,8 @@ export default class PegView {
         ctx.closePath();
     }
 
+    // Comprueba si un punto (x,y) está sobre algún botón HUD y, si es así,
+    // dispara el callback correspondiente o simula un click en el botón DOM.
     _hitHudButton(x,y){
         const r = this._hudRegions;
         if (r.reset && this._pointInRect(x,y,r.reset)){
@@ -823,10 +827,12 @@ export default class PegView {
         return false;
     }
 
+    // Helper: determina si un punto (x,y) está dentro de un rect {x,y,w,h}
     _pointInRect(x,y,rect){
         return x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h;
     }
 
+    // Inicia el loop de animación para las flechas/pistas, usando requestAnimationFrame.
     _startArrowAnim(){
         if (this._arrowAnimating) return;
         this._arrowAnimating = true;
@@ -840,12 +846,18 @@ export default class PegView {
         this._rafId = requestAnimationFrame(tick);
     }
 
+    // Detiene la animación de flechas y cancela el RAF si existe.
     _stopArrowAnim(){
         this._arrowAnimating = false;
         if (this._rafId) cancelAnimationFrame(this._rafId);
         this._rafId = null;
     }
 
+    // Destaca visualmente un conjunto de celdas. También puede activar
+    // la animación de flechas si se pasa un objeto con { source, targets }.
+    // Parámetros aceptados:
+    // - Array de celdas: [{r,c}, ...]  -> solo highlight
+    // - Objeto { source: {r,c}, targets: [{r,c}, ...] } -> highlight + animación
     highlightCells(cells){
         // Acepta: un array de destinos O un objeto { source: {r,c}, targets: [...] }
         if (!cells) return;
@@ -869,46 +881,14 @@ export default class PegView {
         if (this._renderOnUpdate) this._renderOnUpdate();
     }
 
+    // Quita cualquier highlight y detiene animaciones asociadas.
     clearHighlights(){ this._highlightedCells = []; this._arrowSource = null; this._arrowTargets = null; this._stopArrowAnim && this._stopArrowAnim(); if (this._renderOnUpdate) this._renderOnUpdate(); }
 
+    // Registra la función que la vista llamará para solicitar un re-render.
+    // Normalmente el controlador pasa una función que llama a view.render(model).
     setRenderCallback(cb){ this._renderOnUpdate = cb; }
 
-    showBanner(text, type='info'){
-        // Si el banner es de tipo 'warning' (banner naranja de fin de juego),
-        // no lo mostramos para evitar el banner intrusivo en la UI.
-        if (type === 'warning') return;
-
-        // Elimina cualquier banner anterior
-        if (this._bannerEl && this._bannerEl.parentNode) {
-            this._bannerEl.parentNode.removeChild(this._bannerEl);
-            this._bannerEl = null;
-        }
-        const banner = document.createElement('div');
-        banner.className = `peg-banner peg-banner-${type}`;
-        banner.textContent = text;
-        // Estilos básicos inline para asegurar visibili    dad
-        banner.style.position = 'absolute';
-        banner.style.top = '24px';
-        banner.style.left = '50%';
-        banner.style.transform = 'translateX(-50%)';
-        banner.style.padding = '16px 32px';
-        banner.style.background = type === 'warning' ? '#ff9800' :  '#1976d2';
-        banner.style.color = '#fff';
-        banner.style.fontSize = '1.2rem';
-        banner.style.fontWeight = 'bold';
-        banner.style.borderRadius = '8px';
-        banner.style.boxShadow = '0 4px 16px rgba(0,0,0,0.18)';
-        banner.style.zIndex = '1000';
-        banner.style.pointerEvents = 'none';
-        // Insertar sobre el canvas
-        const parent = this.canvas.parentElement || document.body;
-        parent.appendChild(banner);
-        this._bannerEl = banner;
-        setTimeout(()=> {
-            if (banner.parentNode) banner.parentNode.removeChild(banner);
-            if (this._bannerEl === banner) this._bannerEl = null;
-        }, 2200);
-    }
+   
 
     /**
      * Muestra una pantalla de fin de juego (overlay rojo) centrada sobre el área del juego.
