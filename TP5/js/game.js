@@ -10,7 +10,8 @@ const scoreElement = document.getElementById('score');
 
 let score = 0;
 let gameRunning = true;
-const gameSpeed = 3; // Aumentamos un poco la velocidad
+let gamePaused = false;  // ← NUEVO: Variable de pausa
+const gameSpeed = 3;
 const pipeGap = 200;
 const pipeSpawnInterval = 1800;
 
@@ -52,31 +53,48 @@ document.addEventListener('pointerdown', () => {
 const pipe = {
     spawnInterval: 2000,
     lastSpawnTime: 0,
-    gap: 150,
-    width: 27, // Coincide con el CSS
+    gap: 250,
+    width: 54,      // ← CAMBIO: Ancho visual de la pipe
+    height: 324,    // ← NUEVO: Altura de la pipe
     speed: 3
 };
 
 function createPipe() {
-    const topPipeVisibleHeight = Math.floor(Math.random() * (gameContainer.clientHeight - pipe.gap - 200)) + 100;
+    // Altura visible de la tubería superior
+    const topPipeVisibleHeight = Math.floor(
+        Math.random() * (gameContainer.clientHeight - pipe.gap - 250)
+    ) + 100;
     
     const topPipe = document.createElement('div');
     const bottomPipe = document.createElement('div');
 
-    // --- LÓGICA DE CREACIÓN ULTRA-SIMPLIFICADA ---
-    topPipe.classList.add('pipe');
+    topPipe.classList.add('pipe', 'pipe-top');
     bottomPipe.classList.add('pipe', 'pipe-bottom');
-    // --- FIN ---
 
-    // Posicionamiento para "recortar" la parte sobrante
+    // ← CORRECCIÓN: Posiciona la PARTE INFERIOR de la tubería superior
     topPipe.style.left = `${gameContainer.clientWidth}px`;
-    topPipe.style.bottom = `${gameContainer.clientHeight - topPipeVisibleHeight}px`;
+    topPipe.style.top = `${topPipeVisibleHeight - pipe.height}px`;  // ← CAMBIO: pipe.height en lugar de pipe.width
+    topPipe.style.bottom = 'auto';
 
+    // Tubería inferior comienza después del gap
     bottomPipe.style.left = `${gameContainer.clientWidth}px`;
     bottomPipe.style.top = `${topPipeVisibleHeight + pipe.gap}px`;
+    bottomPipe.style.bottom = 'auto';
 
     gameContainer.appendChild(topPipe);
     gameContainer.appendChild(bottomPipe);
+
+    console.log('=== NUEVA TUBERÍA CREADA ===');
+    console.log('Tubería Superior (TOP PIPE):');
+    console.log('  - left:', topPipe.style.left);
+    console.log('  - top:', topPipe.style.top);
+    console.log('  - Tamaño: ', topPipe.offsetWidth + 'px × ' + topPipe.offsetHeight + 'px');
+    
+    console.log('Tubería Inferior (BOTTOM PIPE):');
+    console.log('  - left:', bottomPipe.style.left);
+    console.log('  - top:', bottomPipe.style.top);
+    console.log('  - Tamaño:', bottomPipe.offsetWidth + 'px × ' + bottomPipe.offsetHeight + 'px');
+    console.log('----------------------------\n');
 }
 
 // --- ELIMINAR TODA ESTA FUNCIÓN ---
@@ -108,24 +126,33 @@ function updatePipes() {
     const pipes = document.querySelectorAll('.pipe');
     const birdRect = bird.element.getBoundingClientRect();
 
-    pipes.forEach(pipe => {
-        const pipeRect = pipe.getBoundingClientRect();
-        pipe.style.left = `${pipeRect.left - pipe.speed}px`;
+    pipes.forEach((pipe, index) => {
+        // ← CAMBIO: Obtener la posición actual desde style.left (coordenadas del contenedor)
+        let pipeLeft = parseFloat(pipe.style.left);
+        
+        // Mover la pipe hacia la IZQUIERDA
+        pipeLeft -= gameSpeed;
+        pipe.style.left = `${pipeLeft}px`;
 
-        // --- LÓGICA PARA INCREMENTAR EL PUNTAJE (NUEVO) ---
-        // Solo nos interesa la tubería de abajo para no contar doble.
-        // 'dataset.passed' es una forma de marcar la tubería como "ya puntuada".
+        // Obtener el rect DESPUÉS de actualizar la posición
+        const pipeRect = pipe.getBoundingClientRect();
+        
+        // --- LOG DE MOVIMIENTO (cada 30 frames) ---
+        if (Math.random() < 0.05) {
+            console.log(`Pipe #${index}: left=${pipeLeft.toFixed(0)}px`);
+        }
+
+        // --- LÓGICA PARA INCREMENTAR EL PUNTAJE ---
         if (!pipe.classList.contains('pipe-top') && !pipe.dataset.passed) {
-            // Si el borde derecho de la tubería ha cruzado el centro del pájaro...
             if (pipeRect.right < (birdRect.left + birdRect.width / 2)) {
-                pipe.dataset.passed = 'true'; // Marcar como puntuada.
+                pipe.dataset.passed = 'true';
                 score++;
                 updateScoreDisplay();
             }
         }
-        // --- FIN DE LA LÓGICA DE PUNTAJE ---
 
-        if (pipeRect.right < 0) {
+        // Eliminar pipes que salen de pantalla
+        if (pipeLeft + pipe.offsetWidth < 0) {
             pipe.remove();
         }
     });
@@ -192,8 +219,48 @@ function gameOver() {
     }, 100);
 }
 
+// NUEVO: Referencias a los botones
+const playBtn = document.getElementById('play-btn');
+const pauseBtn = document.getElementById('pause-btn');
+
+// NUEVO: Funciones de pausa/play
+function pauseGame() {
+    if (!gameRunning || gamePaused) return;
+    
+    gamePaused = true;
+    playBtn.classList.remove('disabled');
+    pauseBtn.classList.add('disabled');
+    
+    // Pausar animaciones
+    const layers = document.querySelectorAll('.layer');
+    layers.forEach(layer => layer.style.animationPlayState = 'paused');
+    
+    console.log('⏸ Juego pausado');
+}
+
+function playGame() {
+    if (!gameRunning || !gamePaused) return;
+    
+    gamePaused = false;
+    playBtn.classList.add('disabled');
+    pauseBtn.classList.remove('disabled');
+    
+    // Reanudar animaciones
+    const layers = document.querySelectorAll('.layer');
+    layers.forEach(layer => layer.style.animationPlayState = 'running');
+    
+    console.log('▶ Juego reanudado');
+}
+
+// NUEVO: Event listeners de botones
+playBtn.addEventListener('click', playGame);
+pauseBtn.addEventListener('click', pauseGame);
+
+// Establecer estado inicial (juego en pausa)
+pauseBtn.classList.add('disabled');
+
 function gameLoop() {
-    if (!gameRunning) return;
+    if (!gameRunning || gamePaused) return;  // ← CAMBIO: Agregar gamePaused
 
     bird.velocityY += bird.gravity;
     bird.y += bird.velocityY;
@@ -211,6 +278,69 @@ function gameLoop() {
 
 // Iniciar la generación de tuberías
 const pipeInterval = setInterval(createPipe, pipeSpawnInterval);
+
+// --- NUEVA: Crear una pipe hardcodeada para pruebas ---
+function createHardcodedPipe() {
+    const topPipe = document.createElement('div');
+    const bottomPipe = document.createElement('div');
+
+    topPipe.classList.add('pipe', 'pipe-top');
+    bottomPipe.classList.add('pipe', 'pipe-bottom');
+
+    // Posición fija para debug: arriba y abajo con espacio en el medio
+    topPipe.style.left = `400px`;
+    topPipe.style.top = `50px`;
+    topPipe.style.bottom = 'auto';
+
+    bottomPipe.style.left = `400px`;
+    bottomPipe.style.top = `350px`;  // 50 + 300 (gap) = 350
+    bottomPipe.style.bottom = 'auto';
+
+    gameContainer.appendChild(topPipe);
+    gameContainer.appendChild(bottomPipe);
+
+    console.log('✅ PIPE HARDCODEADA CREADA');
+    console.log('  - Top Pipe: left=400px, top=50px');
+    console.log('  - Bottom Pipe: left=400px, top=350px');
+}
+
+// --- NUEVA: Crear pipes hardcodeadas para pruebas (del test_posicion.html) ---
+function createHardcodedPipes() {
+    // Valores tomados de test_posicion.html - CORRECTO
+    const pipesData = [
+        // Espacio grande
+        { topLeft: 200, topTop: -150, bottomLeft: 200, bottomBottom: -150 },
+        // Espacio medio
+        { topLeft: 400, topTop: -100, bottomLeft: 400, bottomBottom: -100 },
+        // Espacio chico
+        { topLeft: 600, topTop: -80, bottomLeft: 600, bottomBottom: -80 }
+    ];
+
+    pipesData.forEach((pipeData, index) => {
+        // Crear pipe superior (top: negativo, se sale hacia ARRIBA)
+        const topPipe = document.createElement('div');
+        topPipe.classList.add('pipe', 'pipe-top');
+        topPipe.style.left = `${pipeData.topLeft}px`;
+        topPipe.style.top = `${pipeData.topTop}px`;  // NEGATIVO
+        topPipe.style.bottom = 'auto';
+        gameContainer.appendChild(topPipe);
+
+        // Crear pipe inferior (bottom: negativo, se sale hacia ABAJO)
+        const bottomPipe = document.createElement('div');
+        bottomPipe.classList.add('pipe', 'pipe-bottom');
+        bottomPipe.style.left = `${pipeData.bottomLeft}px`;
+        bottomPipe.style.bottom = `${pipeData.bottomBottom}px`;  // ← CAMBIO: bottom en lugar de top
+        bottomPipe.style.top = 'auto';  // ← CAMBIO: top a 'auto'
+        gameContainer.appendChild(bottomPipe);
+
+        console.log(`✅ PIPE HARDCODEADA #${index + 1} CREADA`);
+        console.log(`  - Top Pipe: left=${pipeData.topLeft}px, top=${pipeData.topTop}px`);
+        console.log(`  - Bottom Pipe: left=${pipeData.bottomLeft}px, bottom=${pipeData.bottomBottom}px`);
+    });
+}
+
+// Llamar a la función al cargar la página
+createHardcodedPipes();
 
 // Iniciar el juego
 gameLoop();

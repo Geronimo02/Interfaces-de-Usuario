@@ -5,7 +5,7 @@ body {
     height: 100vh;
     background-color: #000;
     margin: 0;
-    overflow: hidden;
+    overflow: visible;  /* ← CAMBIO: de 'hidden' a 'visible' */
 }
 
 #game-container {
@@ -13,7 +13,7 @@ body {
     width: 800px;
     height: 600px;
     background-color: #70c5ce;
-    overflow: hidden; /* Oculta lo que se sale del contenedor */
+    overflow: visible;  /* ← Ya estaba correcto */
 }
 
 #score {
@@ -47,26 +47,27 @@ body {
 /* Clase única para TODAS las tuberías */
 .pipe {
     position: absolute;
-    z-index: 12;
-
-    /* --- AJUSTA EL TAMAÑO AQUÍ --- */
-    width: 54px;  /* Cambia este valor para el ancho */
-    height: 640px; /* Cambia este valor para el alto */
-
-    /* 1. Apunta a tu nueva imagen */
-    background-image: url('../assets/images/pipe-green.png');
+    z-index: 14;
     
-    /* 2. Elimina la posición, ya no es necesaria */
-    /* background-position: ...; */
+    width: 54px;
+    height: 320px;
 
-    /* 3. Haz que la imagen de fondo llene el div */
-    background-size: 100% 100%; /* Esto hace que la imagen se estire automáticamente */
+    /* ← CAMBIO: De './' a '../' */
+    background-image: url('../assets/images/pipe-green.png');
+    background-size: 100% 100%;
     background-repeat: no-repeat;
+    
+    border: 2px solid red;  /* DEBUG */
 }
 
 /* Modificador para la tubería de abajo: la rota 180 grados */
 .pipe-bottom {
     transform: rotate(180deg);
+}
+
+/* El suelo debe estar detrás de las pipes */
+.layer-1 { 
+    z-index: 13;
 }
 
 /* --- Parallax Scrolling --- */
@@ -118,4 +119,40 @@ body {
 .test-animation {
     /* Animación de aleteo LENTA para depuración (3 segundos) */
     animation: flap-sprite 3s steps(3) infinite !important;
+}
+
+/* NUEVO: Estilos de controles */
+#controls {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    z-index: 25;
+    display: flex;
+    gap: 10px;
+}
+
+.control-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+    transform: scale(1.05);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+}
+
+.control-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
