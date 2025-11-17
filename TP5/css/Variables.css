@@ -1,0 +1,91 @@
+/* ============================================
+   VARIABLES CSS - SPACE FLYER
+   Definición de colores, tamaños y configuraciones
+   ============================================ */
+
+:root {
+    /* Colores principales - Tema espacial */
+    --color-space-dark: #0a0e27;
+    --color-space-deep: #1a1a3e;
+    --color-space-blue: #2d4663;
+    --color-nebula-purple: #6b2d5c;
+    --color-nebula-pink: #e83e8c;
+    --color-star-yellow: #ffd700;
+    --color-star-white: #ffffff;
+    --color-cyan-glow: #00ffff;
+    --color-purple-glow: #ba55d3;
+    
+    /* Colores UI */
+    --color-primary: #4a90e2;
+    --color-primary-hover: #357abd;
+    --color-secondary: #6c757d;
+    --color-secondary-hover: #5a6268;
+    --color-success: #28a745;
+    --color-danger: #dc3545;
+    --color-warning: #ffc107;
+    --color-text: #ffffff;
+    --color-text-shadow: rgba(0, 0, 0, 0.8);
+    
+    /* Dimensiones del juego */
+    --game-width: 100vw;
+    --game-height: 100vh;
+    --canvas-max-width: 1920px;
+    --canvas-max-height: 1080px;
+    
+    /* Dimensiones de la nave */
+    --ship-width: 60px;
+    --ship-height: 40px;
+    
+    /* Dimensiones de obstáculos */
+    --obstacle-width: 80px;
+    --obstacle-min-gap: 180px;
+    --obstacle-max-gap: 240px;
+    
+    /* Velocidades */
+    --game-speed: 3;
+    --parallax-speed-far: 0.3;
+    --parallax-speed-mid: 0.6;
+    --parallax-speed-near: 1.2;
+    
+    /* Física */
+    --gravity: 0.5;
+    --jump-force: -10;
+    
+    /* Animaciones */
+    --animation-duration-fast: 0.3s;
+    --animation-duration-normal: 0.6s;
+    --animation-duration-slow: 1s;
+    
+    /* Fuentes */
+    --font-primary: 'Courier New', monospace;
+    --font-title-size: 4rem;
+    --font-subtitle-size: 1.5rem;
+    --font-text-size: 1rem;
+    
+    /* Z-indexes */
+    --z-parallax-far: 1;
+    --z-parallax-mid: 2;
+    --z-parallax-near: 3;
+    --z-canvas: 10;
+    --z-ui: 100;
+    --z-screen: 200;
+    
+    /* Sombras y efectos */
+    --shadow-glow: 0 0 20px rgba(74, 144, 226, 0.8);
+    --shadow-text: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    --shadow-button: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-primary);
+    overflow: hidden;
+    background: var(--color-space-dark);
+    color: var(--color-text);
+}
