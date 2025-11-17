@@ -1,0 +1,80 @@
+/* Estilos generales del cuerpo y del juego */
+body {
+    margin: 0;
+    background: #000;
+    overflow: hidden; /* Evita barras de scroll */
+}
+
+#game-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #70c5ce; /* Color cielo */
+    position: relative;
+    overflow: hidden; /* Oculta elementos que salen del contenedor */
+}
+
+/* Estilos del Pájaro */
+#bird {
+    width: 80px;  /* Ajustado para un mejor hitbox */
+    height: 80px; /* Ajustado para un mejor hitbox */
+    background-size: cover;
+    position: absolute; /* Usamos absolute para que 'top' y 'left' funcionen */
+    /* La posición inicial se establece desde JS */
+}
+
+/* Animación de parpadeo para invencibilidad */
+.invencible-blink {
+    animation: blink 0.2s linear infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+/* Estilos de los Enemigos y Caños (creados dinámicamente) */
+.enemigo {
+    width: 70px;
+    height: 70px;
+    background-size: cover;
+    position: absolute;
+}
+
+.cano {
+    width: 100px;
+    height: 900px; /* Alto del sprite del caño Si cambias el CSS a 600px, solo necesitas cambiar en el JS */
+    background-size: 100% 100%;
+    position: absolute;
+}
+
+.cano-superior {
+    /* Rota el caño superior para que apunte hacia abajo */
+    transform: rotate(180deg);
+}
+
+/* Pantalla de Game Over */
+#game-over-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#restart-button {
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    border: 2px solid white;
+    background-color: #333;
+    color: white;
+    border-radius: 10px;
+}

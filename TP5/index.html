@@ -3,31 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego Scroller</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Juego del Pájaro</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="game-container">
-        <!-- Capas de Parallax -->
-        <div class="layer layer-10"></div>
-        <div class="layer layer-9"></div>
-        <div class="layer layer-8"></div>
-        <div class="layer layer-7"></div>
-        <div class="layer layer-6"></div>
-        <div class="layer layer-5"></div>
-        <div class="layer layer-4"></div>
-        <div class="layer layer-3"></div>
-        <div class="layer layer-2"></div>
-        <div class="layer layer-1"></div>
-
-        <!-- Elementos del juego -->
+        <!-- El pájaro del jugador -->
         <div id="bird"></div>
-        <div id="score">Puntaje: 0</div>
-         <div id="controls">
-            <button id="play-btn" class="control-btn">▶ Play</button>
-            <button id="pause-btn" class="control-btn">⏸ Pausa</button>
+
+        <!-- Pantalla de Game Over (inicialmente oculta) -->
+        <div id="game-over-screen" style="display: none;">
+            <h1>Juego Terminado</h1>
+            <button id="restart-button">Reiniciar</button>
         </div>
     </div>
-    <script src="js/game.js"></script>
+    
+    <!-- El script del juego se carga al final -->
+    <!-- <script src="js/game1.js"></script> -->
+    <script type="module" src="js/game1.js"></script>
 </body>
 </html>
