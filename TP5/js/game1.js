@@ -21,7 +21,7 @@ function startGame() {
         paresCanos.forEach(pc => pc.destruir());
         enemigos = [];
         paresCanos = [];
-        pajaro = new Pajaro(100, window.innerHeight / 2, gameContainer);
+        pajaro = new Pajaro(100, window.innerHeight / 2, gameContainer, gameOver);
         isGameOver = false;
         document.getElementById('game-over-screen').style.display = 'none';
         gameLoop();
@@ -149,7 +149,7 @@ function startGame() {
     paresCanos = [];
     
     // Crear el pájaro
-    pajaro = new Pajaro(100, window.innerHeight / 2, gameContainer);
+    pajaro = new Pajaro(100, window.innerHeight / 2, gameContainer, gameOver);
     
     // Reiniciar estado
     isGameOver = false;

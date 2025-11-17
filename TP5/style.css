@@ -8,7 +8,7 @@ body {
 #game-container {
     width: 100vw;
     height: 100vh;
-    background-color: #70c5ce; /* Color cielo */
+    /* background-color: #70c5ce; Color cielo */
     position: relative;
     overflow: hidden; /* Oculta elementos que salen del contenedor */
 }
@@ -20,6 +20,8 @@ body {
     background-size: cover;
     position: absolute; /* Usamos absolute para que 'top' y 'left' funcionen */
     /* La posición inicial se establece desde JS */
+    animation: bird-fly 0.3s steps(3) infinite;
+    position: absolute;
 }
 
 /* Animación de parpadeo para invencibilidad */
@@ -27,9 +29,9 @@ body {
     animation: blink 0.2s linear infinite;
 }
 
-@keyframes blink {
-    50% { opacity: 0.4; }
-    100% { opacity: 1; }
+@keyframes bird-fly {
+    0% { background-position-x: 0; }
+    100% { background-position-x: -240px; }
 }
 
 /* Estilos de los Enemigos y Caños (creados dinámicamente) */
