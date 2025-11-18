@@ -173,11 +173,14 @@ class GameModel {
         if (this.player.y > this.canvasHeight - this.player.height) {
             this.player.y = this.canvasHeight - this.player.height;
             this.player.velocity = 0;
-            this.takeDamage();
+            // Solo daño si no está ya invulnerable (evita daño repetitivo en suelo)
+            if (!this.player.invulnerable && this.activeEffects.shield === 0) {
+                this.takeDamage();
+            }
         }
         
-        // Update invulnerabilidad
-        if (this.player.invulnerable) {
+        // Update invulnerabilidad (solo si no es por escudo)
+        if (this.player.invulnerable && this.activeEffects.shield === 0) {
             this.player.invulnerableTimer--;
             if (this.player.invulnerableTimer <= 0) {
                 this.player.invulnerable = false;
@@ -492,9 +495,12 @@ class GameModel {
                 this.player.width - 10,
                 this.player.height - 10
             )) {
+                const wasInvulnerable = this.player.invulnerable || this.activeEffects.shield > 0;
                 this.takeDamage();
-                this.createExplosionParticles(playerCenterX, playerCenterY);
-                return;
+                if (!wasInvulnerable) {
+                    this.createExplosionParticles(playerCenterX, playerCenterY);
+                    return; // Solo salir si recibió daño real
+                }
             }
         }
         
@@ -536,6 +542,8 @@ class GameModel {
         for (let i = this.enemies.length - 1; i >= 0; i--) {
             const enemy = this.enemies[i];
             if (enemy.checkCollision(playerCenterX, playerCenterY, playerCollisionRadius)) {
+                const wasInvulnerable = this.player.invulnerable || this.activeEffects.shield > 0;
+                
                 // Jugador recibe daño
                 this.takeDamage();
                 
@@ -561,7 +569,10 @@ class GameModel {
                     }
                 }
                 
-                return;
+                // Solo salir si recibió daño real (no invulnerable)
+                if (!wasInvulnerable) {
+                    return;
+                }
             }
         }
     }
@@ -570,14 +581,19 @@ class GameModel {
      * Recibe daño
      */
     takeDamage() {
-        if (this.player.invulnerable || this.activeEffects.shield > 0) return;
+        if (this.player.invulnerable || this.activeEffects.shield > 0) {
+            console.log('🛡️ Daño bloqueado - Invulnerable:', this.player.invulnerable, 'Shield:', this.activeEffects.shield);
+            return;
+        }
         
         this.lives--;
+        console.log('💔 Daño recibido! Vidas restantes:', this.lives);
         this.player.invulnerable = true;
         this.player.invulnerableTimer = 60; // 1 segundo de invulnerabilidad
         if (window.SoundManager) SoundManager.play('damage');
         
         if (this.lives <= 0) {
+            console.log('💀 GAME OVER - Sin vidas');
             this.gameOver();
         }
     }
@@ -616,7 +632,12 @@ class GameModel {
     updateActiveEffects() {
         if (this.activeEffects.shield > 0) {
             this.activeEffects.shield--;
-            if (this.activeEffects.shield === 0) this.player.invulnerable = false;
+            if (this.activeEffects.shield === 0) {
+                // Solo desactivar invulnerabilidad si no hay timer de daño activo
+                if (this.player.invulnerableTimer <= 0) {
+                    this.player.invulnerable = false;
+                }
+            }
         }
         if (this.activeEffects.slow > 0) {
             this.activeEffects.slow--;
