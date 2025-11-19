@@ -51,6 +51,9 @@ class Sprite {
 
 // Sprite placeholder base64 (4 cuadros 32x32) - colores simples
 window.PlayerSprite = new Sprite(
-    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAgCAYAAABU1PscAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAABh0RVh0Q3JlYXRpb24gVGltZQAwOS8xNy8yNT8q4zYAAAB4SURBVGje7ZbBCcAgDEW7/0c7sFzJImM1AS0kQJqR8WKmQ7h4i3fd4+Y4gKjk9CVhLQnYvAPlUAswC9y2AY40k1qZf0K+agjm18AG4QzteWwSXzO8A+0wAX3L8IOm8x5nUadZsLe1ah1vA6MdZN9rZYR12zkJE6I0QJqR8WPovhU8QgZepVsAAAAASUVORK5CYII=',
-    32, 32, 4, 8
+    'assets/img/bird_sprite.png', // Ruta relativa al index.html
+    130, // ancho de cada frame del pájaro
+    130, // alto de cada frame del pájaro
+    3,  // cantidad de frames del sprite
+    8  // fps de animación (ajusta si quieres más rápido/lento)
 );
