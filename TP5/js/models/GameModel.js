@@ -202,7 +202,7 @@ class GameModel {
         this.player.velocity = this.player.jumpForce;
         this.player.isFlapping = true;
         this.createThrustParticles();
-        if (window.SoundManager) SoundManager.play('jump');
+        if (window.SoundManager) window.SoundManager.play('jump');
     }
     
     /**
@@ -533,7 +533,7 @@ class GameModel {
             if (p.checkCollision(playerCenterX, playerCenterY, playerCollisionRadius)) {
                 this.applyPowerUpEffect(p.kind);
                 this.createCollectParticles(p.x, p.getDisplayY(), p.kind === 'shield' ? '#00ffff' : '#ffd700');
-                if (window.SoundManager) SoundManager.play('collect');
+                if (window.SoundManager) window.SoundManager.play('collect');
                 this.powerUps.splice(i,1);
             }
         }
@@ -552,7 +552,7 @@ class GameModel {
                 
                 const center = enemy.getCenter();
                 this.createExplosionParticles(center.x, center.y);
-                if (window.SoundManager) SoundManager.play('explosion');
+                if (window.SoundManager) window.SoundManager.play('explosion');
                 
                 if (destroyed) {
                     // Dar puntos según tipo de enemigo
@@ -581,6 +581,9 @@ class GameModel {
      * Recibe daño
      */
     takeDamage() {
+        //evitar dano si el juego ya terminó
+
+        if(this.gameState === 'gameover') return;
         if (this.player.invulnerable || this.activeEffects.shield > 0) {
             console.log('🛡️ Daño bloqueado - Invulnerable:', this.player.invulnerable, 'Shield:', this.activeEffects.shield);
             return;
@@ -590,7 +593,7 @@ class GameModel {
         console.log('💔 Daño recibido! Vidas restantes:', this.lives);
         this.player.invulnerable = true;
         this.player.invulnerableTimer = 60; // 1 segundo de invulnerabilidad
-        if (window.SoundManager) SoundManager.play('damage');
+        if (window.SoundManager) window.SoundManager.play('damage');
         
         if (this.lives <= 0) {
             console.log('💀 GAME OVER - Sin vidas');
@@ -665,7 +668,7 @@ class GameModel {
         this.gameState = 'gameover';
         this.createExplosionParticles(this.player.x + this.player.width / 2, 
                                      this.player.y + this.player.height / 2);
-        if (window.SoundManager) SoundManager.play('explosion');
+        if (window.SoundManager) window.SoundManager.play('explosion');
         
         // Guardar mejor puntuación
         if (this.score > this.bestScore) {

@@ -86,7 +86,7 @@ class GameController {
         this.hideAllScreens();
         this.elements.pauseToggle.style.display = 'block';
         this.inputActive = true;
-        if (window.SoundManager) SoundManager.startMusic();
+        if (window.SoundManager) window.SoundManager.startMusic();
     }
     
     /**
@@ -123,7 +123,7 @@ class GameController {
         this.showScreen('start');
         this.elements.pauseToggle.style.display = 'none';
         this.inputActive = false;
-        if (window.SoundManager) SoundManager.stopMusic();
+        if (window.SoundManager) window.SoundManager.stopMusic();
     }
     
     /**
@@ -217,7 +217,7 @@ class GameController {
     showGameOver() {
         this.inputActive = false;
         this.elements.pauseToggle.style.display = 'none';
-        if (window.SoundManager) SoundManager.fadeMusic(0, 500);
+        if (window.SoundManager) window.SoundManager.fadeMusic(0, 500);
         
         // Actualizar estadísticas
         this.elements.finalScore.textContent = this.model.score;

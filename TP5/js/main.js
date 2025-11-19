@@ -70,7 +70,7 @@ function gameLoop(currentTime) {
     render();
     // Parallax dinámico
     if (window.ParallaxManager && gameModel) {
-        ParallaxManager.update(gameModel.gameSpeed * (gameModel.slowFactor || 1));
+        window.ParallaxManager.update(gameModel.gameSpeed * (gameModel.slowFactor || 1));
     }
     // Debug overlay
     updateDebugOverlay();
