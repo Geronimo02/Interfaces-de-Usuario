@@ -14,9 +14,9 @@
   100% {background-position-x: -1920px;}
 }
 
-.layer-9 { background-image: url("https://i.ibb.co/bzFmksL/09.png"); animation: scroll 40s infinite linear; z-index: 1; }
-.layer-8 { background-image: url("https://i.ibb.co/JRKpSzr/08.png"); animation: scroll 35s infinite linear; z-index: 2; }
-.layer-7 { background-image: url("https://i.ibb.co/42hLhX0/07.png"); animation: scroll 30s infinite linear; z-index: 3; }
+.layer-9 { background-image: url("/Interfaces-de-Usuario/TP5/assets/img/fondo.png"); animation: scroll 40s infinite linear; z-index: 1; }
+.layer-8 { background-image: url("/Interfaces-de-Usuario/TP5/assets/img/nebulosa.png"); animation: scroll 35s infinite linear; z-index: 2; }
+.layer-7 { background-image: url("/Interfaces-de-Usuario/TP5/assets/img/astronauta.png"); animation: scroll 30s infinite linear; z-index: 3; }
 .layer-6 { background-image: url("https://i.ibb.co/6Bjg1yt/06.png"); animation: scroll 25s infinite linear; z-index: 4; }
 .layer-5 { background-image: url("https://i.ibb.co/4jwk7vQ/05.png"); animation: scroll 20s infinite linear; z-index: 5; }
 .layer-4 { background-image: url("https://i.ibb.co/6gJhWZb/04.png"); animation: scroll 15s infinite linear; z-index: 6; }
