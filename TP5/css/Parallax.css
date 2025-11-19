@@ -1,0 +1,25 @@
+/* Parallax con imágenes externas */
+.layer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: repeat-x;
+  background-size: cover;
+  pointer-events: none;
+}
+
+@keyframes scroll {
+  0% {background-position-x: 0px;}
+  100% {background-position-x: -1920px;}
+}
+
+.layer-9 { background-image: url("https://i.ibb.co/bzFmksL/09.png"); animation: scroll 40s infinite linear; z-index: 1; }
+.layer-8 { background-image: url("https://i.ibb.co/JRKpSzr/08.png"); animation: scroll 35s infinite linear; z-index: 2; }
+.layer-7 { background-image: url("https://i.ibb.co/42hLhX0/07.png"); animation: scroll 30s infinite linear; z-index: 3; }
+.layer-6 { background-image: url("https://i.ibb.co/6Bjg1yt/06.png"); animation: scroll 25s infinite linear; z-index: 4; }
+.layer-5 { background-image: url("https://i.ibb.co/4jwk7vQ/05.png"); animation: scroll 20s infinite linear; z-index: 5; }
+.layer-4 { background-image: url("https://i.ibb.co/6gJhWZb/04.png"); animation: scroll 15s infinite linear; z-index: 6; }
+.layer-3 { background-image: url("https://i.ibb.co/2j1yq16/03.png"); animation: scroll 12s infinite linear; z-index: 7; }
+.layer-2 { background-image: url("https://i.ibb.co/0Kg6mnL/02.png"); animation: scroll 11s infinite linear; z-index: 8; }
+.layer-1 { background-image: url("https://i.ibb.co/Qc5CJvf/01.png"); animation: scroll 8s infinite linear; z-index: 9; }

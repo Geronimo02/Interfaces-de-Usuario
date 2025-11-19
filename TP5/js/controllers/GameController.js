@@ -227,7 +227,7 @@ class GameController {
         // Mostrar pantalla después de un pequeño delay
         setTimeout(() => {
             this.showScreen('gameover');
-        }, 500);
+        }, 600);
     }
     
     /**
@@ -263,7 +263,7 @@ class GameController {
      */
     toggleMute() {
         if (!window.SoundManager) return;
-        const muted = SoundManager.toggleMute();
+        const muted = window.SoundManager.toggleMute();
         this.elements.muteToggle.textContent = muted ? '🔇' : '🔊';
     }
 }
