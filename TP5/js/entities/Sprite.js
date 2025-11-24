@@ -28,11 +28,15 @@ class Sprite {
     }
 
     draw(ctx, x, y, width, height, rotation = 0) {
-        if (!this.loaded) return false;
+        if (!this.loaded) {
+            console.warn('⚠️ Sprite no cargado aún');
+            return false;
+        }
+        console.log('🎨 Dibujando sprite en:', x, y, 'tamaño:', width, height);
         ctx.save();
         ctx.translate(x + width/2, y + height/2);
-        // Rotar 90 grados para que mire a la derecha + rotación del juego
-        ctx.rotate((rotation + 90) * Math.PI/180);
+        // SIN rotación temporalmente para debug
+        ctx.rotate((rotation) * Math.PI/180);
         ctx.translate(-width/2, -height/2);
         ctx.drawImage(
             this.image,
@@ -168,35 +172,35 @@ class AnimatedMultiStateSprite {
     }
 }
 
-// Configuración del sprite del jugador con múltiples estados animados
-// Cada sprite tiene múltiples frames en horizontal
+// Configuración del sprite del jugador usando Turn_1.png (64x64, single frame)
+console.log('🎮 Inicializando PlayerSprite con Turn_1.png');
 window.PlayerSprite = new AnimatedMultiStateSprite({
     idle: {
-        src: 'assets/images/Move.png',
-        frameWidth: 64,    // Ancho de cada frame individual
-        frameHeight: 64,   // Alto de cada frame
-        frameCount: 4,     // Cantidad de frames en el spritesheet
-        fps: 10            // Velocidad de animación
-    },
-    thrust: {
-        src: 'assets/images/Boost.png',
+        src: 'assets/images/Turn_1.png',
         frameWidth: 64,
         frameHeight: 64,
-        frameCount: 4,
-        fps: 12
+        frameCount: 1,
+        fps: 1
+    },
+    thrust: {
+        src: 'assets/images/Turn_1.png',
+        frameWidth: 64,
+        frameHeight: 64,
+        frameCount: 1,
+        fps: 1
+    },
+    shield: {
+        src: 'assets/images/Turn_1.png',
+        frameWidth: 64,
+        frameHeight: 64,
+        frameCount: 1,
+        fps: 1
     },
     explosion: {
         src: 'assets/images/Destroyed.png',
         frameWidth: 64,
         frameHeight: 64,
-        frameCount: 8,     // La explosión probablemente tiene más frames
+        frameCount: 8,
         fps: 15
-    },
-    shield: {
-        src: 'assets/images/Evasion.png',
-        frameWidth: 64,
-        frameHeight: 64,
-        frameCount: 4,
-        fps: 10
     }
 });

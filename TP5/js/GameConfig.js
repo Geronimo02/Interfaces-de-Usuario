@@ -16,8 +16,8 @@ const GameConfig = {
     // ===== JUGADOR =====
     PLAYER: {
         X: 150,
-        WIDTH: 90, // Nave más grande
-        HEIGHT: 65,
+        WIDTH: 300, // Sprite ENORME para depuración
+        HEIGHT: 220,
         GRAVITY: 0.5,
         JUMP_FORCE: -10,
         ROTATION_SPEED: 2,

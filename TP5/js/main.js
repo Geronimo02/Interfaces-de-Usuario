@@ -27,6 +27,9 @@ function initGame() {
     gameView = new GameView('game-canvas');
     gameController = new GameController(gameModel, gameView);
     
+    // Cargar sprites de la nave
+    loadPlayerSprites();
+    
     console.log('✅ Modelo, Vista y Controlador inicializados');
     
     // Iniciar game loop
@@ -133,6 +136,53 @@ function restartGameLoop() {
     stopGameLoop();
     startGameLoop();
     console.log('▶️ Game loop reiniciado');
+}
+
+/**
+ * Carga todos los sprites de la nave
+ */
+function loadPlayerSprites() {
+    if (!gameModel || !gameModel.player) return;
+    
+    const playerSprites = {
+        normal: new Image(),
+        boost: new Image(),
+        move: new Image(),
+        turn1: new Image(),
+        turn2: new Image()
+    };
+    
+    let spritesLoaded = 0;
+    const totalSprites = Object.keys(playerSprites).length;
+    
+    function onSpriteLoad() {
+        spritesLoaded++;
+        if (spritesLoaded === totalSprites) {
+            gameModel.player.sprites = playerSprites;
+            gameModel.player.currentSprite = 'normal';
+            gameModel.player.sprite = {
+                img: playerSprites.normal,
+                frameWidth: 288,    // 1152px / 4 frames = 288px por frame
+                frameHeight: 192,   // Alto completo del sprite
+                currentFrame: 0,
+                totalFrames: 4,
+                animationSpeed: 0.05  // Mucho más lento
+            };
+            console.log('✅ Sprites de nave cargados correctamente');
+        }
+    }
+    
+    playerSprites.normal.onload = onSpriteLoad;
+    playerSprites.boost.onload = onSpriteLoad;
+    playerSprites.move.onload = onSpriteLoad;
+    playerSprites.turn1.onload = onSpriteLoad;
+    playerSprites.turn2.onload = onSpriteLoad;
+    
+    playerSprites.normal.src = 'assets/images/Move.png';
+    playerSprites.boost.src = 'assets/images/Boost.png';
+    playerSprites.move.src = 'assets/images/Move.png';
+    playerSprites.turn1.src = 'assets/images/Turn_1.png';
+    playerSprites.turn2.src = 'assets/images/Turn_2.png';
 }
 
 // Event listeners para cuando el DOM esté listo

@@ -196,6 +196,9 @@ class GameModel {
             }
         }
         
+        // Actualizar sprite del jugador
+        this.updatePlayerSprite();
+        
         // Reset flapping animation flag
         if (this.player.isFlapping) {
             setTimeout(() => { this.player.isFlapping = false; }, 300);
@@ -211,7 +214,54 @@ class GameModel {
         this.player.velocity = this.player.jumpForce;
         this.player.isFlapping = true;
         this.createThrustParticles();
+        this.updatePlayerSprite('boost');
         if (window.SoundManager) window.SoundManager.play('jump');
+    }
+
+    /**
+     * Actualiza el sprite del jugador según su estado
+     */
+    updatePlayerSprite(state = null) {
+        if (!this.player.sprites || !this.player.sprite) return;
+        
+        let newSprite = 'normal';
+        
+        // Si se especifica un estado, usarlo
+        if (state) {
+            newSprite = state;
+        } else {
+            // Auto-detectar estado basado en la nave
+            if (this.player.isFlapping) {
+                newSprite = 'boost';
+            } else if (this.player.velocity > 0) {
+                newSprite = 'move';
+            }
+        }
+        
+        // Cambiar sprite si es necesario
+        if (this.player.currentSprite !== newSprite && this.player.sprites[newSprite]) {
+            this.player.currentSprite = newSprite;
+            this.player.sprite.img = this.player.sprites[newSprite];
+            this.player.sprite.currentFrame = 0; // Resetear animación
+            
+            // Configurar animación según el tipo de sprite
+            this.player.sprite.frameWidth = 288;
+            this.player.sprite.frameHeight = 192;
+            
+            if (newSprite === 'boost') {
+                // Boost: animación más rápida para efecto de propulsores
+                this.player.sprite.totalFrames = 4;
+                this.player.sprite.animationSpeed = 0.12;
+            } else if (newSprite === 'turn1' || newSprite === 'turn2') {
+                // Giros: solo usar el primer frame (estático)
+                this.player.sprite.totalFrames = 1;
+                this.player.sprite.animationSpeed = 0;
+            } else {
+                // Normal/Move: animación lenta
+                this.player.sprite.totalFrames = 4;
+                this.player.sprite.animationSpeed = 0.05;
+            }
+        }
     }
     
     /**
