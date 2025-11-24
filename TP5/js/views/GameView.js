@@ -70,6 +70,17 @@ class GameView {
         // Intentar dibujar sprite del jugador si cargó
         let drawnSprite = false;
         if (window.PlayerSprite && window.PlayerSprite.loaded) {
+            // Determinar estado del sprite
+            if (player.explosionTimer > 0 || model.gameState === 'gameover') {
+                PlayerSprite.setState('explosion');
+            } else if (model.activeEffects && model.activeEffects.shield > 0) {
+                PlayerSprite.setState('shield');
+            } else if (player.isFlapping) {
+                PlayerSprite.setState('thrust');
+            } else {
+                PlayerSprite.setState('idle');
+            }
+            
             drawnSprite = window.PlayerSprite.draw(
                 this.ctx,
                 -player.width / 2,

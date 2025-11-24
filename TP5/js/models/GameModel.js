@@ -29,7 +29,8 @@ class GameModel {
             rotation: 0,
             isFlapping: false,
             invulnerable: false,
-            invulnerableTimer: 0
+            invulnerableTimer: 0,
+            explosionTimer: 0
         };
         
         // Sistema de puntuación
@@ -184,6 +185,14 @@ class GameModel {
             this.player.invulnerableTimer--;
             if (this.player.invulnerableTimer <= 0) {
                 this.player.invulnerable = false;
+            }
+        }
+        
+        // Update explosionTimer - cuando llega a 0, mostrar pantalla de game over
+        if (this.player.explosionTimer > 0) {
+            this.player.explosionTimer--;
+            if (this.player.explosionTimer === 0) {
+                this.finalizeGameOver();
             }
         }
         
@@ -665,10 +674,17 @@ class GameModel {
      * Game Over
      */
     gameOver() {
+        // Iniciar explosión sin cambiar estado todavía
+        if (this.player.explosionTimer === 0) {
+            this.player.explosionTimer = this.config.PLAYER.EXPLOSION_DELAY || 90;
+            this.createExplosionParticles(this.player.x + this.player.width / 2, 
+                                         this.player.y + this.player.height / 2);
+            if (window.SoundManager) window.SoundManager.play('explosion');
+        }
+    }
+    
+    finalizeGameOver() {
         this.gameState = 'gameover';
-        this.createExplosionParticles(this.player.x + this.player.width / 2, 
-                                     this.player.y + this.player.height / 2);
-        if (window.SoundManager) window.SoundManager.play('explosion');
         
         // Guardar mejor puntuación
         if (this.score > this.bestScore) {

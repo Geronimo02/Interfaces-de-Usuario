@@ -16,14 +16,15 @@ const GameConfig = {
     // ===== JUGADOR =====
     PLAYER: {
         X: 150,
-        WIDTH: 55, // Ligeramente reducido para mejor maniobra
-        HEIGHT: 38,
+        WIDTH: 90, // Nave más grande
+        HEIGHT: 65,
         GRAVITY: 0.5,
         JUMP_FORCE: -10,
         ROTATION_SPEED: 2,
         MAX_ROTATION: 30,
         INVULNERABLE_DURATION: 60, // frames
-        COLLISION_RADIUS: 18 // Radio efectivo de colisión más justo
+        COLLISION_RADIUS: 28, // Radio de colisión ajustado al nuevo tamaño
+        EXPLOSION_DELAY: 90 // frames antes de mostrar game over (1.5 segundos a 60fps)
     },
     
     // ===== OBSTÁCULOS (TUBOS) =====
