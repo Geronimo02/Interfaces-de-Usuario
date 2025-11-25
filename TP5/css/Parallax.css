@@ -1,11 +1,14 @@
 /* Parallax con imágenes externas - contenido dentro de game-fullwidth */
 .game-fullwidth .layer {
   position: absolute;
-  top: 0; left: 0;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 1200px;
   height: 600px;
   background-repeat: repeat-x;
   background-size: auto 100%;
+  background-position: center;
   pointer-events: none;
   overflow: hidden;
   /* Asegurar que no se salga del contenedor */
