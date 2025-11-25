@@ -790,17 +790,17 @@ export default class PegView {
 
     _roundRectPath(ctx, x, y, w, h, r){
         // crea la ruta de un rectángulo redondeado (no la rellena ni la dibuja)
-        if (r <= 0) {
-            ctx.rect(x, y, w, h);
-            return;
-        }
-        const radius = Math.min(r, w/2, h/2);
-        ctx.moveTo(x + radius, y);
-        ctx.arcTo(x + w, y, x + w, y + h, radius);
-        ctx.arcTo(x + w, y + h, x, y + h, radius);
-        ctx.arcTo(x, y + h, x, y, radius);
-        ctx.arcTo(x, y, x + w, y, radius);
-        ctx.closePath();
+        // if (r <= 0) {
+        //     ctx.rect(x, y, w, h);
+        //     return;
+        // }
+        // const radius = Math.min(r, w/2, h/2);
+        // ctx.moveTo(x + radius, y);
+        // ctx.arcTo(x + w, y, x + w, y + h, radius);
+        // ctx.arcTo(x + w, y + h, x, y + h, radius);
+        // ctx.arcTo(x, y + h, x, y, radius);
+        // ctx.arcTo(x, y, x + w, y, radius);
+        // ctx.closePath();
     }
 
     _hitHudButton(x,y){

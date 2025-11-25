@@ -29,8 +29,8 @@ const GameConfig = {
     // ===== OBSTÁCULOS (TUBOS) =====
     OBSTACLES: {
         WIDTH: 100,
-        MIN_GAP: 200,
-        MAX_GAP: 260,
+        MIN_GAP: 320,
+        MAX_GAP: 420,
         SPAWN_INTERVAL: 120, // frames
         COLOR_TOP: '#2ecc71',
         COLOR_BOTTOM: '#27ae60',

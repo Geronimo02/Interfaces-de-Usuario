@@ -239,10 +239,17 @@ class GameModel {
             this.obstacleSpawnTimer = 0;
             
             const obstacleConfig = this.config.OBSTACLES;
-            // Escalado de dificultad: reduce gap máximo con el tiempo
-            const difficultyFactor = Math.min(1, this.frameCount / (60 * 180)); // ~180s para max
-            const dynamicMinGap = obstacleConfig.MIN_GAP - difficultyFactor * 30; // reduce hasta 30px
-            const dynamicMaxGap = obstacleConfig.MAX_GAP - difficultyFactor * 60; // reduce hasta 60px
+           
+            const difficultyFactor = Math.min(1, this.frameCount / (60 * 90)); 
+
+            
+            const reductionAmount = 150;
+
+            const dynamicMinGap = obstacleConfig.MIN_GAP - (difficultyFactor * reductionAmount);
+            const dynamicMaxGap = obstacleConfig.MAX_GAP - (difficultyFactor * reductionAmount);
+            
+            // ------------------------------------------------
+            
             const gap = dynamicMinGap + Math.random() * (dynamicMaxGap - dynamicMinGap);
             const topHeight = 50 + Math.random() * (this.canvasHeight - gap - 100);
             

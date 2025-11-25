@@ -1,4 +1,4 @@
-import PegView from './views/PegView.js';
+// import PegView from './views/PegView.js';
 import PegController from './controllers/PegController.js';
 
 window.addEventListener('DOMContentLoaded', ()=>{
