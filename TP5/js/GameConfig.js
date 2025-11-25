@@ -7,10 +7,10 @@
 const GameConfig = {
     // ===== CANVAS =====
     CANVAS: {
-        WIDTH: 1280,
-        HEIGHT: 720,
+        WIDTH: 1920,
+        HEIGHT: 520,      // <--- CAMBIAR A 520 (antes era 720 o 1080)
         MAX_WIDTH: 1920,
-        MAX_HEIGHT: 1080
+        MAX_HEIGHT: 520
     },
     
     // ===== JUGADOR =====
@@ -92,7 +92,7 @@ const GameConfig = {
         
         SPAWN_INTERVAL: 180, // frames entre spawns
         MIN_Y: 50,
-        MAX_Y: 670
+        MAX_Y: 450
     },
 
     // ===== POWER UPS =====

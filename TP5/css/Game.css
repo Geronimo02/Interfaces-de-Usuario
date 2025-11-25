@@ -6,15 +6,15 @@
 /* ===== CONTAINER PRINCIPAL ===== */
 #game-container {
     position: relative;
-    width: var(--game-width);
-    height: var(--game-height);
+    width: 100vw;
+    height: 520px;
     overflow: hidden;
-    background: radial-gradient(ellipse at center, var(--color-space-deep) 0%, var(--color-space-dark) 100%);
+    /* background: radial-gradient(ellipse at center, var(--color-space-deep) 0%, var(--color-space-dark) 100%); */
 }
 
 /* ===== PARALLAX SCROLLING (4 CAPAS) ===== */
 #parallax-container {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -108,14 +108,14 @@
 /* ===== CANVAS DEL JUEGO ===== */
 #game-canvas {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: var(--canvas-max-width);
-    max-height: var(--canvas-max-height);
-    z-index: var(--z-canvas);
+    top: 0;
+    left: 0;
+    width: 100%;       /* Cambiado de 100vw a 100% para respetar el contenedor */
+    height: 100%;      /* Cambiado de 1080px a 100% para ajustarse a los 520px del padre */
+    z-index: var(--z-canvas, 10);
     image-rendering: crisp-edges;
     image-rendering: pixelated;
+    object-fit: contain; /* Opcional: Ayuda a mantener la proporción interna */
 }
 
 /* ===== UI OVERLAY ===== */
@@ -193,7 +193,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 100%;
     display: none;
     flex-direction: column;
@@ -323,7 +323,7 @@
 
 /* Botón de pausa */
 #pause-toggle {
-    position: absolute;
+    /* position: absolute; */
     top: 20px;
     right: 20px;
     width: 50px;

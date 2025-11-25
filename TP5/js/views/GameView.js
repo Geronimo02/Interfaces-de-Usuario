@@ -22,8 +22,18 @@ class GameView {
      * Configura el tamaño del canvas
      */
     setupCanvas() {
-        this.canvas.width = this.config.CANVAS.WIDTH;
-        this.canvas.height = this.config.CANVAS.HEIGHT;
+        // 1. Obtenemos el contenedor padre (el div #game-container)
+        const container = this.canvas.parentElement;
+        
+        // 2. Ajustamos la resolución interna del canvas al tamaño real del contenedor
+        this.canvas.width = container.clientWidth;
+        this.canvas.height = container.clientHeight; // Esto tomará los 520px automáticamente
+
+        // Opcional: Si el juego se ve borroso en pantallas retina/móviles, descomenta esto:
+        // const dpr = window.devicePixelRatio || 1;
+        // this.canvas.width = container.clientWidth * dpr;
+        // this.canvas.height = container.clientHeight * dpr;
+        // this.ctx.scale(dpr, dpr);
     }
     
     /**
