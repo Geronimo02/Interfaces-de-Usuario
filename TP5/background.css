@@ -1,0 +1,34 @@
+/* Parallax layers */
+@keyframes scroll {
+    0% {background-position-x: 0px;}
+    100% {background-position-x: -1920px;}
+}
+
+.layer {
+    min-height: 500px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-repeat: repeat-x; 
+    background-size: cover;
+}
+.layer-1  { z-index: -1; background-image: url(assets/layes/asteroid-2.png); animation: scroll 10s infinite linear; }
+.layer-2  { z-index: -2; background-image: url(assets/layes/asteroid-1.png); animation: scroll 12s infinite linear; }
+.layer-3  { z-index: -3; background-image: url(assets/layes/prop-planet-small.png); animation: scroll 15s infinite linear; }
+
+.layer-4  { z-index: -4; background-image: url(assets/layes/prop-planet-big.png); animation: scroll 20s infinite linear; }
+.layer-5  { z-index: -5; background-image: url(assets/layes/blue-stars.png); animation: scroll 25s infinite linear; }
+
+.layer-6  { z-index: -6; background-image: url(assets/layes/blue-with-stars.png); animation: scroll 30s infinite linear; }
+.layer-7  { z-index: -7; background-image: url(blue-back.png); animation: scroll 35s infinite linear; }
+
+#game-container {
+    position: relative;
+    z-index: 100;
+    width: 800px;
+    height: 600px;
+    /* Sin background-color para que se vea el parallax */
+    overflow: hidden;
+}

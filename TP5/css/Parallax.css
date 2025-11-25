@@ -1,0 +1,22 @@
+/* Parallax con imágenes externas - contenido dentro de game-fullwidth */
+.game-fullwidth .layer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 1200px;
+  height: 600px;
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  pointer-events: none;
+  overflow: hidden;
+  /* Asegurar que no se salga del contenedor */
+  clip: rect(0, 1200px, 600px, 0);
+}
+
+@keyframes scroll {
+  0% {background-position-x: 0px;}
+  100% {background-position-x: -1920px;}
+}
+
+.game-fullwidth .layer-9 { background-image: url("/Interfaces-de-Usuario/TP5/assets/img/fondo.png"); animation: scroll 40s infinite linear; z-index: -9; }
+.game-fullwidth .layer-8 { background-image: url("/Interfaces-de-Usuario/TP5/assets/img/nebulosa.png"); animation: scroll 35s infinite linear; z-index: -8; }
+.game-fullwidth .layer-7 { background-image: url("/Interfaces-de-Usuario/TP5/assets/img/astronauta.png"); animation: scroll 30s infinite linear; z-index: -7; }

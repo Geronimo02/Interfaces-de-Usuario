@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Flyer - Flappy Bird Espacial</title>
+    <link rel="stylesheet" href="css/Variables.css">
+    <link rel="stylesheet" href="css/Game.css">
+    <link rel="stylesheet" href="css/Parallax.css">
+</head>
+
+<body>
+    <div id="game-container">
+        <!-- Parallax Layers (4 capas) -->
+        <!-- <div id="parallax-container"> -->
+        <!-- <div class="parallax-layer" id="stars-far"></div>
+            <div class="parallax-layer" id="stars-mid"></div>
+            <div class="parallax-layer" id="nebula"></div>
+            <div class="parallax-layer" id="stars-near"></div>
+            <div class="layer layer-10"></div>      -->
+
+        <!-- Parallax adicional de 10 capas -->
+        <div class="layer layer-9"></div>
+        <div class="layer layer-8"></div>
+        <div class="layer layer-7"></div>
+        <!-- <div class="layer layer-6"></div>
+            <div class="layer layer-5"></div>
+            <div class="layer layer-4"></div>
+            <div class="layer layer-3"></div>
+            <div class="layer layer-2"></div>
+            <div class="layer layer-1"></div>  -->
+    </div>
+
+    <!-- Canvas Principal del Juego -->
+    <canvas id="game-canvas"></canvas>
+
+    <!-- UI Overlay -->
+    <div id="game-ui">
+        <!-- Header con info del juego -->
+        <div id="game-header">
+            <div id="score-container">
+                <span class="label">Puntuación:</span>
+                <span id="score">0</span>
+            </div>
+            <div id="lives-container">
+                <span class="label">Vidas:</span>
+                <div id="lives">
+                    <span class="life-icon">💙</span>
+                    <span class="life-icon">💙</span>
+                    <span class="life-icon">💙</span>
+                </div>
+            </div>
+            <div id="timer-container">
+                <span class="label">Tiempo:</span>
+                <span id="timer">0:00</span>
+            </div>
+        </div>
+
+        <!-- Pantalla de inicio -->
+        <div id="start-screen" class="screen active">
+            <h1 class="game-title">🚀 SPACE FLYER 🚀</h1>
+            <p class="game-subtitle">Flappy Bird Espacial</p>
+            <div class="instructions">
+                <h2>Cómo Jugar</h2>
+                <p>🖱️ <strong>Click</strong> o <strong>Espacio</strong> para impulsar la nave</p>
+                <p>⭐ Recoge estrellas (+5pts) dentro de los tubos</p>
+                <p>💎 Recoge gemas (+20pts + vida) dentro de los tubos</p>
+                <p>� Evita los tubos espaciales</p>
+                <p>👾 Cuidado con los enemigos: Drones, Meteoros y Aliens</p>
+                <p>💥 Colisionar con enemigos te quita vida pero los destruyes</p>
+                <p>⏰ Sobrevive el mayor tiempo posible</p>
+            </div>
+            <button id="start-button" class="game-button">COMENZAR MISIÓN</button>
+        </div>
+
+        <!-- Pantalla de pausa -->
+        <div id="pause-screen" class="screen">
+            <h1>⏸️ PAUSA</h1>
+            <button id="resume-button" class="game-button">CONTINUAR</button>
+            <button id="restart-button-pause" class="game-button secondary">REINICIAR</button>
+        </div>
+
+        <!-- Pantalla de Game Over -->
+        <div id="gameover-screen" class="screen">
+            <h1 class="gameover-title">💥 MISIÓN FALLIDA 💥</h1>
+            <div class="stats">
+                <p>Puntuación Final: <span id="final-score">0</span></p>
+                <p>Tiempo Sobrevivido: <span id="final-time">0:00</span></p>
+                <p>Mejor Puntuación: <span id="best-score">0</span></p>
+            </div>
+            <button id="restart-button" class="game-button">REINTENTAR MISIÓN</button>
+            <button id="menu-button" class="game-button secondary">MENÚ PRINCIPAL</button>
+        </div>
+    </div>
+
+    <!-- Botones flotantes -->
+    <div id="floating-buttons">
+        <button id="pause-toggle" class="icon-button" title="Pausa">⏸️</button>
+        <button id="mute-toggle" class="icon-button" title="Sonido On/Off">🔊</button>
+    </div>
+    <!-- Overlay debug (FPS / entidades) -->
+    <div id="debug-overlay" style="display:none;"></div>
+    </div>
+
+    <!-- Scripts Core Config -->
+    <script src="js/GameConfig.js"></script>
+    <!-- Entidades -->
+    <script src="js/entities/Particle.js"></script>
+    <script src="js/entities/Obstacle.js"></script>
+    <script src="js/entities/Star.js"></script>
+    <script src="js/entities/Gem.js"></script>
+    <script src="js/entities/Enemy.js"></script>
+    <!-- Nuevas entidades / sistemas -->
+    <script src="js/entities/PowerUp.js"></script>
+    <script src="js/entities/Sprite.js"></script>
+    <script src="js/SoundManager.js"></script>
+    <script src="js/ParallaxManager.js"></script>
+    <!-- MVC -->
+    <script src="js/models/GameModel.js"></script>
+    <script src="js/views/GameView.js"></script>
+    <script src="js/controllers/GameController.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
