@@ -228,53 +228,76 @@ class GameModel {
             }
         }
     }
+
+/**
+ * Genera nuevos obstáculos (tubos espaciales)
+ */
+spawnObstacles() {
+    this.obstacleSpawnTimer++;
     
-    /**
-     * Genera nuevos obstáculos (tubos espaciales)
-     */
-    spawnObstacles() {
-        this.obstacleSpawnTimer++;
+    if (this.obstacleSpawnTimer >= this.obstacleSpawnInterval) {
+        this.obstacleSpawnTimer = 0;
         
-        if (this.obstacleSpawnTimer >= this.obstacleSpawnInterval) {
-            this.obstacleSpawnTimer = 0;
-            
-            const obstacleConfig = this.config.OBSTACLES;
-            // Escalado de dificultad: reduce gap máximo con el tiempo
-            const difficultyFactor = Math.min(1, this.frameCount / (60 * 180)); // ~180s para max
-            const dynamicMinGap = obstacleConfig.MIN_GAP - difficultyFactor * 30; // reduce hasta 30px
-            const dynamicMaxGap = obstacleConfig.MAX_GAP - difficultyFactor * 60; // reduce hasta 60px
-            const gap = dynamicMinGap + Math.random() * (dynamicMaxGap - dynamicMinGap);
-            const topHeight = 50 + Math.random() * (this.canvasHeight - gap - 100);
-            
-            // Tubo superior (usando clase Obstacle)
-            const topPipe = new Obstacle(
-                this.canvasWidth,
-                0,
-                obstacleConfig.WIDTH,
-                topHeight,
-                'top'
-            );
-            
-            // Tubo inferior (usando clase Obstacle)
-            const bottomPipe = new Obstacle(
-                this.canvasWidth,
-                topHeight + gap,
-                obstacleConfig.WIDTH,
-                this.canvasHeight - (topHeight + gap),
-                'bottom'
-            );
-            
-            this.obstacles.push(topPipe, bottomPipe);
-            
-            // Guardar información del gap para spawn de collectibles
-            this.lastObstacleGap = {
-                x: this.canvasWidth,
-                topY: topHeight,
-                bottomY: topHeight + gap,
-                gap: gap
-            };
-        }
+        const obstacleConfig = this.config.OBSTACLES;
+        
+        // Calcular progreso basado en obstáculos generados (no pasados)
+        const obstaclesGenerated = this.obstacles.length / 2; // Dividir por 2 porque cada obstáculo son 2 tubos
+        
+        // Calcular gap progresivo usando interpolación lineal
+        let progressRatio = obstaclesGenerated / obstacleConfig.MAX_DIFFICULTY_OBSTACLES;
+        progressRatio = Math.min(1, progressRatio); // Limitar a 1 (100%)
+        
+        // Interpolación lineal entre INITIAL_GAP y MIN_GAP
+        const currentGap = obstacleConfig.INITIAL_GAP - 
+            (progressRatio * (obstacleConfig.INITIAL_GAP - obstacleConfig.MIN_GAP));
+        
+        // CAMBIO PRINCIPAL: Eliminar variación aleatoria que podía agrandar el gap
+        // Solo permitir variación que lo haga más pequeño o igual
+        const maxVariation = Math.min(15, currentGap - obstacleConfig.MIN_GAP);
+        const randomVariation = -Math.random() * maxVariation; // Solo valores negativos o cero
+        
+        const finalGap = Math.max(
+            obstacleConfig.MIN_GAP, 
+            currentGap + randomVariation
+        );
+        
+        // Calcular posición del tubo superior
+        const maxTopHeight = this.canvasHeight - finalGap - 50; // 50px margen inferior
+        const minTopHeight = 50; // 50px margen superior
+        const topHeight = minTopHeight + Math.random() * (maxTopHeight - minTopHeight);
+        
+        // Tubo superior
+        const topPipe = new Obstacle(
+            this.canvasWidth,
+            0,
+            obstacleConfig.WIDTH,
+            topHeight,
+            'top'
+        );
+        
+        // Tubo inferior
+        const bottomPipe = new Obstacle(
+            this.canvasWidth,
+            topHeight + finalGap,
+            obstacleConfig.WIDTH,
+            this.canvasHeight - (topHeight + finalGap),
+            'bottom'
+        );
+        
+        this.obstacles.push(topPipe, bottomPipe);
+        
+        // Guardar información del gap para spawn de collectibles
+        this.lastObstacleGap = {
+            x: this.canvasWidth,
+            topY: topHeight,
+            bottomY: topHeight + finalGap,
+            gap: finalGap
+        };
+        
+        // Debug - mostrar progresión
+        console.log(`Obstáculo ${Math.floor(obstaclesGenerated + 1)}: Gap ${Math.round(finalGap)}px (${Math.round(progressRatio * 100)}% dificultad)`);
     }
+}
     
     /**
      * Actualiza collectibles (usando clases Star y Gem)
@@ -639,7 +662,7 @@ class GameModel {
         this.powerUpSpawnTimer++;
         if (this.powerUpSpawnTimer < this.powerUpSpawnInterval) return;
         this.powerUpSpawnTimer = 0;
-        if (Math.random() < 0.5) {
+        if (Math.random() < 0.8) {
             const rand = Math.random();
             const shieldChance = this.config.POWERUPS.shield.SPAWN_CHANCE;
             const kind = rand < shieldChance ? 'shield' : 'slow';
