@@ -137,18 +137,21 @@ const GameConfig = {
     
     // ===== PARTÍCULAS =====
     PARTICLES: {
-        THRUST_COUNT: 5,
+        // Limites para evitar creación excesiva de partículas
+        MAX_PARTICLES: 200,
+
+        THRUST_COUNT: 3,
         THRUST_LIFE: 20,
         THRUST_SPEED_MIN: -3,
         THRUST_SPEED_MAX: -5,
         THRUST_COLORS: ['#00ffff', '#ffffff'],
-        
-        EXPLOSION_COUNT: 20,
+
+        EXPLOSION_COUNT: 12,
         EXPLOSION_LIFE: 30,
         EXPLOSION_SPEED: 3,
         EXPLOSION_COLORS: ['#ff6b00', '#ff0000', '#ffff00', '#ffffff'],
-        
-        COLLECT_COUNT: 10,
+
+        COLLECT_COUNT: 6,
         COLLECT_LIFE: 20,
         COLLECT_SPEED: 2
     },

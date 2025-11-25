@@ -412,7 +412,9 @@ class GameModel {
      */
     createThrustParticles() {
         const particleConfig = this.config.PARTICLES;
-        
+        // Evitar exceso de partículas
+        if (this.particles.length >= particleConfig.MAX_PARTICLES) return;
+
         for (let i = 0; i < particleConfig.THRUST_COUNT; i++) {
             const color = particleConfig.THRUST_COLORS[Math.floor(Math.random() * particleConfig.THRUST_COLORS.length)];
             
@@ -425,8 +427,8 @@ class GameModel {
                 color,
                 particleConfig.THRUST_LIFE
             );
-            
             this.particles.push(particle);
+            if (this.particles.length >= particleConfig.MAX_PARTICLES) break;
         }
     }
     
@@ -435,7 +437,9 @@ class GameModel {
      */
     createExplosionParticles(x, y) {
         const particleConfig = this.config.PARTICLES;
-        
+        // Evitar crear explosión si ya hay muchas partículas
+        if (this.particles.length >= particleConfig.MAX_PARTICLES) return;
+
         for (let i = 0; i < particleConfig.EXPLOSION_COUNT; i++) {
             const angle = (Math.PI * 2 * i) / particleConfig.EXPLOSION_COUNT;
             const color = particleConfig.EXPLOSION_COLORS[Math.floor(Math.random() * particleConfig.EXPLOSION_COLORS.length)];
@@ -451,6 +455,7 @@ class GameModel {
             );
             
             this.particles.push(particle);
+            if (this.particles.length >= particleConfig.MAX_PARTICLES) break;
         }
     }
     
@@ -459,7 +464,8 @@ class GameModel {
      */
     createCollectParticles(x, y, color) {
         const particleConfig = this.config.PARTICLES;
-        
+        if (this.particles.length >= particleConfig.MAX_PARTICLES) return;
+
         for (let i = 0; i < particleConfig.COLLECT_COUNT; i++) {
             const angle = (Math.PI * 2 * i) / particleConfig.COLLECT_COUNT;
             
@@ -474,6 +480,7 @@ class GameModel {
             );
             
             this.particles.push(particle);
+            if (this.particles.length >= particleConfig.MAX_PARTICLES) break;
         }
     }
     
