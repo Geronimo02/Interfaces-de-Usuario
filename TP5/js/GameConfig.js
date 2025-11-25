@@ -16,8 +16,8 @@ const GameConfig = {
     // ===== JUGADOR =====
     PLAYER: {
         X: 150,
-        WIDTH: 55, // Ligeramente reducido para mejor maniobra
-        HEIGHT: 38,
+        WIDTH: 90, // Ligeramente reducido para mejor maniobra
+        HEIGHT: 90,
         GRAVITY: 0.5,
         JUMP_FORCE: -10,
         ROTATION_SPEED: 2,
