@@ -27,7 +27,8 @@ export default class PegView {
         // evitar problemas CORS si la imagen se carga desde otra ruta
         try { this._bgImage.crossOrigin = 'anonymous'; } catch(e){}
         // ruta solicitada por el usuario (archivo compartido en TP2)
-        this._bgImage.src = '../TP2/assets/img/background_simpson.jpg';
+        this._bgImage.src = '../TP2/assets/img/background_simpson.jpg';        // ...en el método render, reemplaza...
+        // ...existing code...
         this._bgImage.onload = () => {
             // Cuando cargue, forzamos re-render
             if (this._renderOnUpdate) this._renderOnUpdate();
@@ -246,11 +247,11 @@ export default class PegView {
             try{
                 ctx.drawImage(this._bgImage, 0, 0, w, h);
             } catch(err){
-                ctx.fillStyle = '#0b1720';
+                ctx.fillStyle = '#ffffffff';
                 ctx.fillRect(0,0,w,h);
             }
         } else {
-            ctx.fillStyle = '#0b1720';
+            ctx.fillStyle = '#ffffffff';
             ctx.fillRect(0,0,w,h);
         }
 
@@ -502,62 +503,86 @@ export default class PegView {
     showMessage(text){ if (this.ui.messageEl) this.ui.messageEl.textContent = text; }
 
     _drawHud(ctx, originX, originY, w, h, model){
-        // Dibujar HUD dentro de los paneles laterales (si existen), con medidas relativas
+        // Estadísticas como botones, alineación mejorada y números más integrados
         ctx.save();
-        const pad = Math.max(10, Math.floor(this.cellSize * 0.12));
-        const labelFont = `${Math.max(12, Math.floor(this.cellSize * 0.18))}px Arial`;
-        const valueFont = `${Math.max(16, Math.floor(this.cellSize * 0.22))}px Arial`;
-        ctx.fillStyle = 'rgba(255,255,255,0.95)';
+        const pad = Math.max(18, Math.floor(this.cellSize * 0.18));
+        const btnW = Math.max(120, Math.floor(this.cellSize * 1.8));
+        const btnH = Math.max(38, Math.floor(this.cellSize * 0.38));
+        const spacing = Math.max(4, Math.floor(this.cellSize * 0.38));
+        const iconFont = `bold ${Math.max(5, Math.floor(this.cellSize * 0.20))}px Arial`;
+        const labelFont = `bold ${Math.max(4, Math.floor(this.cellSize * 0.15))}px Arial`;
+        const valueFont = `bold ${Math.max(3, Math.floor(this.cellSize * 0.15))}px Arial`;
 
-        // Texto / estadísticas en el panel izquierdo
         if (this._sidePanelLeft){
             const p = this._sidePanelLeft;
-            const sx = p.x + pad;
-            let sy = p.y + pad + Math.floor(this.cellSize * 0.2);
+            let bx = p.x + (p.w - btnW)/2;
+            let by = p.y + pad + Math.floor(this.cellSize * 0.2);
 
-            ctx.font = labelFont;
-            ctx.fillText('Fichas', sx, sy);
-            ctx.font = valueFont;
-            ctx.fillText(String(model.pegCount), sx, sy + Math.floor(this.cellSize * 0.9));
+            // Helper para dibujar cada estadística con mejor alineación
+            function drawStat(icon, label, value, color, valueColor) {
+                ctx.save();
+                ctx.fillStyle = 'rgba(255,255,255,0.08)';
+                ctx.fillRect(bx, by, btnW, btnH);
+                ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+                ctx.strokeRect(bx, by, btnW, btnH);
 
-            sy += Math.floor(this.cellSize * 1.6);
-            ctx.font = labelFont;
-            ctx.fillText('Movimientos', sx, sy);
-            ctx.font = valueFont;
-            ctx.fillText(String(model.moveCount), sx, sy + Math.floor(this.cellSize * 0.9));
+                // Icono alineado verticalmente con label
+                ctx.font = iconFont;
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = color;
+                ctx.fillText(icon, bx + 12, by + btnH/2);
 
-            // Tiempo
-            sy += Math.floor(this.cellSize * 1.6);
-            ctx.font = labelFont;
-            ctx.fillText('Tiempo', sx, sy);
-            ctx.font = valueFont;
+                // Label alineado verticalmente
+                ctx.font = labelFont;
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#fff';
+                ctx.fillText(label, bx + 38, by + btnH/2);
+
+                // Valor pegado al label (no alineado a la derecha)
+                ctx.font = valueFont;
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = valueColor;
+                // Calcula el ancho del label para ubicar el valor justo después
+                const labelWidth = ctx.measureText(label).width;
+                ctx.fillText(String(value), bx + 35  + labelWidth + 12, by + btnH/2);
+
+                ctx.restore();
+            }
+
+            drawStat('🟡', 'Fichas', model.pegCount, '#FFD54F', '#FFD54F');
+            by += btnH + spacing;
+            drawStat('🔄', 'Movimientos', model.moveCount, '#64B5F6', '#64B5F6');
+            by += btnH + spacing;
             let timerText = '00:00';
             if (window.pegController && typeof window.pegController.remainingTime === 'number') {
                 const t = window.pegController.remainingTime;
                 timerText = `${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
             }
-            ctx.fillText(timerText, sx, sy + Math.floor(this.cellSize * 0.9));
+            drawStat('⏰', 'Tiempo', timerText, '#FF5722', '#FF5722');
         }
 
-        // Botones apilados en el panel derecho
+        // Panel derecho: botones (sin cambios)
         if (this._sidePanelRight){
             const p = this._sidePanelRight;
-            const btnW = Math.max(96, Math.floor(p.w - pad*2));
-            const btnH = Math.max(36, Math.floor(this.cellSize * 0.32));
-            const spacing = Math.max(10, Math.floor(this.cellSize * 0.18));
-            let bx = p.x + (p.w - btnW)/2;
-            let by = p.y + pad + Math.floor(this.cellSize * 0.2);
+            const btnW2 = Math.max(96, Math.floor(p.w - pad*2));
+            const btnH2 = Math.max(36, Math.floor(this.cellSize * 0.32));
+            const spacing2 = Math.max(10, Math.floor(this.cellSize * 0.18));
+            let bx2 = p.x + (p.w - btnW2)/2;
+            let by2 = p.y + pad + Math.floor(this.cellSize * 0.2);
 
-            this._hudRegions.reset = { x: bx, y: by, w: btnW, h: btnH };
-            this._drawButton(ctx, bx, by, btnW, btnH, '🔁 Reiniciar');
+            this._hudRegions.reset = { x: bx2, y: by2, w: btnW2, h: btnH2 };
+            this._drawButton(ctx, bx2, by2, btnW2, btnH2, '🔁 Reiniciar');
 
-            by += btnH + spacing;
-            this._hudRegions.undo = { x: bx, y: by, w: btnW, h: btnH };
-            this._drawButton(ctx, bx, by, btnW, btnH, '↶ Deshacer');
+            by2 += btnH2 + spacing2;
+            this._hudRegions.undo = { x: bx2, y: by2, w: btnW2, h: btnH2 };
+            this._drawButton(ctx, bx2, by2, btnW2, btnH2, '↶ Deshacer');
 
-            by += btnH + spacing;
-            this._hudRegions.hint = { x: bx, y: by, w: btnW, h: btnH };
-            this._drawButton(ctx, bx, by, btnW, btnH, '💡 Pista');
+            by2 += btnH2 + spacing2;
+            this._hudRegions.hint = { x: bx2, y: by2, w: btnW2, h: btnH2 };
+            this._drawButton(ctx, bx2, by2, btnW2, btnH2, '💡 Pista');
         }
 
         ctx.restore();
@@ -810,3 +835,4 @@ export default class PegView {
     }
 
 }
+
