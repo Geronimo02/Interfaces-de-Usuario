@@ -7,24 +7,23 @@
 const GameConfig = {
     // ===== CANVAS =====
     CANVAS: {
-        WIDTH: 1280,
-        HEIGHT: 720,
+        WIDTH: 1920,
+        HEIGHT: 520,      // <--- CAMBIAR A 520 (antes era 720 o 1080)
         MAX_WIDTH: 1920,
-        MAX_HEIGHT: 1080
+        MAX_HEIGHT: 520
     },
     
     // ===== JUGADOR =====
     PLAYER: {
         X: 150,
-        WIDTH: 90, // Nave más grande
-        HEIGHT: 65,
+        WIDTH: 90, // Ligeramente reducido para mejor maniobra
+        HEIGHT: 90,
         GRAVITY: 0.5,
         JUMP_FORCE: -10,
         ROTATION_SPEED: 2,
         MAX_ROTATION: 30,
         INVULNERABLE_DURATION: 60, // frames
-        COLLISION_RADIUS: 28, // Radio de colisión ajustado al nuevo tamaño
-        EXPLOSION_DELAY: 90 // frames antes de mostrar game over (1.5 segundos a 60fps)
+        COLLISION_RADIUS: 18 // Radio efectivo de colisión más justo
     },
     
     // ===== OBSTÁCULOS (TUBOS) =====
@@ -93,7 +92,7 @@ const GameConfig = {
         
         SPAWN_INTERVAL: 180, // frames entre spawns
         MIN_Y: 50,
-        MAX_Y: 670
+        MAX_Y: 450
     },
 
     // ===== POWER UPS =====

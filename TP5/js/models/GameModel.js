@@ -29,8 +29,7 @@ class GameModel {
             rotation: 0,
             isFlapping: false,
             invulnerable: false,
-            invulnerableTimer: 0,
-            explosionTimer: 0
+            invulnerableTimer: 0
         };
         
         // Sistema de puntuación
@@ -185,14 +184,6 @@ class GameModel {
             this.player.invulnerableTimer--;
             if (this.player.invulnerableTimer <= 0) {
                 this.player.invulnerable = false;
-            }
-        }
-        
-        // Update explosionTimer - cuando llega a 0, mostrar pantalla de game over
-        if (this.player.explosionTimer > 0) {
-            this.player.explosionTimer--;
-            if (this.player.explosionTimer === 0) {
-                this.finalizeGameOver();
             }
         }
         
@@ -494,15 +485,23 @@ class GameModel {
         
         const playerCenterX = this.player.x + this.player.width / 2;
         const playerCenterY = this.player.y + this.player.height / 2;
+        
+        // IMPORTANTE: Asegúrate de que en GameConfig.js el COLLISION_RADIUS sea aprox 25
+        // o defínelo aquí manualmente si prefieres: const playerCollisionRadius = 25;
         const playerCollisionRadius = this.config.PLAYER.COLLISION_RADIUS;
         
+        // --- AQUÍ ESTÁ EL CAMBIO CLAVE PARA LOS TUBOS ---
+        // Definimos cuánto "aire" recortar. 
+        // Si la nave es de 90px, quitamos 25px de cada lado.
+        const hitPadding = 25; 
+
         // Colisión con obstáculos (usando método de Obstacle)
         for (const obstacle of this.obstacles) {
             if (obstacle.checkCollision(
-                this.player.x + 5,
-                this.player.y + 5,
-                this.player.width - 10,
-                this.player.height - 10
+                this.player.x + hitPadding,                 // X: movemos el borde hacia adentro
+                this.player.y + hitPadding,                 // Y: bajamos el techo
+                this.player.width - (hitPadding * 2),       // Ancho: reducimos el total (25 izq + 25 der = 50 menos)
+                this.player.height - (hitPadding * 2)       // Alto: reducimos el total
             )) {
                 const wasInvulnerable = this.player.invulnerable || this.activeEffects.shield > 0;
                 this.takeDamage();
@@ -513,6 +512,8 @@ class GameModel {
             }
         }
         
+        // --- EL RESTO SIGUE IGUAL (Colisiones circulares) ---
+
         // Colisión con estrellas (usando método de Star)
         for (let i = this.stars.length - 1; i >= 0; i--) {
             const star = this.stars[i];
@@ -674,17 +675,10 @@ class GameModel {
      * Game Over
      */
     gameOver() {
-        // Iniciar explosión sin cambiar estado todavía
-        if (this.player.explosionTimer === 0) {
-            this.player.explosionTimer = this.config.PLAYER.EXPLOSION_DELAY || 90;
-            this.createExplosionParticles(this.player.x + this.player.width / 2, 
-                                         this.player.y + this.player.height / 2);
-            if (window.SoundManager) window.SoundManager.play('explosion');
-        }
-    }
-    
-    finalizeGameOver() {
         this.gameState = 'gameover';
+        this.createExplosionParticles(this.player.x + this.player.width / 2, 
+                                     this.player.y + this.player.height / 2);
+        if (window.SoundManager) window.SoundManager.play('explosion');
         
         // Guardar mejor puntuación
         if (this.score > this.bestScore) {

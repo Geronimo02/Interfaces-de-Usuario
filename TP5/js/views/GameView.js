@@ -22,8 +22,18 @@ class GameView {
      * Configura el tamaño del canvas
      */
     setupCanvas() {
-        this.canvas.width = this.config.CANVAS.WIDTH;
-        this.canvas.height = this.config.CANVAS.HEIGHT;
+        // 1. Obtenemos el contenedor padre (el div #game-container)
+        const container = this.canvas.parentElement;
+        
+        // 2. Ajustamos la resolución interna del canvas al tamaño real del contenedor
+        this.canvas.width = container.clientWidth;
+        this.canvas.height = container.clientHeight; // Esto tomará los 520px automáticamente
+
+        // Opcional: Si el juego se ve borroso en pantallas retina/móviles, descomenta esto:
+        // const dpr = window.devicePixelRatio || 1;
+        // this.canvas.width = container.clientWidth * dpr;
+        // this.canvas.height = container.clientHeight * dpr;
+        // this.ctx.scale(dpr, dpr);
     }
     
     /**
@@ -70,17 +80,6 @@ class GameView {
         // Intentar dibujar sprite del jugador si cargó
         let drawnSprite = false;
         if (window.PlayerSprite && window.PlayerSprite.loaded) {
-            // Determinar estado del sprite
-            if (player.explosionTimer > 0 || model.gameState === 'gameover') {
-                PlayerSprite.setState('explosion');
-            } else if (model.activeEffects && model.activeEffects.shield > 0) {
-                PlayerSprite.setState('shield');
-            } else if (player.isFlapping) {
-                PlayerSprite.setState('thrust');
-            } else {
-                PlayerSprite.setState('idle');
-            }
-            
             drawnSprite = window.PlayerSprite.draw(
                 this.ctx,
                 -player.width / 2,
