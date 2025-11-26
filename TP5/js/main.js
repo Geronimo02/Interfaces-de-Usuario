@@ -20,20 +20,19 @@ let currentFPS = 0;
  * Inicializa el juego
  */
 function initGame() {
-    console.log('🚀 Iniciando Space Flyer...');
+
     
     // Crear instancias MVC
     gameModel = new GameModel();
     gameView = new GameView('game-canvas');
     gameController = new GameController(gameModel, gameView);
     
-    console.log('✅ Modelo, Vista y Controlador inicializados');
+
     
     // Iniciar game loop
     startGameLoop();
     
-    console.log('✅ Game loop iniciado');
-    console.log('🎮 ¡Listo para jugar!');
+
 }
 
 /**
@@ -122,7 +121,6 @@ function stopGameLoop() {
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
-        console.log('⏸️ Game loop detenido');
     }
 }
 
@@ -132,7 +130,6 @@ function stopGameLoop() {
 function restartGameLoop() {
     stopGameLoop();
     startGameLoop();
-    console.log('▶️ Game loop reiniciado');
 }
 
 // Event listeners para cuando el DOM esté listo
@@ -163,22 +160,20 @@ window.debugGame = {
     setSpeed: (speed) => { 
         if (gameModel) {
             gameModel.gameSpeed = speed;
-            console.log(`⚡ Velocidad del juego ajustada a: ${speed}`);
+
         }
     },
     addScore: (points) => {
         if (gameModel) {
             gameModel.score += points;
-            console.log(`⭐ +${points} puntos! Total: ${gameModel.score}`);
+
         }
     },
     godMode: () => {
         if (gameModel) {
             gameModel.lives = 999;
             gameModel.player.invulnerable = true;
-            console.log('🛡️ Modo Dios activado');
         }
     }
 };
 
-console.log('💡 Tip: Usa window.debugGame en la consola para funciones de debug');

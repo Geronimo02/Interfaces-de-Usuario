@@ -4,12 +4,33 @@
    ============================================ */
 
 /* ===== CONTAINER PRINCIPAL ===== */
+main {
+    padding: 20px 0;
+}
 #game-container {
     position: relative;
-    width: 100vw;
-    height: 520px;
+    /* Cambiar de fixed/absolute a relative */
+    width: 100%;
+    max-width: 1200px;
+    /* Limitar ancho máximo */
+    height: 480px;
+    /* Altura reducida para mostrar completo */
+    margin: 0 auto;
+    /* Centrar horizontalmente */
+    background: #1a1a2e;
     overflow: hidden;
-    /* background: radial-gradient(ellipse at center, var(--color-space-deep) 0%, var(--color-space-dark) 100%); */
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    /* Crear contexto de apilamiento para contener elementos absolutos */
+    z-index: 1;
+}
+
+/* Asegurar que body y html permitan scroll */
+html, body {
+    height: auto !important; /* No altura fija */
+    overflow-y: auto !important; /* Permitir scroll vertical */
+    overflow-x: hidden !important; /* Evitar scroll horizontal */
+    overflow: visible !important; /* Sobrescribir cualquier overflow: hidden */
 }
 
 /* ===== PARALLAX SCROLLING (4 CAPAS) ===== */
@@ -35,11 +56,11 @@
 #stars-far {
     z-index: var(--z-parallax-far);
     background-image: radial-gradient(2px 2px at 20% 30%, white, transparent),
-                      radial-gradient(2px 2px at 60% 70%, white, transparent),
-                      radial-gradient(1px 1px at 50% 50%, white, transparent),
-                      radial-gradient(1px 1px at 80% 10%, white, transparent),
-                      radial-gradient(2px 2px at 90% 60%, white, transparent),
-                      radial-gradient(1px 1px at 33% 80%, white, transparent);
+        radial-gradient(2px 2px at 60% 70%, white, transparent),
+        radial-gradient(1px 1px at 50% 50%, white, transparent),
+        radial-gradient(1px 1px at 80% 10%, white, transparent),
+        radial-gradient(2px 2px at 90% 60%, white, transparent),
+        radial-gradient(1px 1px at 33% 80%, white, transparent);
     background-size: 400px 400px;
     animation: parallaxScrollFar 120s linear infinite;
     opacity: 0.4;
@@ -49,10 +70,10 @@
 #stars-mid {
     z-index: calc(var(--z-parallax-far) + 1);
     background-image: radial-gradient(2px 2px at 15% 40%, var(--color-star-yellow), transparent),
-                      radial-gradient(3px 3px at 45% 20%, white, transparent),
-                      radial-gradient(2px 2px at 75% 65%, var(--color-cyan-glow), transparent),
-                      radial-gradient(1px 1px at 35% 85%, white, transparent),
-                      radial-gradient(2px 2px at 85% 25%, white, transparent);
+        radial-gradient(3px 3px at 45% 20%, white, transparent),
+        radial-gradient(2px 2px at 75% 65%, var(--color-cyan-glow), transparent),
+        radial-gradient(1px 1px at 35% 85%, white, transparent),
+        radial-gradient(2px 2px at 85% 25%, white, transparent);
     background-size: 300px 300px;
     animation: parallaxScrollMid 60s linear infinite;
     opacity: 0.6;
@@ -61,12 +82,12 @@
 /* Capa 3: Nebulosa */
 #nebula {
     z-index: calc(var(--z-parallax-far) + 2);
-    background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(107, 45, 92, 0.2) 25%, 
-                rgba(232, 62, 140, 0.2) 50%, 
-                rgba(107, 45, 92, 0.2) 75%, 
-                transparent 100%);
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(107, 45, 92, 0.2) 25%,
+            rgba(232, 62, 140, 0.2) 50%,
+            rgba(107, 45, 92, 0.2) 75%,
+            transparent 100%);
     background-size: 800px 100%;
     animation: parallaxScrollNebula 40s linear infinite;
     opacity: 0.5;
@@ -76,9 +97,9 @@
 #stars-near {
     z-index: var(--z-parallax-near);
     background-image: radial-gradient(3px 3px at 25% 25%, white, transparent),
-                      radial-gradient(2px 2px at 70% 40%, var(--color-star-yellow), transparent),
-                      radial-gradient(3px 3px at 40% 80%, var(--color-cyan-glow), transparent),
-                      radial-gradient(2px 2px at 90% 50%, white, transparent);
+        radial-gradient(2px 2px at 70% 40%, var(--color-star-yellow), transparent),
+        radial-gradient(3px 3px at 40% 80%, var(--color-cyan-glow), transparent),
+        radial-gradient(2px 2px at 90% 50%, white, transparent);
     background-size: 200px 200px;
     animation: parallaxScrollNear 30s linear infinite;
     opacity: 0.8;
@@ -86,23 +107,43 @@
 
 /* Animaciones de parallax */
 @keyframes parallaxScrollFar {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
 }
 
 @keyframes parallaxScrollMid {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
 }
 
 @keyframes parallaxScrollNebula {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
 }
 
 @keyframes parallaxScrollNear {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
 }
 
 /* ===== CANVAS DEL JUEGO ===== */
@@ -110,12 +151,9 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;       /* Cambiado de 100vw a 100% para respetar el contenedor */
-    height: 100%;      /* Cambiado de 1080px a 100% para ajustarse a los 520px del padre */
-    z-index: var(--z-canvas, 10);
-    image-rendering: crisp-edges;
-    image-rendering: pixelated;
-    object-fit: contain; /* Opcional: Ayuda a mantener la proporción interna */
+    width: 100%;
+    height: 100%;
+    z-index: 5;
 }
 
 /* ===== UI OVERLAY ===== */
@@ -125,12 +163,22 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: var(--z-ui);
+    z-index: 10;
     pointer-events: none;
+    /* Permitir clics en el canvas */
 }
 
 #game-ui * {
     pointer-events: auto;
+}
+
+#game-ui .screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+    /* Restaurar clics en pantallas */
 }
 
 /* ===== HEADER DEL JUEGO ===== */
@@ -139,6 +187,7 @@
     top: 20px;
     left: 0;
     right: 0;
+    margin: 40px 0 20px 0;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -148,7 +197,7 @@
     text-shadow: var(--shadow-text);
 }
 
-#game-header > div {
+#game-header>div {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -193,7 +242,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%; /* CAMBIO: Era 100vw, ahora 100% */
     height: 100%;
     display: none;
     flex-direction: column;
@@ -212,7 +261,7 @@
     font-size: var(--font-title-size);
     color: var(--color-star-yellow);
     text-shadow: 0 0 20px var(--color-star-yellow),
-                 var(--shadow-text);
+        var(--shadow-text);
     margin-bottom: 20px;
     animation: titleGlow 2s ease-in-out infinite;
 }
@@ -228,7 +277,7 @@
     font-size: var(--font-title-size);
     color: var(--color-danger);
     text-shadow: 0 0 20px var(--color-danger),
-                 var(--shadow-text);
+        var(--shadow-text);
     margin-bottom: 30px;
     animation: shake 0.5s ease-in-out;
 }
@@ -305,7 +354,7 @@
     background: var(--color-primary-hover);
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4),
-                var(--shadow-glow);
+        var(--shadow-glow);
 }
 
 .game-button:active {
@@ -358,20 +407,24 @@
     right: 20px;
     display: flex;
     gap: 10px;
-    z-index: calc(var(--z-ui) + 2);
+    z-index: 15; /* Reducir z-index para que no sobrepase el header */
 }
 
 #mute-toggle {
     width: 50px;
     height: 50px;
     font-size: 1.4rem;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     border: 2px solid var(--color-secondary);
     border-radius: 10px;
     cursor: pointer;
     transition: all var(--animation-duration-fast);
 }
-#mute-toggle:hover { background: var(--color-secondary); transform: scale(1.1); }
+
+#mute-toggle:hover {
+    background: var(--color-secondary);
+    transform: scale(1.1);
+}
 
 /* Debug overlay */
 #debug-overlay {
@@ -384,25 +437,31 @@
 
 /* Animación de título brillante */
 @keyframes titleGlow {
-    0%, 100% {
+
+    0%,
+    100% {
         text-shadow: 0 0 20px var(--color-star-yellow),
-                     0 0 40px var(--color-star-yellow),
-                     var(--shadow-text);
+            0 0 40px var(--color-star-yellow),
+            var(--shadow-text);
     }
+
     50% {
         text-shadow: 0 0 30px var(--color-star-yellow),
-                     0 0 60px var(--color-star-yellow),
-                     0 0 80px var(--color-star-yellow),
-                     var(--shadow-text);
+            0 0 60px var(--color-star-yellow),
+            0 0 80px var(--color-star-yellow),
+            var(--shadow-text);
     }
 }
 
 /* Animación de pulso */
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
         opacity: 1;
     }
+
     50% {
         transform: scale(1.1);
         opacity: 0.8;
@@ -411,9 +470,26 @@
 
 /* Animación de shake (temblor) */
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
-    20%, 40%, 60%, 80% { transform: translateX(10px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        transform: translateX(-10px);
+    }
+
+    20%,
+    40%,
+    60%,
+    80% {
+        transform: translateX(10px);
+    }
 }
 
 /* Animación de fade in */
@@ -422,6 +498,7 @@
         opacity: 0;
         transform: scale(0.9);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
@@ -430,9 +507,17 @@
 
 /* Animación de nave aleteo/impulso */
 @keyframes shipFlap {
-    0% { transform: rotate(-5deg); }
-    50% { transform: rotate(5deg); }
-    100% { transform: rotate(-5deg); }
+    0% {
+        transform: rotate(-5deg);
+    }
+
+    50% {
+        transform: rotate(5deg);
+    }
+
+    100% {
+        transform: rotate(-5deg);
+    }
 }
 
 /* Animación de explosión */
@@ -441,10 +526,12 @@
         transform: scale(1) rotate(0deg);
         opacity: 1;
     }
+
     50% {
         transform: scale(1.5) rotate(180deg);
         opacity: 0.5;
     }
+
     100% {
         transform: scale(2) rotate(360deg);
         opacity: 0;
@@ -457,6 +544,7 @@
         transform: scale(1);
         opacity: 1;
     }
+
     100% {
         transform: scale(2) translateY(-50px);
         opacity: 0;
@@ -465,20 +553,39 @@
 
 /* Animación de parpadeo (daño) */
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
 }
 
 /* Animación de rotación continua */
 @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* Animación de flotación */
 @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
 }
 
 /* ===== RESPONSIVE ===== */
@@ -486,31 +593,31 @@
     .game-title {
         font-size: 2.5rem;
     }
-    
+
     .game-subtitle {
         font-size: 1rem;
     }
-    
+
     #game-header {
         flex-direction: column;
         gap: 10px;
         padding: 10px;
     }
-    
-    #game-header > div {
+
+    #game-header>div {
         padding: 8px 15px;
         font-size: 0.9rem;
     }
-    
+
     .instructions {
         padding: 20px;
         max-width: 90%;
     }
-    
+
     .instructions p {
         font-size: 0.9rem;
     }
-    
+
     .game-button {
         padding: 12px 30px;
         font-size: 1rem;

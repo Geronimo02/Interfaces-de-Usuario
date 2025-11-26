@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Space Flyer - Flappy Bird Espacial</title>
+    <link rel="stylesheet" href="css/Variables.css">
+    <link rel="stylesheet" href="css/Game.css">
+    <link rel="stylesheet" href="css/Parallax.css">
+
+    <!-- CSS modularizado -->
+    <link rel="stylesheet" href="../TP2/css/Variables.css" />
+    <link rel="stylesheet" href="../TP2/css/Utils.css" />
+    <link rel="stylesheet" href="../TP2/css/Header.css" />
+    <link rel="stylesheet" href="../TP2/css/Footer.css" />
+    <link rel="stylesheet" href="../TP2/css/SVGContainers.css" />
+    <link rel="stylesheet" href="../TP2/css/Home.css" />
+    <link rel="stylesheet" href="../TP2/css/Game.css" />
+</head>
+
+<body>
+
+    <header class="header" id="appHeader">
+        <div class="container inner header-flex">
+            <!-- Grupo Izquierdo -->
+            <div class="header-group header-left">
+                <button class="icon-btn" id="btnMenu" aria-label="Abrir menú" aria-haspopup="true"
+                    aria-controls="sidebarNav" aria-expanded="false">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <path d="M3 6h18M3 12h18M3 18h18" />
+                    </svg>
+                </button>
+                <a class="brand" href="../TP2/index.html" aria-label="GAMEBIT · Inicio">
+                    <span class="brand-badge logo-img" aria-hidden="true">
+                        <img src="../TP2/assets/icons/logo.png" alt="" />
+                    </span>
+                    <span class="gamebit-title">GAMEBIT</span>
+                </a>
+            </div>
+
+            <!-- Centro (buscador solo visible en desktop) -->
+            <div class="header-group header-center">
+                <div class="header-search">
+                    <div class="search-bar">
+                        <img src="../TP2/assets/icons/lupa.svg" alt="buscar">
+                        <input type="search" class="search-input" placeholder="Buscar juegos...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grupo Derecho -->
+            <div class="header-group header-right">
+                <button class="icon-btn" id="btnCart" aria-label="Carrito">
+                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="9" cy="20" r="1" />
+                        <circle cx="16" cy="20" r="1" />
+                        <path d="M3 4h2l2.4 12.3A2 2 0 0 0 9.4 18H17a2 2 0 0 0 2-1.6L21 8H6" />
+                    </svg>
+                </button>
+                <button class="icon-btn" id="btnProfile" aria-label="Abrir perfil" aria-haspopup="true"
+                    aria-controls="profileDropdown" aria-expanded="false">
+                    <img src="../TP2/assets/icons/usuario.png" alt="Perfil" />
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Drawer (menú hamburguesa) -->
+    <aside class="drawer" id="sidebarNav" aria-hidden="true">
+        <div class="drawer-head">
+            <div class="brand">
+                <span class="brand-badge logo-svg" aria-hidden="true">
+                    <svg fill="#14123A" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path
+                            d="M21.986 9.74a3.193 3.193 0 0 0-.008-.088A5.003 5.003 0 0 0 17 5H7a4.97 4.97 0 0 0-4.987 4.737c-.01.079-.013.161-.013.253v6.51c0 .925.373 1.828 1.022 2.476A3.524 3.524 0 0 0 5.5 20c1.8 0 2.504-1 3.5-3 .146-.292.992-2 3-2 1.996 0 2.853 1.707 3 2 1.004 2 1.7 3 3.5 3 .925 0 1.828-.373 2.476-1.022A3.524 3.524 0 0 0 22 16.5V10c0-.095-.004-.18-.014-.26zM7 12.031a2 2 0 1 1-.001-3.999A2 2 0 0 1 7 12.031zm10-5a1 1 0 1 1 0 2 1 1 0 1 1 0-2zm-2 4a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2 2a1 1 0 1 1 0-2 1 1 0 1 1 0 2zm2-2a1 1 0 1 1 0-2 1 1 0 1 1 0 2z">
+                        </path>
+                    </svg>
+                </span>
+                <span>GAMEBIT</span>
+            </div>
+            <button class="icon-btn" id="btnCloseMenu" aria-label="Cerrar menú">✕</button>
+        </div>
+        <form class="search drawer-search" role="search" aria-label="Buscar juegos">
+            <input type="search" placeholder="Buscar juegos..." />
+        </form>
+
+        <nav class="drawer-nav" aria-label="Categorías">
+            <h2>Categoría</h2>
+            <a href="#">🏅 Deportes</a>
+            <a href="#">🏎️ Shooter</a>
+            <a href="#">🕹️ Clásicos</a>
+            <a href="#">👥 RPG</a>
+            <a href="#">🧭 Aventura</a>
+            <a href="#">🍳 Cocina</a>
+            <a href="#">🧠 Cartas</a>
+            <a href="#">🧒 Infantiles</a>
+            <a href="#">🔥 Acción</a>
+            <a href="#">🧩 Mesa</a>
+        </nav>
+    </aside>
+    <div class="scrim" id="scrimMenu" hidden></div>
+
+    <!-- Dropdown Perfil -->
+    <aside class="dropdown" id="profileDropdown" aria-hidden="true">
+        <div class="profile-head">
+            <div class="avatar">
+                <img src="../TP2/assets/icons/Usuario3.svg" alt="Avatar" />
+            </div>
+            <div>
+                <strong>Robert Plant</strong>
+                <div class="muted" style="font-size:13px">Nivel 42 · Pro Player</div>
+            </div>
+        </div>
+        <nav class="profile-nav">
+            <a href="#" class="profile-btn profile-main">
+                <img class="profile-icon" src="../TP2/assets/icons/User-1.png" alt="">
+                Mi Perfil
+            </a>
+            <a href="#"><img class="profile-icon" src="../TP2/assets/icons/joystick.png" alt=""> Mis Juegos
+                <em>12</em></a>
+            <a href="#"><img class="profile-icon" src="../TP2/assets/icons/trofeo.png" alt=""> Logros <em>3</em></a>
+            <a href="#"><img class="profile-icon" src="../TP2/assets/icons/multijugador.png" alt=""> Amigos
+                <em>5</em></a>
+            <a href="#"><img class="profile-icon" src="../TP2/assets/icons/notificaccion.png" alt=""> Notificaciones
+                <em>2</em></a>
+            <a href="#"><img class="profile-icon" src="../TP2/assets/icons/ajustes.png" alt=""> Configuración</a>
+        </nav>
+        <hr class="profile-divider">
+        <a class="logout" href="#">
+            <img class="profile-icon" src="../TP2/assets/icons/salir.png" alt="">
+            Cerrar Sesión
+        </a>
+        <hr class="profile-divider">
+        <div class="profile-social">
+            <a href="#" aria-label="Instagram">
+                <img src="../TP2/assets/icons/instagram.png" alt="Instagram">
+            </a>
+            <a href="#" aria-label="X">
+                <img src="../TP2/assets/icons/twiter.png" alt="X">
+            </a>
+            <a href="#" aria-label="Facebook">
+                <img src="../TP2/assets/icons/facebook2.png" alt="Facebook">
+            </a>
+        </div>
+    </aside>
+    <div class="scrim" id="scrimProfile" hidden></div>
+
+    <main>
+        <!-- Breadcrumb navigation -->
+        <nav class="breadcrumb-nav" aria-label="Navegación de ruta">
+            <div class="breadcrumb-container">
+                <ol class="breadcrumb">
+                    <li><a href="/Interfaces-de-Usuario/TP2/Pages/index.html">Inicio</a></li>
+                    <li><a href="#">Juegos</a></li>
+                    <li><a href="#">Infinito</a></li>
+                    <li aria-current="page">Space Flyer</li>
+                </ol>
+            </div>
+        </nav>
+
+        <!-- Contenedor principal del juego a pantalla completa -->
+        <div id="game-container" width="1280" height="720" tabindex="0"
+            aria-label="Juego Space Flyer: Flappy Bird Espacial">
+
+
+
+            <div class="layer layer-9"></div>
+            <div class="layer layer-8"></div>
+            <div class="layer layer-7"></div>
+
+
+
+            <!-- Canvas Principal del Juego -->
+            <canvas id="game-canvas"></canvas>
+
+            <!-- UI Overlay -->
+            <div id="game-ui">
+                <!-- Header con info del juego -->
+                <div id="game-header">
+                    <div id="score-container">
+                        <span class="label">Puntuación:</span>
+                        <span id="score">0</span>
+                    </div>
+                    <div id="lives-container">
+                        <span class="label">Vidas:</span>
+                        <div id="lives">
+                            <span class="life-icon">💙</span>
+                            <span class="life-icon">💙</span>
+                            <span class="life-icon">💙</span>
+                        </div>
+                    </div>
+                    <div id="timer-container">
+                        <span class="label">Tiempo:</span>
+                        <span id="timer">0:00</span>
+                    </div>
+                </div>
+
+                <!-- Pantalla de inicio -->
+                <div id="start-screen" class="screen active">
+                    <h1 class="game-title">🚀 SPACE FLYER 🚀</h1>
+                    <p class="game-subtitle">Flappy Bird Espacial</p>
+                    <button id="start-button" class="game-button">COMENZAR MISIÓN</button>
+                </div>
+
+                <!-- Pantalla de pausa -->
+                <div id="pause-screen" class="screen">
+                    <h1>⏸️ PAUSA</h1>
+                    <button id="resume-button" class="game-button">CONTINUAR</button>
+                    <button id="restart-button-pause" class="game-button secondary">REINICIAR</button>
+                </div>
+
+                <!-- Pantalla de Game Over -->
+                <div id="gameover-screen" class="screen">
+                    <h1 class="gameover-title">💥 MISIÓN FALLIDA 💥</h1>
+                    <div class="stats">
+                        <p>Puntuación Final: <span id="final-score">0</span></p>
+                        <p>Tiempo Sobrevivido: <span id="final-time">0:00</span></p>
+                        <p>Mejor Puntuación: <span id="best-score">0</span></p>
+                    </div>
+                    <button id="restart-button" class="game-button">REINTENTAR MISIÓN</button>
+                    <button id="menu-button" class="game-button secondary">MENÚ PRINCIPAL</button>
+                </div>
+            </div>
+
+            <!-- Botones flotantes -->
+            <div id="floating-buttons">
+                <button id="pause-toggle" class="icon-button" title="Pausa">⏸️</button>
+                <button id="mute-toggle" class="icon-button" title="Sonido On/Off">🔊</button>
+            </div>
+            <!-- Overlay debug (FPS / entidades) -->
+            <div id="debug-overlay" style="display:none;"></div>
+        </div>
+
+        <!-- Título principal del juego -->
+        <div class="game-header">
+            <h2>Space Flyer</h2>
+            <div class="game-rating">
+                <span class="stars">★★★★☆</span>
+                <span class="rating-text">4.2/5 (1,847 reseñas)</span>
+            </div>
+        </div>
+
+        <!-- Información del juego ocupa todo el ancho -->
+        <section class="game-info-full">
+            <div class="game-desc-controls">
+                <div class="rules-section">
+                    <h3>⚙️ Reglas e instrucciones</h3>
+                    <ol>
+                   <li>Haz click o presiona <kbd>Espacio</kbd> para impulsar la nave espacial.</li>
+            <li>Evita chocar contra los tubos espaciales y obstáculos.</li>
+            <li>Recoge estrellas (+5 puntos) y gemas (+20 puntos y vida extra) dentro de los tubos.</li>
+            <li>Colisionar con enemigos te quita una vida, pero los destruyes.</li>
+            <li>El juego termina cuando pierdes todas las vidas.</li>
+                    </ol>
+                </div>
+
+                <div class="objective-section">
+                    <h3>🎯 Objetivo del juego</h3>
+                    <p>Sobrevive el mayor tiempo posible, esquivando obstáculos y enemigos, mientras recolectas
+                        estrellas y gemas para aumentar tu puntuación y vidas.</p>
+                </div>
+
+                <div class="description-section">
+                    <h3>📖 Descripción del juego</h3>
+                    <p class="game-description">
+                        Space Flyer es un juego arcade inspirado en Flappy Bird, pero ambientado en el espacio. Pilota
+                        tu nave a través de tubos espaciales, recoge estrellas y gemas, y enfrenta drones, meteoros y
+                        aliens. Cada colisión con un enemigo te resta una vida, pero puedes destruirlos. ¡Demuestra tus
+                        reflejos y alcanza la máxima puntuación!
+                    </p>
+                </div>
+
+                <div class="control-section">
+                    <h3>🎮 Controles</h3>
+                    <div class="controls-grid">
+                        <div class="control-item">
+                            <kbd>Click</kbd> / <kbd>Espacio</kbd>
+                            <span>Impulsar nave</span>
+                        </div>
+                        <div class="control-item">
+                            <kbd>P</kbd>
+                            <span>Pausar juego</span>
+                        </div>
+                        <div class="control-item">
+                            <kbd>M</kbd>
+                            <span>Silenciar sonido</span>
+                        </div>
+                        <div class="control-item">
+                            <kbd>R</kbd>
+                            <span>Reiniciar partida</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Enlaces relacionados -->
+        <section class="game-links-section">
+            <div class="game-links-container">
+                <h3>🔗 Enlaces relacionados</h3>
+                <div class="links-grid">
+                    <a href="#" class="game-link-item">
+                        <div class="link-icon">🎮</div>
+                        <div class="link-content">
+                            <h4>Más juegos de Los Simpson</h4>
+                            <p>Descubre otros juegos de la famosa serie</p>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link-item">
+                        <div class="link-icon">🧩</div>
+                        <div class="link-content">
+                            <h4>Juegos de mesa clásicos</h4>
+                            <p>Explora más puzzles y juegos tradicionales</p>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link-item">
+                        <div class="link-icon">🏆</div>
+                        <div class="link-content">
+                            <h4>Tutorial completo</h4>
+                            <p>Aprende las estrategias avanzadas</p>
+                        </div>
+                    </a>
+                    <a href="#" class="game-link-item">
+                        <div class="link-icon">👥</div>
+                        <div class="link-content">
+                            <h4>Comunidad del juego</h4>
+                            <p>Únete a otros jugadores y comparte tips</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galería separada, abajo de la información -->
+        <section class="gallery-section">
+            <div class="game-gallery">
+                <h3>🖼️ Galería</h3>
+                <div class="gallery-container">
+                    <div class="banner">
+                        <button class="gallery-nav gallery-nav-left" aria-label="Imagen anterior">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="15,18 9,12 15,6"></polyline>
+                            </svg>
+                        </button>
+                        <div class="slider" style="--quantity: 8">
+                            <div class="item active" style="--position: 1"><img src="../TP2/assets/img/17073_3.jpg"
+                                    alt="Captura de pantalla del juego 1"></div>
+                            <div class="item" style="--position: 2"><img src="../TP2/assets/img/252578_3.jpg"
+                                    alt="Captura de pantalla del juego 2"></div>
+                            <div class="item" style="--position: 3"><img src="../TP2/assets/img/254334_3.jpg"
+                                    alt="Captura de pantalla del juego 3"></div>
+                            <div class="item" style="--position: 4"><img src="../TP2/assets/img/251922_3.jpg"
+                                    alt="Captura de pantalla del juego 4"></div>
+                            <div class="item" style="--position: 5"><img src="../TP2/assets/img/250888_3.jpg"
+                                    alt="Captura de pantalla del juego 5"></div>
+                            <div class="item" style="--position: 6"><img src="../TP2/assets/img/254590_3.jpg"
+                                    alt="Captura de pantalla del juego 6"></div>
+                            <div class="item" style="--position: 7"><img src="../TP2/assets/img/254564_3.jpg"
+                                    alt="Captura de pantalla del juego 7"></div>
+                            <div class="item" style="--position: 8"><img src="../TP2/assets/img/254518_3.jpg"
+                                    alt="Captura de pantalla del juego 8"></div>
+                        </div>
+                        <button class="gallery-nav gallery-nav-right" aria-label="Imagen siguiente">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="9,18 15,12 9,6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de video después de la galería -->
+        <section class="video-section">
+            <div class="game-video">
+                <h3>📹 Gameplay y Tutorial</h3>
+                <div class="video-container">
+                    <div class="video-player">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Space Flyer - Gameplay"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <h4>🎯 Cómo jugar Space Flyer</h4>
+                        <p>
+                            Mira este tutorial completo donde te explicamos todas las estrategias
+                            para dominar el Space Flyer.
+                            Aprende los movimientos básicos, trucos avanzados y cómo conseguir
+                            la puntuación perfecta.
+                        </p>
+                        <div class="video-stats">
+                            <span class="video-stat">👁️ 125,847 visualizaciones</span>
+                            <span class="video-stat">👍 4,582 likes</span>
+                            <span class="video-stat">⏱️ 8:42 minutos</span>
+                        </div>
+                        <div class="video-actions">
+                            <button class="video-btn primary">▶️ Ver en YouTube</button>
+                            <button class="video-btn secondary">💾 Guardar</button>
+                            <button class="video-btn secondary">📤 Compartir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de comentarios separada, abajo de todo -->
+        <section class="comments-section">
+            <div class="game-comments">
+                <h3>💬 Comentarios</h3>
+                <form class="comment-form">
+                    <div class="form-group">
+                        <textarea placeholder="Comparte tu experiencia con este juego..." rows="4"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" type="submit">
+                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                            </svg>
+                            Enviar comentario
+                        </button>
+                    </div>
+                </form>
+                <div class="comments-list">
+                    <div class="comment-item">
+                        <div class="comment-header">
+                            <strong class="username">GamerPro87</strong>
+                            <span class="comment-date">hace 2 horas</span>
+                            <div class="comment-rating">★★★★★</div>
+                        </div>
+                        <p class="comment-text">¡Muy divertido y con buena temática!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer-block">
+        <div class="footer-inner">
+            <!-- Columna izquierda -->
+            <div class="footer-meta">
+                <div class="footer-logo" aria-hidden="true">
+                    <span class="brand-badge logo-img">
+                        <img src="../TP2/assets/icons/logo.png" alt="Logo" />
+                    </span>
+                </div>
+                <button class="lang-chip" aria-label="Cambiar idioma">
+                    <img src="../TP2/assets/icons/bandera.png" alt="Español" class="flag">
+                    <span>Español</span>
+                    <img src="../TP2/assets/icons/flecha abajo.png" alt="Desplegar" class="chev">
+                </button>
+                <div class="social">
+                    <a href="#" aria-label="Instagram" class="social-btn">
+                        <img src="../TP2/assets/icons/instagram.png" alt="Instagram" class="social-icon">
+                    </a>
+                    <a href="#" aria-label="X" class="social-btn">
+                        <img src="../TP2/assets/icons/twiter.png" alt="X" class="social-icon">
+                    </a>
+                    <a href="#" aria-label="Facebook" class="social-btn">
+                        <img src="../TP2/assets/icons/facebook2.png" alt="Facebook" class="social-icon">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Columna derecha -->
+            <nav class="footer-cols" aria-label="Enlaces del sitio">
+                <div class="col">
+                    <h4>Conózcanos</h4>
+                    <a href="#">Sobre nosotros</a>
+                    <a href="#">InterGames for Developers</a>
+                    <a href="#">InterGames</a>
+                    <a href="#">Empleos</a>
+                </div>
+                <div class="col">
+                    <h4>Privacidad y términos</h4>
+                    <a href="#">Centro de Privacidad</a>
+                    <a href="#">Términos y condiciones</a>
+                </div>
+                <div class="col">
+                    <h4>Ayuda y asistencia</h4>
+                    <a href="#">Preguntas frecuentes</a>
+                    <a href="#">Contacto</a>
+                    <a href="#">Soporte Técnico</a>
+                </div>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="../TP2/js/main.js"></script>
+    <script src="../TP2/js/gallery.js"></script>
+    <script src="../TP5/js/GameConfig.js"></script>
+    <!-- Entidades -->
+    <script src="../TP5/js/entities/Particle.js"></script>
+    <script src="../TP5/js/entities/Obstacle.js"></script>
+    <script src="../TP5/js/entities/Star.js"></script>
+    <script src="../TP5/js/entities/Gem.js"></script>
+    <script src="../TP5/js/entities/Enemy.js"></script>
+    <!-- Nuevas entidades / sistemas -->
+    <script src="../TP5/js/entities/PowerUp.js"></script>
+    <script src="../TP5/js/entities/Sprite.js"></script>
+    <script src="../TP5/js/SoundManager.js"></script>
+    <script src="../TP5/js/ParallaxManager.js"></script>
+    <!-- MVC -->
+    <script src="../TP5/js/models/GameModel.js"></script>
+    <script src="../TP5/js/views/GameView.js"></script>
+    <script src="../TP5/js/controllers/GameController.js"></script>
+    <script src="../TP5/js/main.js"></script>
+</body>
+
+</html>

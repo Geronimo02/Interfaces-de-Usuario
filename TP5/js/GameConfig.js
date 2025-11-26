@@ -7,10 +7,10 @@
 const GameConfig = {
     // ===== CANVAS =====
     CANVAS: {
-        WIDTH: 1920,
-        HEIGHT: 520,      // <--- CAMBIAR A 520 (antes era 720 o 1080)
-        MAX_WIDTH: 1920,
-        MAX_HEIGHT: 520
+        WIDTH: 1200,
+        HEIGHT: 480,      // Altura reducida para mostrar completo en pantalla
+        MAX_WIDTH: 1200,
+        MAX_HEIGHT: 480
     },
 
     // ===== JUGADOR =====
@@ -30,7 +30,7 @@ const GameConfig = {
     OBSTACLES: {
         WIDTH: 100,
         // Gap progresivo - empieza grande y se reduce
-        INITIAL_GAP: 400,        // Gap inicial muy amplio
+        INITIAL_GAP: 350,        // Gap inicial muy amplio
         MIN_GAP: 120,           // Gap mínimo cuando está muy avanzado  
         GAP_DECREASE_RATE: 3,   // Cuánto disminuye el gap por cada obstáculo pasado
         MAX_DIFFICULTY_OBSTACLES: 6, // Después de cuántos obstáculos alcanza dificultad máxima
@@ -95,7 +95,7 @@ const GameConfig = {
 
         SPAWN_INTERVAL: 180, // frames entre spawns
         MIN_Y: 50,
-        MAX_Y: 450
+        MAX_Y: 380
     },
 
     // ===== POWER UPS =====
@@ -141,7 +141,7 @@ const GameConfig = {
     // ===== PARTÍCULAS =====
     PARTICLES: {
         // Limites para evitar creación excesiva de partículas
-        MAX_PARTICLES: 200,
+        MAX_PARTICLES: 50,
 
         THRUST_COUNT: 3,
         THRUST_LIFE: 20,
